@@ -1,0 +1,76 @@
+#addon-list {
+  label {
+    margin-bottom: 10px;
+
+    span {
+      display: block;
+      color: #888;
+    }
+  }
+}
+
+#settings_hint {
+  background-color: var(--theme-main-color);
+  text-align: center;
+  position: absolute;
+  top: 52px;
+  width: 100%;
+  padding: 10px;
+}
+
+.settings-tab {
+  .actions {
+    a:not(:first-of-type) {
+      margin-left: 10px;
+    }
+  }
+
+  .text-type {
+    .description {
+      display: block;
+      color: #888;
+      margin-bottom: 10px;
+    }
+
+    input {
+      margin-bottom: 20px;
+      width: 80%;
+    }
+  }
+
+  #versioninfo {
+    dt {
+      float: left;
+      font-weight: bold;
+      margin-right: 0.5em;
+      width: 130px;
+    }
+
+    dt::after {
+      content: ": ";
+    }
+
+    dd::after {
+      clear: left;
+      content: " ";
+      display: block;
+    }
+
+    dd:empty:before {
+      content: '...';
+    }
+
+    dd a {
+      font-size: 10px;
+      margin-left: 5px;
+
+      &:after {
+        content: ')';
+      }
+
+      &:before {
+        content: '(';
+      }
+    }
+  }
+}

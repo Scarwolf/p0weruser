@@ -1,0 +1,54 @@
+{
+    "name": "p0weruser",
+    "description": "A modularized userScript for pr0gramm.com - Developed by FlorianMaak, Modifier by Scarwolf",
+    "homepage": "https://github.com/Scarwolf/p0weruser",
+    "author": {
+        "name": "Florian Maak",
+        "email": "fm-github@posteo.de"
+    },
+    "keywords": [
+        "UserScript",
+        "TamperMonkey",
+        "pr0gramm"
+    ],
+    "version": "1.2.1",
+    "license": "GPL-3.0",
+    "dependencies": {
+        "chart.js": "^2.8.0",
+        "core-js": "^2.6.5",
+        "moment": "^2.24.0",
+        "simplebar": "^2.6.1",
+        "tesseract.js": "^1.0.14"
+    },
+    "devDependencies": {
+        "ajv": "^6.10.0",
+        "css-loader": "^2.0.0",
+        "html-loader": "^0.5.5",
+        "less": "^3.9.0",
+        "less-loader": "^4.1.0",
+        "style-loader": "^0.23.1",
+        "webpack": "^4.29.6",
+        "webpack-auto-inject-version": "^1.2.2",
+        "webpack-cli": "^3.3.0"
+    },
+    "bugs": {
+        "url": "https://github.com/Scarwolf/p0weruser/issues",
+        "email": "github@scarwolf.com"
+    },
+    "engines": {
+        "node": ">=8.0.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Scarwolf/p0weruser"
+    },
+    "scripts": {
+        "postinstall": "npm run build",
+        "dev": "webpack  --config webpack.config.js --watch --mode development",
+        "build": "webpack  --config webpack.config.js --mode production",
+        "build-major": "webpack  --config webpack.config.js --mode production --env.major",
+        "build-minor": "webpack  --config webpack.config.js --mode production --env.minor",
+        "build-patch": "webpack  --config webpack.config.js --mode production --env.patch",
+        "test": "webpack --config webpack.config.js"
+    }
+}

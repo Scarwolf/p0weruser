@@ -1,0 +1,78 @@
+<div class="comment-count">
+    <div class="count"><span class="pict">c</span> {"Kommentar".inflect(commentCount)}</div>
+    <div class="comments-switch fa  fa-chevron-right"></div>
+    <div class="comments-toggle fa  fa-bars"></div>
+</div>
+<div class="comments-head">
+    <?js if( p.user.id ) {?>
+    <form class="comment-form" method="post">
+        <textarea class="comment" name="comment" required
+                  placeholder="Kommentar schreiben…"></textarea>
+        <input type="hidden" name="parentId" value="0"/>
+        <input type="hidden" name="itemId" value="{params.id}"/>
+        <div>
+            <input type="submit" value="Abschicken"/>
+            <input type="button" value="Abbrechen" class="cancel"/>
+        </div>
+    </form>
+
+    <form class="comment-edit-form" method="post">
+        <textarea class="comment" required name="comment"></textarea>
+        <input type="hidden" name="commentId" value="0"/>
+        <div>
+            <input type="submit" value="Abschicken"/>
+            <input type="button" value="Abbrechen" class="cancel"/>
+        </div>
+    </form>
+    <div class="comments">
+        <?js var recurseComments = function( comments, level ) { ?>
+        <div class="comment-box">
+            <?js for( var i = 0; i < comments.length; i++ ) { var c = comments[i]; ?>
+            <div class="comment-box-inner">
+                <div class="comment{p.voteClass(c.vote)}" id="comment{c.id}">
+                    <div class="comment-vote">
+                        <span class="pict vote-up">+</span>
+                        <span class="pict vote-down">-</span>
+                    </div>
+                    <div class="comment-content"> {c.content.format()}</div>
+                    <div class="comment-foot">
+                        <?js if(c.name == itemUser){?>
+                        <span class="user-comment-op">OP</span>
+                        <?js}?>
+                        <a href="#user/{c.name}" class="user um{c.mark}">{c.name}</a>
+                        <?js if( p.shouldShowScore(c) ) {?>
+                        <span class="score"
+                              title="{c.up} up, {c.down} down">{"Punkt".inflect(c.score)}</span> <?js } else { ?>
+                        <span class="score-hidden" title="Score noch unsichtbar">●●●</span> <?js } ?>
+                        <a href="#{tab}/{itemId}:comment{c.id}" class="time permalink"
+                           title="{c.date.readableTime()} ">{c.date.relativeTime(true)}</a>
+                        <?js if( level < CONFIG.COMMENTS_MAX_LEVELS ) {?>
+                        <a href="#{tab}/{itemId}:comment{c.id}" class="comment-reply-link action">
+                            <span class="pict">r</span> antworten
+                        </a>
+                        <?js } ?>
+                        <?js if (c.children.length > 0) {?>
+                        <span class="fold fold-in action" title="Kommentare einklappen">[–]</span>
+                        <span class="fold fold-out action" title="Kommentare ausklappen">[+]</span>
+                        <span class="folded-comments-message"> (<span class="folded-comments-count"></span> eingeklappt) </span>
+                        <?js } ?>
+                        <?js if( p.user.admin ) {?>
+                        [ <span class="comment-delete action">del</span> /
+                        <a href="#{tab}/{itemId}:comment{c.id}" class="comment-edit-link action">edit</a> ]
+                        <?js } ?>
+                        <span class="comment-report action" data-item="{itemId}"
+                              data-comment="{c.id}"><span class="fa fa-exclamation-triangle"></span></span>
+
+                        <?js if( c.name != p.user.name ) {?> <span
+                            class="pict vote-cfav{p.favClass(c.vote)}">*</span> <?js } ?>
+                    </div>
+                </div>
+                <?js if( c.children.length ) { recurseComments(c.children, level+1); } ?>
+            </div>
+            <?js } ?>
+        </div>
+        <?js }; ?>
+        <?js recurseComments(comments, 1); ?>
+    </div>
+    <?js } ?>
+</div>

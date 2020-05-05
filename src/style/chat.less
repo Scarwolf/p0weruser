@@ -1,0 +1,107 @@
+.private-message-pane {
+  .simplebar-scrollbar {
+    background: #2a2e31;
+    border-radius: 0;
+    right: 0;
+
+    &:before {
+      background: #2a2e31;
+    }
+
+    &.visible {
+      opacity: 1;
+    }
+  }
+
+  .private-messages {
+    max-width: unset;
+    display: flex;
+    flex-direction: column;
+    margin-left: 0;
+    flex-grow: 1;
+    height: 100%;
+
+    .inbox-messages {
+      max-height: 100%;
+      flex-grow: 1;
+
+      .simplebar-content {
+        padding: 25px;
+        overflow: hidden;
+      }
+
+      .message {
+        padding: 10px;
+        margin: 0 0 48px 0;
+        background-color: #2a2e31;
+
+        .comment-content,
+        .comment-foot {
+          margin-left: 0;
+          margin-right: 0;
+          padding: 0 !important;
+        }
+
+        .comment-foot {
+          position: absolute;
+          margin-top: 20px;
+          white-space: nowrap;
+          left: 0;
+        }
+
+        &.message-own {
+          background-color: var(--theme-main-color);
+          color: #fff;
+
+          .comment-foot {
+            position: absolute;
+            margin-top: 20px;
+            white-space: nowrap;
+            right: 0;
+            left: unset;
+          }
+
+          a {
+            color: #ddd;
+          }
+        }
+      }
+    }
+
+    .private-message-form {
+      order: 1;
+      margin-bottom: 0;
+      display: flex;
+      flex-shrink: 0;
+      padding: 10px 10px 0 10px;
+
+      textarea {
+        min-height: 60px;
+        margin-bottom: 0;
+        margin-right: 10px;
+        padding: 10px;
+        transition: height .1s linear;
+
+        &:focus {
+          height: 100px;
+        }
+      }
+
+      input[type=submit] {
+        height: 100%;
+      }
+    }
+  }
+
+  .conversations-pane {
+    float: right;
+    border-right: none;
+    border-left: 1px solid #252525;
+    max-height: 100%;
+    padding-bottom: 0;
+
+    .conversation-tab {
+      padding: 8px 0 8px 10px;
+    }
+  }
+}

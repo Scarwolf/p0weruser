@@ -1,0 +1,552 @@
+body[class] {
+
+  // Fix newyears-hat
+  #head-content:after {
+    left: 15px;
+  }
+
+  // Fix cancer donation
+  #head-content div#cancer-donations {
+    position: relative;
+    top: 4px;
+    order: 3;
+    left: 10px;
+  }
+
+  &.fixed {
+    overflow: hidden;
+  }
+
+  > .side-wide-skyscraper {
+    display: none;
+  }
+
+  #page {
+    &.desktop,
+    #head {
+      padding: 0 20px;
+      width: 100% !important;
+
+      #pr0-miner {
+        display: none;
+      }
+    }
+
+    #main-view {
+      #stream {
+        text-align: center;
+        display: block;
+        margin: 0 auto;
+
+        a.thumb {
+          display: inline-block;
+          float: left;
+        }
+
+        .stream-row {
+          clear: none;
+        }
+      }
+    }
+
+    #head {
+      background: rgba(0, 0, 0, 0.8);
+
+      #head-content {
+        background: none;
+        display: flex;
+        align-items: center;
+
+        #loader {
+          left: -20px;
+          right: -20px;
+        }
+
+        #filter-menu {
+          left: ~"calc(50% - 135px)";
+        }
+
+        > .user-info {
+          order: 20;
+          margin: 0;
+        }
+
+        > #head-menu {
+          padding: 0;
+          order: 3;
+          flex-grow: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        > #pr0gramm-logo-link {
+          order: 1;
+          height: 24px;
+          margin: 0;
+        }
+
+        a[id*="badge"] {
+          order: 2;
+          position: relative;
+          top: 0;
+          left: 0;
+          margin-left: 5px;
+          transform: scale(0.75);
+        }
+
+        .sidebar-toggle {
+          order: 0;
+          color: #fff;
+          font-size: 20px;
+          margin-right: 10px;
+
+          &.active {
+            color: #ee4d2e;
+          }
+        }
+      }
+    }
+  }
+
+  > #footer-links {
+    width: 250px;
+    left: -250px !important;
+    position: fixed;
+    margin: 0;
+    top: 52px;
+    border-right: 3px solid rgb(42, 46, 49);
+    background: #161618;
+    transition: left .2s linear;
+    z-index: 500;
+
+    &.open {
+      left: 0 !important;
+      box-shadow: 2px 0 10px #000;
+    }
+
+    a {
+      color: #fff;
+      display: block;
+      text-align: left;
+      padding: 10px 20px;
+      margin-right: 0;
+      font-size: 16px;
+
+      &:hover {
+        color: #ee4d2e;
+      }
+
+      &:before {
+        font-family: 'FontAwesome';
+        margin-right: 10px;
+        display: inline-block;
+        width: 20px;
+      }
+
+      &[href="/faq"]:before {
+        content: "\f059";
+      }
+
+      &[href="/contact"]:before {
+        content: "\f0e0";
+      }
+
+      &[href*="//miner.pr0gramm.com"]:before {
+        content: "\f15a";
+      }
+
+      &[href*="/datasafety"]:before {
+        content: "\f06e";
+      }
+
+      &[href="http://app.pr0gramm.com"]:before {
+        content: "\f10b";
+      }
+
+      &[href="https://twitter.com/pr0gramm"]:before {
+        content: "\f099";
+      }
+
+      &[href="https://pr0mart.com"]:before {
+        content: "\f07a";
+      }
+    }
+  }
+}
+
+// Image details-view
+#stream .item-container {
+  margin: 0;
+  max-height: ~"calc(100vh - 52px)";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.9);
+  position: fixed;
+  top: 52px;
+  right: 0;
+  left: -20px;
+  bottom: -20px;
+  padding: 0;
+  z-index: 10;
+
+  .item-pointer {
+    display: none;
+  }
+
+  .item-container-content {
+    display: flex;
+    height: 100%;
+    width: 100%;
+
+    .image-main {
+      position: relative;
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+
+      .item-info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 120px;
+
+        > div {
+          position: relative;
+          display: flex;
+          width: 90%;
+          max-width: 980px;
+
+          .item-details,
+          .item-tags {
+            padding: 5px 20px 5px 40px;
+          }
+
+          .item-details {
+            .item-report {
+              margin-left: 10px;
+            }
+          }
+
+          .item-vote {
+            display: flex;
+            align-items: center;
+            left: 0;
+            top: 0;
+            position: relative;
+
+            > div {
+              display: flex;
+              align-items: center;
+              position: relative;
+              min-width: 80px;
+
+              .vote-fav {
+                position: relative;
+                margin-left: 20px;
+                font-size: 32px;
+                left: 0;
+                top: 0;
+              }
+
+              .score,
+              .score-hidden {
+                position: relative;
+                top: 0;
+                left: 10px;
+              }
+
+              .benisbar {
+                height: 3px;
+                display: none;
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                right: 0;
+                background-color: #5cb85c;
+
+                &.show {
+                  display: block;
+                }
+
+                &:after {
+                  content: attr(data-after-text);
+                  bottom: -20px;
+                  position: absolute;
+                  color: #bbb;
+                  white-space: nowrap;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .item-image-wrapper {
+        flex-grow: 1;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+
+        .move-link {
+          position: absolute;
+          color: #fff;
+          opacity: 0.7;
+          padding: 0 24px;
+          font-size: 26px;
+          right: 0;
+          top: 24px;
+          text-shadow: 0 0 3px #000;
+          z-index: 10;
+
+          &:hover {
+            color: #ee4d2e;
+          }
+        }
+
+        .item-fullsize-link + .move-link {
+          top: 60px;
+        }
+
+        .video-controls {
+          height: 50px;
+        }
+
+        &.resized {
+          .item-image {
+            max-height: ~"calc(100vh - 200px)";
+            top: auto !important;
+            left: auto !important;
+          }
+        }
+
+        &.oversize:not(.resized) {
+          .item-image {
+            cursor: move;
+          }
+
+          img {
+            max-height: none !important;
+            align-self: flex-start;
+          }
+        }
+
+        .stream-prev,
+        .stream-next {
+          display: flex;
+          height: 50px;
+          align-items: center;
+          justify-content: center;
+
+          span:before {
+            opacity: .2;
+            font-size: 70px;
+          }
+
+          &:hover span:before {
+            opacity: .6;
+          }
+        }
+
+        .stream-prev {
+          padding: 0 0 0 20px !important;
+        }
+
+        .stream-next {
+          right: 20px;
+          padding: 0 5px !important
+        }
+
+        .video-controls {
+          width: 100% !important;
+
+          .video-position-bar-background {
+            min-height: 2px;
+          }
+        }
+
+        .item-image {
+          outline: none;
+          display: flex;
+          flex-grow: 1;
+          align-items: center;
+          justify-content: center;
+          max-width: 100%;
+          max-height: 100%;
+          width: auto !important;
+
+          .item-image-thumb {
+            display: none !important;
+          }
+
+          .item-image-actual {
+            height: auto !important;
+            width: auto !important;
+            max-width: 100%;
+            max-height: 100%;
+            position: relative;
+            margin: 0 auto;
+          }
+        }
+      }
+    }
+
+    .item-comments {
+      background: #161618;
+      flex-grow: 0;
+      flex-shrink: 0;
+      padding-top: 30px;
+      border-right: 3px solid #2a2e31;
+      transition: width 0.2s ease-out;
+
+      &.loaded {
+        width: 30vw;
+
+        &.wide {
+          width: 40vw;
+        }
+      }
+
+      &.closed {
+        width: 60px !important;
+
+        .comment-count {
+          width: 60px !important;
+        }
+
+        .count,
+        .comments-head,
+        .simplebar-track,
+        .comments-switch {
+          display: none;
+        }
+      }
+
+      .vote-cfav {
+        color: #888;
+        font-size: 16px;
+        cursor: pointer;
+        position: relative;
+        padding: 0 5px 0 0;
+        top: 4px;
+
+        &.faved,
+        &:hover {
+          color: var(--theme-main-color);
+        }
+      }
+
+      .comment[voted-up] {
+        .vote-up {
+          color: var(--theme-main-color);
+        }
+
+        .vote-down {
+          color: #3c3c3c;
+        }
+      }
+
+      .comment[voted-down] {
+        .vote-up {
+          color: #3c3c3c;
+        }
+
+        .vote-down {
+          color: #F5F7F6;
+        }
+
+        .comment-content {
+          color: #666;
+        }
+      }
+
+      &.toggled {
+        transition: width .2s ease-out;
+      }
+
+      &.wide {
+        width: 40vw;
+
+        .comments-switch:before {
+          content: "\f053";
+        }
+
+        .comment-count {
+          width: 40vw;
+        }
+      }
+
+      .comments-head {
+        padding: 10px 10px 10px 30px;
+        opacity: 1;
+        transition: opacity .2s;
+
+        .comment-content,
+        .comment-foot,
+        .comment {
+          max-width: 100%;
+        }
+
+        .comment-report {
+          margin-right: 5px;
+        }
+      }
+
+      .comment-count {
+        display: flex;
+        align-items: center;
+        background-color: #2a2e31;
+        text-align: left;
+        padding: 10px 10px 10px 35px;
+        transition: width .2s ease-out;
+        z-index: 400;
+        position: fixed;
+        top: 52px;
+        width: 30vw;
+
+        > div:first-child {
+          flex-grow: 1;
+        }
+
+        .fa {
+          cursor: pointer;
+
+          &:not(:last-child) {
+            margin-right: 10px;
+          }
+        }
+      }
+
+      textarea {
+        transition: height .2s ease-out;
+
+        &.comment:focus,
+        &.comment:valid,
+        &.reply {
+          height: 75px;
+        }
+      }
+
+      .simplebar-scrollbar {
+        background: #2a2e31;
+        border-radius: 0;
+        right: 0;
+
+        &:before {
+          background: #2a2e31;
+        }
+
+        &.visible {
+          opacity: 1;
+        }
+      }
+
+      .simplebar-content {
+        outline: none;
+      }
+    }
+  }
+}

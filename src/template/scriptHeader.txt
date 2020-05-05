@@ -1,0 +1,20 @@
+// ==UserScript==
+// @name		p0weruser - Rel0aded
+// @namespace	https://github.com/Scarwolf/p0weruser/
+// @author		Florian Maak - Modified by PoTTii
+// @description	Erweitert pr0gramm.com um weitere Funktionen
+// @license     GPL-3.0; http://www.gnu.org/licenses/gpl-3.0.txt
+// @include		/^https?://pr0gramm.com/.*$/
+// @icon		https://pr0gramm.com/media/pr0gramm-favicon.png
+// @connect     rep0st.rene8888.at
+// @connect     github.com
+// @connect     raw.githubusercontent.com
+// @connect     pr0gramm.com
+// @connect     pr0p0ll.com
+// @run-at      document-end
+// @version		{version}
+// @grant		GM_notification
+// @grant       GM_xmlhttpRequest
+// @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
+// @updateURL	https://github.com/Scarwolf/p0weruser/raw/master/dist/p0weruser.user.js
+// ==/UserScript==
