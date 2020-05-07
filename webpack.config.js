@@ -37,7 +37,8 @@ module.exports = {
                     dateFormat: 'h:MM:ss TT'
                 }
             }
-        })
+        }),
+        new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de/)
     ],
     module: {
         rules: [
