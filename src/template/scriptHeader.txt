@@ -16,5 +16,5 @@
 // @grant		GM_notification
 // @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
-// @updateURL	https://github.com/Scarwolf/p0weruser/raw/master/dist/p0weruser.user.js
+// @updateURL	https://cdn.jsdelivr.net/gh/Scarwolf/p0weruser@master/dist/p0weruser.user.js
 // ==/UserScript==
