@@ -2,6 +2,8 @@ const path = require('path');
 const fs = require('fs');
 const WebpackAutoInject = require('webpack-auto-inject-version');
 const webpack = require('webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 module.exports = {
     entry: './src/P0weruser.js',
@@ -11,6 +13,9 @@ module.exports = {
     },
     performance: {
         hints: false
+    },
+    externals: {
+        moment: 'moment',
     },
     plugins: [
         new WebpackAutoInject({
@@ -38,7 +43,8 @@ module.exports = {
                 }
             }
         }),
-        new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de/)
+        new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de/),
+        new BundleAnalyzerPlugin()
     ],
     module: {
         rules: [
