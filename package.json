@@ -14,22 +14,22 @@
     "version": "1.2.1",
     "license": "GPL-3.0",
     "dependencies": {
-        "chart.js": "^2.8.0",
-        "core-js": "^2.6.5",
-        "moment": "^2.24.0",
+        "chart.js": "^2.9.3",
+        "core-js": "^2.6.11",
+        "moment": "^2.25.3",
         "simplebar": "^2.6.1",
         "tesseract.js": "^1.0.19"
     },
     "devDependencies": {
-        "ajv": "^6.10.0",
-        "css-loader": "^2.0.0",
+        "ajv": "^6.12.2",
+        "css-loader": "^2.1.1",
         "html-loader": "^0.5.5",
-        "less": "^3.9.0",
+        "less": "^3.11.1",
         "less-loader": "^4.1.0",
         "style-loader": "^0.23.1",
-        "webpack": "^4.29.6",
+        "webpack": "^4.43.0",
         "webpack-auto-inject-version": "^1.2.2",
-        "webpack-cli": "^3.3.0"
+        "webpack-cli": "^3.3.11"
     },
     "bugs": {
         "url": "https://github.com/Scarwolf/p0weruser/issues",
