@@ -26,6 +26,7 @@
         "html-loader": "^0.5.5",
         "less": "^3.9.0",
         "less-loader": "^4.1.0",
+        "moment-locales-webpack-plugin": "^1.2.0",
         "style-loader": "^0.23.1",
         "webpack": "^4.29.6",
         "webpack-auto-inject-version": "^1.2.2",

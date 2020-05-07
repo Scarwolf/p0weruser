@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const WebpackAutoInject = require('webpack-auto-inject-version');
 const webpack = require('webpack');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 module.exports = {
     entry: './src/P0weruser.js',
@@ -37,6 +38,9 @@ module.exports = {
                     dateFormat: 'h:MM:ss TT'
                 }
             }
+        }),
+        new MomentLocalesPlugin({
+            localesToKeep: ['de']
         })
     ],
     module: {
