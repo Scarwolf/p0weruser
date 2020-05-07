@@ -12,6 +12,9 @@ module.exports = {
     performance: {
         hints: false
     },
+    externals: {
+        moment: 'moment',
+    },
     plugins: [
         new WebpackAutoInject({
             NAME: 'p0weruser',
@@ -37,7 +40,8 @@ module.exports = {
                     dateFormat: 'h:MM:ss TT'
                 }
             }
-        })
+        }),
+        new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de/)
     ],
     module: {
         rules: [
