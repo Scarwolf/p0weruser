@@ -12,9 +12,6 @@ module.exports = {
     performance: {
         hints: false
     },
-    externals: {
-        moment: 'moment',
-    },
     plugins: [
         new WebpackAutoInject({
             NAME: 'p0weruser',
