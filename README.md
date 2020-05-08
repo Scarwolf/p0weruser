@@ -2,6 +2,10 @@
 Extend pr0gramm.com with some extra functions and improve look and feel. Don't like a special feature? No problem, just disable
 it using settings.
 
+![Image 1](https://i.imgur.com/KJ7IGPZ.jpg)
+![Image 2](https://i.imgur.com/tp2jKQ3.png)
+
+
 The original repo can be found here: [FlorianMaak/p0weruser](https://github.com/FlorianMaak/p0weruser)
 
 ## Features
