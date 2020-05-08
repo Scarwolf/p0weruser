@@ -188,7 +188,7 @@ export default class Settings {
         for (let i = 0; i < activated.length; i++) {
             let module = modules[activated[i]];
 
-            if(typeof module !== undefined) {
+            if(typeof module === 'object') {
                 if (typeof module.getSettings === 'function') {
                     const settings = module.getSettings();
                     let headline = document.createElement('h3');
