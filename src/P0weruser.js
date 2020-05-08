@@ -68,7 +68,8 @@ export default class P0weruser {
         let activated = P0weruser.getActivatedModules();
 
         for (let i = 0; i < activated.length; i++) {
-            this.modules[activated[i]].load();
+            if(typeof this.modules[activated[i]] === 'object')
+                this.modules[activated[i]].load();
             console.debug(`Loaded module: ${activated[i]}`);
         }
     }
