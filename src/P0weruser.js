@@ -44,7 +44,14 @@ export default class P0weruser {
     }
 
 
-    static getActivatedModules() {
+    /**
+     * Drops legacy modules from the array of loaded modules.
+     */
+    static dropLegacyModulesFromActivated() {
+        let legacyModules = [
+            "C0mmunityrat"
+        ];
+
         let modules = window.localStorage.getItem('activated_modules');
 
         if (!modules) {
@@ -52,11 +59,22 @@ export default class P0weruser {
             modules = '[]';
         }
 
+        modules = JSON.parse(modules);
+        let newModules = modules.filter(module => !legacyModules.includes(module));
+        window.localStorage.setItem('activated_modules', JSON.stringify(newModules));
+    }
+
+
+    static getActivatedModules() {
+        this.dropLegacyModulesFromActivated();
+
+        let modules = window.localStorage.getItem('activated_modules');
+
         if (modules === '[]') {
             Settings.addHint();
         }
 
-        return JSON.parse(modules);
+        return modules;
     }
 
     static saveActivatedModules(selection) {
@@ -68,8 +86,10 @@ export default class P0weruser {
         let activated = P0weruser.getActivatedModules();
 
         for (let i = 0; i < activated.length; i++) {
-            this.modules[activated[i]].load();
-            console.debug(`Loaded module: ${activated[i]}`);
+            if(typeof this.modules[activated[i]] === 'object') {
+                this.modules[activated[i]].load();
+                console.debug(`Loaded module: ${activated[i]}`);
+            }
         }
     }
 

@@ -188,33 +188,35 @@ export default class Settings {
         for (let i = 0; i < activated.length; i++) {
             let module = modules[activated[i]];
 
-            if (typeof module.getSettings === 'function') {
-                const settings = module.getSettings();
-                let headline = document.createElement('h3');
-                headline.innerText = module.name;
-                wrapper.append(headline);
+            if(typeof module === 'object') {
+                if (typeof module.getSettings === 'function') {
+                    const settings = module.getSettings();
+                    let headline = document.createElement('h3');
+                    headline.innerText = module.name;
+                    wrapper.append(headline);
 
-                for (let i = 0; i < settings.length; i++) {
-                    const id = `${module.id}.settings.${settings[i].id}`;
-                    let currentValue = Settings.get(id);
-                    let container = document.createElement('div');
-                    container.className = 'box-from-label';
+                    for (let i = 0; i < settings.length; i++) {
+                        const id = `${module.id}.settings.${settings[i].id}`;
+                        let currentValue = Settings.get(id);
+                        let container = document.createElement('div');
+                        container.className = 'box-from-label';
 
-                    switch (settings[i].type) {
-                        case 'number':
-                            currentValue = (currentValue === true) ? 1 : currentValue;
-                            container.innerHTML = `<div class="text-type"><span class="title">${settings[i].title}</span><span class="description">${settings[i].description}</span><input id="${id}" type="number" value="${currentValue}" /></div>`;
-                            break;
-                        case 'text':
-                            currentValue = (currentValue === true) ? '' : currentValue;
-                            container.innerHTML = `<div class="text-type"><span class="title">${settings[i].title}</span><span class="description">${settings[i].description}</span><input id="${id}" type="text" value="${currentValue}" /></div>`;
-                            break;
-                        default:
-                            container.innerHTML = `<input id="${id}" type="${settings[i].type ? settings[i].type : 'checkbox'}" class="box-from-label" ${currentValue ? 'checked' : ''} /><label for="${id}">${settings[i].title}<span>${settings[i].description}</span></label>`;
-                            break;
+                        switch (settings[i].type) {
+                            case 'number':
+                                currentValue = (currentValue === true) ? 1 : currentValue;
+                                container.innerHTML = `<div class="text-type"><span class="title">${settings[i].title}</span><span class="description">${settings[i].description}</span><input id="${id}" type="number" value="${currentValue}" /></div>`;
+                                break;
+                            case 'text':
+                                currentValue = (currentValue === true) ? '' : currentValue;
+                                container.innerHTML = `<div class="text-type"><span class="title">${settings[i].title}</span><span class="description">${settings[i].description}</span><input id="${id}" type="text" value="${currentValue}" /></div>`;
+                                break;
+                            default:
+                                container.innerHTML = `<input id="${id}" type="${settings[i].type ? settings[i].type : 'checkbox'}" class="box-from-label" ${currentValue ? 'checked' : ''} /><label for="${id}">${settings[i].title}<span>${settings[i].description}</span></label>`;
+                                break;
+                        }
+
+                        headline.after(container);
                     }
-
-                    headline.after(container);
                 }
             }
         }
