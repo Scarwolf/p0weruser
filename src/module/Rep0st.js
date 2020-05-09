@@ -98,16 +98,27 @@ export default class Rep0st {
                 result.html($(res.responseText));
                 const images = result.find('.result-list a');
 
+                let currentPostId = this.getCurrentPostId();
                 for (let i = 1; i < images.length; i++) {
-                    output.push({
-                        url: images[i].href,
-                        img: images[i].style.backgroundImage.match(/\(([^)]+)\)/)[1]
-                    });
+                    let postId = parseInt(images[i].href.replace('pr0gramm', '').replace(/\D/g,''));
+
+                    if(currentPostId !== postId) {
+                        output.push({
+                            url: images[i].href,
+                            img: images[i].style.backgroundImage.match(/\(([^)]+)\)/)[1]
+                        });
+                    }
                 }
 
                 this.displayImages(bar, output);
             }
         });
+    }
+
+    getCurrentPostId() {
+        return parseInt(window.location.href
+            .replace('pr0gramm', '')
+            .replace(/\D/g,''));
     }
 
 
