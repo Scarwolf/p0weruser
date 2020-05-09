@@ -14,7 +14,9 @@ export default class AnonymousTitle {
 
     addListeners() {
         p.mainView.setTitle = () => this.changeTitle();
+        window.addEventListener('userSync', (e) => this.changeTitle());
     }
+
 
     changeTitle() {
         if (this.customTitle !== true && this.customTitle !== '') {
