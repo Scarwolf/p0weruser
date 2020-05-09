@@ -28,13 +28,20 @@ export default class BenisInNavbar {
                 id: 'legacy_icon',
                 title: 'cust0m Icon',
                 description: 'Nutze das alte Icon vom cust0m-pr0gramm.'
+            },
+            {
+                id: 'show_username',
+                title: 'Benutzername neben der Benisanzeige',
+                description: 'Zeigt neben der Benisanzeige deinen Nutzernamen an.'
             }
         ];
     }
 
 
     addBenis() {
-        this.target.innerText = this.benis;
+        let showUsername = Settings.get('BenisInNavbar.settings.show_username');
+
+        this.target.innerText = showUsername ? p.user.name + ' (' + this.benis + ')' : this.benis;
     }
 
 
