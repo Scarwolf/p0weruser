@@ -1,4 +1,6 @@
 # p0weruser
+[![Build Status](https://travis-ci.com/Scarwolf/p0weruser.svg?branch=master)](https://travis-ci.com/Scarwolf/p0weruser)
+
 Extend pr0gramm.com with some extra functions and improve look and feel. Don't like a special feature? No problem, just disable
 it using settings.
 
