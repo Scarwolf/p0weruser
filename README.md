@@ -28,13 +28,8 @@ The original repo can be found here: [FlorianMaak/p0weruser](https://github.com/
 
 ## Installation
 Just install Tampermonkey and install the script by a simple
-click on one of the following urls:
-
-### Release
-[https://cdn.jsdelivr.net/gh/Scarwolf/p0weruser@master/dist/p0weruser.user.js](https://cdn.jsdelivr.net/gh/Scarwolf/p0weruser@master/dist/p0weruser.user.js)
-
-### Beta
-[https://cdn.jsdelivr.net/gh/Scarwolf/p0weruser@develop/dist/p0weruser.user.js](https://cdn.jsdelivr.net/gh/Scarwolf/p0weruser@develop/dist/p0weruser.user.js)
+click on the following url:
+[https://scarwolf.github.io/p0weruser/p0weruser.user.js](https://scarwolf.github.io/p0weruser/p0weruser.user.js)
 
 ## Missing Feature or found a bug?
 Just open an issue and describe your request as accurately as possible. If you like to script it on your own, feel free to fork this repository and open a Pull Request.
