@@ -64,7 +64,7 @@
                               data-comment="{c.id}"><span class="fa fa-exclamation-triangle"></span></span>
 
                         <?js if( c.name != p.user.name ) {?> <span
-                            class="pict vote-cfav{p.favClass(c.vote)}">*</span> <?js } ?>
+                            class="pict vote-cfav<?js if (c.fav){ ?> faved<?js } ?>">*</span> <?js } ?>
                     </div>
                 </div>
                 <?js if( c.children.length ) { recurseComments(c.children, level+1); } ?>
