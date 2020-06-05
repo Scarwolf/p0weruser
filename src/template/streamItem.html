@@ -86,7 +86,8 @@
                               title="{item.up} up, {item.down} down"><?js print(item.up - item.down)?></span> <?js } else { ?>
                         <span class="score-hidden" title="Score noch unsichtbar">●●●</span> <?js } ?>
                         <?js if( item.user != p.user.name ) {?>
-                        <span class="pict vote-fav{p.favClass(item.vote)}">*</span>
+                        <span class="pict vote-fav<?js if (item.fav){ ?> faved<?js } ?>" title="Favorisieren [f]">*</span> <span
+                            class="collect" title="In Sammlung einsortieren">▼</span>
                         <?js } ?>
 
                         <div class="benisbar" data-after-text="{item.up} up / {item.down} down"></div>
