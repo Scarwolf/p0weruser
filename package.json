@@ -11,7 +11,7 @@
         "TamperMonkey",
         "pr0gramm"
     ],
-    "version": "1.4.1",
+    "version": "1.4.2",
     "license": "GPL-3.0",
     "dependencies": {
         "chart.js": "^2.9.3",
@@ -47,9 +47,9 @@
         "postinstall": "npm run build",
         "dev": "webpack  --config webpack.config.js --watch --mode development",
         "build": "webpack  --config webpack.config.js --mode production",
-        "build-major": "webpack  --config webpack.config.js --mode production --env.major",
-        "build-minor": "webpack  --config webpack.config.js --mode production --env.minor",
-        "build-patch": "webpack  --config webpack.config.js --mode production --env.patch",
+        "build:major": "webpack  --config webpack.config.js --mode production --env.major",
+        "build:minor": "webpack  --config webpack.config.js --mode production --env.minor",
+        "build:patch": "webpack  --config webpack.config.js --mode production --env.patch",
         "test": "webpack --config webpack.config.js"
     }
 }
