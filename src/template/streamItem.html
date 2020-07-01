@@ -11,10 +11,10 @@
             <?js if( item.video ) { ?>
             <div class="item-image">
                 <?js if(supportsAutoplay) {?>
-                <video class="item-image-actual" src="{item.image}" type="video/mp4" loop autoplay
+                <video class="item-image-actual" draggable="true" src="{item.image}" type="video/mp4" loop autoplay
                        preload="auto"></video>
                 <?js } else { ?>
-                <video class="item-image-actual" webkit-playsinline playsinline poster="{item.thumb}" src="{item.image}"
+                <video class="item-image-actual" draggable="true" webkit-playsinline playsinline poster="{item.thumb}" src="{item.image}"
                        type="video/mp4" loop preload="metadata"></video>
                 <svg class="video-play-button" viewBox="0 0 200 200">
                     <circle cx="100" cy="100" r="90" fill="none" stroke-width="15" stroke="#fff"></circle>
