@@ -1,6 +1,5 @@
 const path = require('path');
-const fs = require('fs');
-const WebpackAutoInject = require('webpack-auto-inject-version');
+const WebpackUserscript = require('webpack-userscript');
 const webpack = require('webpack');
 
 module.exports = {
@@ -13,30 +12,21 @@ module.exports = {
         hints: false
     },
     plugins: [
-        new WebpackAutoInject({
-            NAME: 'p0weruser',
-            SHORT: 'pr0',
-            SILENT: true,
-            PACKAGE_JSON_PATH: './package.json',
-            components: {
-                AutoIncreaseVersion: true,
-                InjectByTag: true
+        new WebpackUserscript({
+            headers: {
+                name: 'p0weruser - Rel0aded',
+                author: 'Florian Maak - Modified by PoTTii',
+                namespace: 'https://github.com/Scarwolf/p0weruser/',
+                license: 'GPL-3.0; http://www.gnu.org/licenses/gpl-3.0.txt',
+                include: '/^https?://pr0gramm.com/.*$/',
+                icon: 'https://pr0gramm.com/media/pr0gramm-favicon.png',
+                connect: ['rep0st.rene8888.at', 'github.com', 'raw.githubusercontent.com', 'pr0gramm.com', 'pr0p0ll.com'],
+                'run-at': 'document-end',
+                grant: ['GM_notification', 'GM_xmlhttpRequest'],
+                require: 'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js',
+                updateURL: 'https://scarwolf.github.io/p0weruser/p0weruser.user.js'
             },
-            componentsOptions: {
-                InjectAsComment: {
-                    tag: fs.readFileSync(
-                        path.resolve(__dirname, 'src/template/scriptHeader.txt'), 'utf8'
-                    ),
-                    dateFormat: 'dddd, mmmm dS, yyyy, h:MM:ss TT'
-                },
-                AutoIncreaseVersion: {
-                    runInWatchMode: false
-                },
-                InjectByTag: {
-                    fileRegex: /\.+/,
-                    dateFormat: 'h:MM:ss TT'
-                }
-            }
+            metajs: false
         }),
         new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de/)
     ],

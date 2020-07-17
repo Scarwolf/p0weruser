@@ -30,7 +30,8 @@
         "style-loader": "^0.23.1",
         "webpack": "^4.43.0",
         "webpack-auto-inject-version": "^1.2.2",
-        "webpack-cli": "^3.3.11"
+        "webpack-cli": "^3.3.11",
+        "webpack-userscript": "^2.5.4"
     },
     "bugs": {
         "url": "https://github.com/Scarwolf/p0weruser/issues",
