@@ -15,7 +15,7 @@ module.exports = {
         new WebpackUserscript({
             headers: {
                 name: 'p0weruser - Rel0aded',
-                author: 'Florian Maak - Modified by PoTTii',
+                author: 'PoTTii - Created by Florian Maak',
                 namespace: 'https://github.com/Scarwolf/p0weruser/',
                 license: 'GPL-3.0; http://www.gnu.org/licenses/gpl-3.0.txt',
                 include: '/^https?://pr0gramm.com/.*$/',
