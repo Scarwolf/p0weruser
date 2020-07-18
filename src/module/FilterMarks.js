@@ -70,10 +70,13 @@ export default class FilterMarks {
 
         // Handle stream-view
         p.View.Stream.Main.prototype.buildItem = function (item) {
-            let content = `<a class="silent ${item.promoted > 1000000000 ? 'sticky ' : ''}thumb filter ${_this.displayLabelStream ? FilterMarks.getFilter(item) : ''}" id="item-${item.id}" href="${this.baseURL + item.id}"><img src="${item.thumb}"/>`;
+            let content = `<a class="silent thumb filter ${_this.displayLabelStream ? FilterMarks.getFilter(item) : ''}" id="item-${item.id}" href="${this.baseURL + item.id}"><img src="${item.thumb}"/> ${item.promoted > 1000000000 ? '<div class="sticky-badge"></div>' : ''}`;
 
             if (_this.displayBenisStream) {
                 content += `<span class="benis-info ${item.up - item.down > 0 ? 'up' : 'down'}">${item.up - item.down}</span></a>`;
+            }
+            else {
+                content += '</a>';
             }
             return content;
         };
