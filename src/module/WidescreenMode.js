@@ -16,6 +16,7 @@ export default class WidescreenMode {
         this.mouseControl = Settings.get('WidescreenMode.settings.mouse_control');
         this.displayBenisbar = Settings.get('WidescreenMode.settings.display_benisbar');
         this.scrollMultiplicator = parseInt(Settings.get('WidescreenMode.settings.scroll_speed')) || 1;
+        this.displayBenisUntilTop = Settings.get("WidescreenMode.settings.display_benis_until_top");
     }
 
 
@@ -80,6 +81,11 @@ export default class WidescreenMode {
 
     getSettings() {
         return [
+            {
+                id: 'display_benis_until_top',
+                title: 'Benis bis beliebt anzeigen',
+                description: 'Zeigt an, wie viel Benis ungefähr bis beliebt fehlt. (Nur mit Benisbar möglich)'
+            },
             {
                 id: 'display_benis',
                 title: 'Benis sofort anzeigen',
@@ -187,6 +193,13 @@ export default class WidescreenMode {
                             ` color-stop(${percentage}, #5cb85c), color-stop(${percentage}, #888));`);
                     }
 
+                    if (_this.displayBenisUntilTop) {
+                        var now = new Date();
+                        if (Math.abs(now - itemData.date) / 36e5 < 3 && itemData.promoted == 0) {
+                            benisbar.dataset.afterText += " (" + _this.calculateBenisUntilTop(itemData.up, itemData.down, itemData.date) + " bis beliebt)";
+                        }
+                    }
+                    
                     benisbar.classList.add('show', _this.displayBenisbar);
                 }
 
@@ -260,6 +273,9 @@ export default class WidescreenMode {
         };
     }
 
+    calculateBenisUntilTop(up, down, date) {
+        return Math.ceil(7.2857 * down + ((date.getHours() >= 22 || date.getHours() <= 6) ? 15 : 16) - up);
+    }
 
     addItemListener(image, itemData) {
         this.img = image;
