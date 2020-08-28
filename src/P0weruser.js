@@ -35,7 +35,7 @@ export default class P0weruser {
         let fa = document.createElement('link');
         fa.type = 'text/css';
         fa.rel = 'stylesheet';
-        fa.href = 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
+        fa.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css';
         document.getElementsByTagName('head')[0].appendChild(fa);
 
         let scrollbar = document.createElement('style');
