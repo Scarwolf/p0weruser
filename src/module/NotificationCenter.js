@@ -112,7 +112,7 @@ export default class NotificationCenter {
 
     getNotifications(all = false) {
         return new Promise((resolve, reject) => {
-            p.api.get(all ? 'inbox.all' : 'inbox.messages', {}, resolve, reject);
+            p.api.get(all ? 'inbox.all' : 'inbox.conversations', {}, resolve, reject);
         });
     }
 
@@ -127,6 +127,10 @@ export default class NotificationCenter {
             img = '<span class="message fa fa-envelope-open"></span>';
         } else {
             img = img.replace('##THUMB', image);
+        }
+
+        if(user === null) {
+            user = "Systembenachrichtigung";
         }
 
         elem.innerHTML = this.templateEntry.replaceArray(

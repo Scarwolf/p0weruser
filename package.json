@@ -1,6 +1,6 @@
 {
     "name": "p0weruser",
-    "description": "A modularized userScript for pr0gramm.com - Developed by FlorianMaak, Modifier by Scarwolf",
+    "description": "A modularized userScript for pr0gramm.com - Developed by FlorianMaak, Modified by Scarwolf",
     "homepage": "https://github.com/Scarwolf/p0weruser",
     "author": {
         "name": "Florian Maak",
@@ -11,7 +11,7 @@
         "TamperMonkey",
         "pr0gramm"
     ],
-    "version": "1.5.2",
+    "version": "1.5.3",
     "license": "GPL-3.0",
     "dependencies": {
         "chart.js": "^2.9.3",
