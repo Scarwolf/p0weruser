@@ -18,6 +18,7 @@ export default class WidescreenMode {
         this.scrollMultiplicator = parseInt(Settings.get('WidescreenMode.settings.scroll_speed')) || 1;
         this.displayBenisUntilTop = Settings.get("WidescreenMode.settings.display_benis_until_top");
         this.biggerStreamNavIcons = Settings.get("WidescreenMode.settings.bigger_stream_nav_icons");
+        this.commentsLeft = Settings.get("WidescreenMode.settings.comments_left");
     }
 
 
@@ -117,6 +118,11 @@ export default class WidescreenMode {
                 description: 'Definiere, wie schnell im Zoom gescrollt werden soll.',
                 type: 'number'
             },
+            {
+                id: 'comments_left',
+                title: 'Kommentare auf der linken Seite',
+                description: 'Wenn deaktiviert werden Kommentare auf der rechten Seite des Bildschirms angezeigt.',
+            },
         ];
     }
 
@@ -214,6 +220,10 @@ export default class WidescreenMode {
                 if(_this.biggerStreamNavIcons) {
                     document.getElementsByClassName('stream-prev-icon')[0].classList.add('stream-prev-icon-xl');
                     document.getElementsByClassName('stream-next-icon')[0].classList.add('stream-next-icon-xl');
+                }
+
+                if(!_this.commentsLeft) {
+                    document.getElementsByClassName('item-container-content')[0].classList.add('right');
                 }
             },
             remove: function () {

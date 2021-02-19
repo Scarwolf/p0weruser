@@ -197,6 +197,23 @@ body[class] {
 
   .item-container-content {
     display: flex;
+
+    &.right {
+      flex-direction: row-reverse;
+
+      .comments-switch {
+        transform: rotate(180deg);
+      }
+
+      .video-controls {
+        padding-left: 30px;
+      }
+
+      .stream-prev {
+        margin-left: 30px;
+      }
+    }
+
     height: 100%;
     width: 100%;
 
