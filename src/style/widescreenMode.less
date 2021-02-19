@@ -197,6 +197,23 @@ body[class] {
 
   .item-container-content {
     display: flex;
+
+    &.right {
+      flex-direction: row-reverse;
+
+      .comments-switch {
+        transform: rotate(180deg);
+      }
+
+      .video-controls {
+        padding-left: 30px;
+      }
+
+      .stream-prev {
+        margin-left: 30px;
+      }
+    }
+
     height: 100%;
     width: 100%;
 
@@ -346,6 +363,13 @@ body[class] {
           height: 50px;
           align-items: center;
           justify-content: center;
+
+          .stream-prev-icon-xl,
+          .stream-next-icon-xl {
+            width: 8px;
+            min-height: 32px;
+            height: calc(100vh - 400px);
+          }
 
           span:before {
             opacity: .2;

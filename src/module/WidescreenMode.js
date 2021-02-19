@@ -17,6 +17,8 @@ export default class WidescreenMode {
         this.displayBenisbar = Settings.get('WidescreenMode.settings.display_benisbar');
         this.scrollMultiplicator = parseInt(Settings.get('WidescreenMode.settings.scroll_speed')) || 1;
         this.displayBenisUntilTop = Settings.get("WidescreenMode.settings.display_benis_until_top");
+        this.biggerStreamNavIcons = Settings.get("WidescreenMode.settings.bigger_stream_nav_icons");
+        this.commentsLeft = Settings.get("WidescreenMode.settings.comments_left");
     }
 
 
@@ -69,7 +71,6 @@ export default class WidescreenMode {
         this.modifyLogo();
     }
 
-
     checkScoreDisplay() {
         if (this.displayBenis) {
             p.shouldShowScore = () => {
@@ -84,7 +85,7 @@ export default class WidescreenMode {
             {
                 id: 'display_benis_until_top',
                 title: 'Benis bis beliebt anzeigen',
-                description: 'Zeigt an, wie viel Benis ungefähr bis beliebt fehlt. (Nur mit Benisbar möglich)'
+                description: 'Zeigt an, wie viel Benis ungefähr bis beliebt fehlt. (Nur mit Benisleiste möglich)'
             },
             {
                 id: 'display_benis',
@@ -107,10 +108,20 @@ export default class WidescreenMode {
                 description: 'Zeigt die Benisverteilung als Leiste an.'
             },
             {
+                id: 'bigger_stream_nav_icons',
+                title: 'Post-Navigationslinks vergrößern',
+                description: 'Vergrößert die Links um zum nächsten/vorherigen Post zu kommen.'
+            },
+            {
                 id: 'scroll_speed',
                 title: 'Scrollgeschwindigkeit',
                 description: 'Definiere, wie schnell im Zoom gescrollt werden soll.',
                 type: 'number'
+            },
+            {
+                id: 'comments_left',
+                title: 'Kommentare auf der linken Seite',
+                description: 'Wenn deaktiviert werden Kommentare auf der rechten Seite des Bildschirms angezeigt.',
             },
         ];
     }
@@ -205,6 +216,15 @@ export default class WidescreenMode {
 
                 _this.addItemListener(this.$image, itemData);
                 document.body.classList.add('fixed');
+
+                if(_this.biggerStreamNavIcons) {
+                    document.getElementsByClassName('stream-prev-icon')[0].classList.add('stream-prev-icon-xl');
+                    document.getElementsByClassName('stream-next-icon')[0].classList.add('stream-next-icon-xl');
+                }
+
+                if(!_this.commentsLeft) {
+                    document.getElementsByClassName('item-container-content')[0].classList.add('right');
+                }
             },
             remove: function () {
                 this.parent();
