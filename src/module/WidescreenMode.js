@@ -110,7 +110,7 @@ export default class WidescreenMode {
             {
                 id: 'bigger_stream_nav_icons',
                 title: 'Post-Navigationslinks vergrößern',
-                description: 'Vergrößert die Links um zum nächsten/vorherigen Post zu kommen.'
+                description: 'Vergrößert die Links um zum nächsten/vorherigen Post zu kommen. (Nur ohne pr0mium)'
             },
             {
                 id: 'scroll_speed',
@@ -218,8 +218,14 @@ export default class WidescreenMode {
                 document.body.classList.add('fixed');
 
                 if(_this.biggerStreamNavIcons) {
-                    document.getElementsByClassName('stream-prev-icon')[0].classList.add('stream-prev-icon-xl');
-                    document.getElementsByClassName('stream-next-icon')[0].classList.add('stream-next-icon-xl');
+                    let prev = document.getElementsByClassName('stream-prev-icon')[0];
+                    let next = document.getElementsByClassName('stream-next-icon')[0];
+
+                    if(prev !== undefined)
+                        prev.classList.add('stream-prev-icon-xl');
+
+                    if(next !== undefined)
+                        next.classList.add('stream-next-icon-xl');
                 }
 
                 if(!_this.commentsLeft) {
