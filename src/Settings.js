@@ -74,12 +74,8 @@ export default class Settings {
     }
 
 
-    static getVersion(getBeta) {
+    static getVersion() {
         let url = 'https://github.com/Scarwolf/p0weruser/raw/master/package.json';
-
-        if (getBeta) {
-            url = 'https://github.com/Scarwolf/p0weruser/raw/develop/package.json';
-        }
 
         return new Promise((resolve, reject) => {
             GM_xmlhttpRequest({
@@ -253,15 +249,11 @@ export default class Settings {
         let elems = {
             installed: document.getElementById('installed_version'),
             release: document.getElementById('release_version'),
-            beta: document.querySelectorAll('#beta_version > span')[0]
         };
 
         elems.installed.innerText = GM_info.script.version;
         Settings.getVersion(false).then((version) => {
             elems.release.innerText = version;
-        });
-        Settings.getVersion(true).then((version) => {
-            elems.beta.innerText = version;
         });
     }
 }
