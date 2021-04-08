@@ -96,16 +96,23 @@ export default class Rep0st {
                 this.visible = true;
                 this.loader.remove();
                 result.html($(res.responseText));
-                const images = result.find('.result-list a');
+                const images = result.find('.search-results a');
 
                 let currentPostId = this.getCurrentPostId();
                 for (let i = 1; i < images.length; i++) {
                     let postId = parseInt(images[i].href.replace('pr0gramm', '').replace(/\D/g,''));
 
                     if(currentPostId !== postId) {
+                        let childrenList = images[i].children[0];
+
+                        let postUrl = images[i].href;
+                        let probability = childrenList.children[0].innerHTML;
+                        let imgSrc = childrenList.children[1].src;
+
                         output.push({
-                            url: images[i].href,
-                            img: images[i].style.backgroundImage.match(/\(([^)]+)\)/)[1]
+                            url: postUrl,
+                            img: imgSrc,
+                            probability: probability,
                         });
                     }
                 }
@@ -126,8 +133,11 @@ export default class Rep0st {
         bar = bar.find('.simplebar-content');
 
         for (let i = 0; i < urls.length; i++) {
-            let container = bar.append($(`<a href=${urls[i].url} target="_blank"><img src=${urls[i].img} class="rep0st-thumb" /><span title="Als Repost markieren" class="fa fa-comment"></span></a>`));
-            let comment = container.find(`img[src=${urls[i].img}] + span`)[0];
+            let probabilityContainer = `<div class="probability">${urls[i].probability}</div>`;
+
+            let container = bar.append($(`<a href=${urls[i].url} target="_blank"><img src=${urls[i].img} class="rep0st-thumb" />${probabilityContainer}<span title="Als Repost markieren" class="fa fa-comment"></span></a>`));
+
+            let comment = container.find(`img[src='${urls[i].img}'] + span`)[0];
 
             comment.addEventListener('click', (e) => {
                 e.preventDefault();
