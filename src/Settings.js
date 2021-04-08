@@ -252,7 +252,7 @@ export default class Settings {
         };
 
         elems.installed.innerText = GM_info.script.version;
-        Settings.getVersion(false).then((version) => {
+        Settings.getVersion().then((version) => {
             elems.release.innerText = version;
         });
     }
