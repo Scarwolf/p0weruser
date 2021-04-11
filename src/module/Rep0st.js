@@ -137,7 +137,7 @@ export default class Rep0st {
 
             let container = bar.append($(`<a href=${urls[i].url} target="_blank"><img src=${urls[i].img} class="rep0st-thumb" />${probabilityContainer}<span title="Als Repost markieren" class="fa fa-comment"></span></a>`));
 
-            let comment = container.find(`img[src='${urls[i].img}'] + span`)[0];
+            let comment = container.find(`a[href='${urls[i].url}'] > .fa.fa-comment`)[0];
 
             comment.addEventListener('click', (e) => {
                 e.preventDefault();
