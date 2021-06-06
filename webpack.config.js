@@ -23,7 +23,7 @@ module.exports = {
                 connect: ['rep0st.rene8888.at', 'github.com', 'raw.githubusercontent.com', 'pr0gramm.com', 'pr0p0ll.com'],
                 'run-at': 'document-end',
                 grant: ['GM_notification', 'GM_xmlhttpRequest'],
-                require: 'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js',
+                require: ['https://code.jquery.com/ui/1.12.1/jquery-ui.min.js'],
                 updateURL: 'https://scarwolf.github.io/p0weruser/p0weruser.user.js'
             },
             metajs: false

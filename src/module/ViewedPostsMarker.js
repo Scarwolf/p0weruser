@@ -14,8 +14,8 @@ export default class ViewedPostsMarker {
         this.viewedPosts = ViewedPostsMarker.getViewedPosts();
 
         $(document).ajaxComplete((event, request, settings) => {
-            for (let i = 0; i < this.viewedPosts.length; i++) {
-                ViewedPostsMarker.markAsViewed(this.viewedPosts[i]);
+            for (let post of this.viewedPosts) {
+                ViewedPostsMarker.markAsViewed(post);
             }
         });
 
@@ -24,6 +24,15 @@ export default class ViewedPostsMarker {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
 
                 _this.addViewedPost(itemData.id);
+            }
+        });
+
+        //TODO: Async
+        window.addEventListener('storage', () => {
+            const newIds = ViewedPostsMarker.getViewedPosts().filter((item) => this.viewedPosts.indexOf(item) < 0);
+            this.viewedPosts.push(...newIds);
+            for (let post of newIds) {
+                ViewedPostsMarker.markAsViewed(post);
             }
         });
 

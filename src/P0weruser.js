@@ -16,6 +16,7 @@ import Rep0st from './module/Rep0st';
 import ImageOCR from './module/ImageOCR';
 import AnonymousTitle from './module/AnonymousTitle';
 import StatisticsLinkInNavbar from './module/StatisticsLinkInNavbar';
+import { AppSyncViewedPosts } from './module/SyncViewedPosts';
 
 export default class P0weruser {
     constructor() {
@@ -89,6 +90,7 @@ export default class P0weruser {
                 'ImageOCR': new ImageOCR(),
                 'Pr0p0ll': new Pr0p0ll(),
                 'ViewedPostsMarker': new ViewedPostsMarker(),
+                'SyncViewedPosts': new AppSyncViewedPosts(),
                 'Chat': new Chat(),
                 'AnonymousTitle': new AnonymousTitle(),
                 'StatisticsLinkInNavbar': new StatisticsLinkInNavbar(),
