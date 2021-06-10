@@ -14,7 +14,7 @@
     "version": "1.7.2",
     "license": "GPL-3.0",
     "dependencies": {
-        "chart.js": "^2.9.3",
+        "chart.js": "^2.9.4",
         "core-js": "^2.6.11",
         "moment": "^2.25.3",
         "simplebar": "^2.6.1",
