@@ -1,0 +1,134 @@
+#inbox-link {
+  position: relative;
+
+  &.active {
+    color: var(--theme-main-color);
+  }
+}
+
+#notification-center {
+  display: none;
+  position: fixed;
+  right: 20px;
+  top: 52px;
+  z-index: 100;
+  border: 3px solid #2a2e31;
+  background-color: #161618;
+  box-shadow: 2px 0 10px #000;
+  min-width: 300px;
+  max-height: 50vh;
+  flex-direction: column;
+
+  &.visible {
+    display: flex;
+  }
+
+  > div {
+    padding: 10px;
+    text-align: center;
+    border-top: 1px solid #252525;
+  }
+
+  #new-messages {
+    padding-left: 10px;
+    margin: 0;
+
+    &.loading {
+      text-align: center;
+      justify-content: center;
+      padding: 10px;
+
+      .fa-spin {
+        font-size: 24px;
+      }
+    }
+
+    .simplebar-scrollbar {
+      background: #2a2e31;
+      right: 0;
+      border-radius: 0;
+
+      &.visible {
+        opacity: 1;
+      }
+    }
+
+    li {
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      opacity: .5;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid #252525;
+      }
+
+      &:hover {
+        opacity: 1;
+
+        .headline {
+          color: var(--theme-main-color);
+        }
+      }
+
+      &.new {
+        opacity: 1;
+
+        .message:before {
+          content: '\f0e0';
+        }
+      }
+
+      &.no-notifications {
+        text-align: center;
+        width: 100%;
+        padding: 10px;
+      }
+
+      .headline {
+        color: #fff;
+        font-weight: bold;
+      }
+
+      .comment-thumb {
+        height: 42px;
+        width: 42px;
+      }
+
+      .content {
+        padding: 10px;
+        flex-grow: 1;
+
+        small {
+          display: block;
+          font-size: 12px;
+          font-weight: normal;
+          color: #666;
+        }
+
+        .time {
+          float: right;
+        }
+
+        .text {
+          text-overflow: ellipsis;
+          max-width: 200px;
+          color: #666;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+
+        span {
+          font-size: 12px;
+        }
+      }
+
+      .message {
+        width: 42px;
+        margin-left: 4px;
+        font-size: 34px;
+        margin-right: -4px;
+      }
+    }
+  }
+}
