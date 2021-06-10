@@ -19,6 +19,7 @@ export default class WidescreenMode {
         this.displayBenisUntilTop = Settings.get("WidescreenMode.settings.display_benis_until_top");
         this.biggerStreamNavIcons = Settings.get("WidescreenMode.settings.bigger_stream_nav_icons");
         this.commentsLeft = Settings.get("WidescreenMode.settings.comments_left");
+        this.logoLinksToNew = Settings.get('WidescreenMode.settings.logo_links_to_new');
     }
 
 
@@ -68,7 +69,10 @@ export default class WidescreenMode {
         this.addHeaderListener();
         this.overrideViews();
         this.addNavigation();
-        this.modifyLogo();
+
+        if(this.logoLinksToNew) {
+            this.modifyLogo();
+        }
     }
 
     checkScoreDisplay() {
@@ -122,6 +126,11 @@ export default class WidescreenMode {
                 id: 'comments_left',
                 title: 'Kommentare auf der linken Seite',
                 description: 'Wenn deaktiviert werden Kommentare auf der rechten Seite des Bildschirms angezeigt.',
+            },
+            {
+                id: 'logo_links_to_new',
+                title: 'Logo-Verlinkung auf Neu',
+                description: 'Wenn aktiviert bringt dich ein Klick auf das pr0gramm Logo nach /new statt /top.'
             },
         ];
     }
