@@ -1,5 +1,6 @@
 import Settings from '../Settings';
 import Utils from '../Utils';
+import { inflate, deflate } from "pako";
 
 export default class ViewedPostsMarker {
     constructor() {
@@ -124,5 +125,99 @@ export default class ViewedPostsMarker {
 
         // If the current request would retrieve any of the users collection
         return queryParams.has("collection") && queryParams.get("user") === name;
+    }
+
+    /**
+     * Converts an array of post ids into a bitmap
+     * @param {number[]} posts 
+     * @returns {Promise<Uint8Array>}
+     */
+    arrayToBitmap(posts) {
+        return new Promise((resolve) => {
+            const seenBits = new Uint8Array(10000000 / 8).fill(0);
+            posts.forEach(post => {
+                const idx = Math.trunc(post / 8)
+                if(idx < 0 || idx >= seenBits.length) {
+                    return;
+                }
+                const value = seenBits[idx];
+                const update = value | (1 << (7 - post % 8));
+                seenBits[idx] = update;
+            });
+            resolve(seenBits);
+        });
+    }   
+
+    /**
+     * Compress the bitmap using deflate algorithm
+     * @param {Uint8Array} bitmap 
+     * @returns {Promise<Uint8Array>} 
+     */
+    compressBitmap(bitmap) {
+        return deflate(bitmap, { level: 9 });
+    }
+
+    /**
+     * Decrompresses the bitmap using the Inflate Algorithm.
+     * @param {Uint8Array} bitmap
+     * @returns {Promise<Uint8Array>}
+     */
+    decompressBitmap(bitmap) {
+        return new Promise((resolve, reject) => {
+            const decompressed = inflate(bitmap, { level: 9 });
+            resolve(decompressed);
+        });
+    }
+
+    /**
+     * Parses the Uint8Array and decode it into post IDs
+     * @param {Uint8Array} bytes
+     * @returns {Promise<number[]>} 
+     */
+    getViewedPostIds(bytes) {
+        return new Promise((resolve) => {
+            let arr = []
+            bytes.forEach((byte , index) => {
+                arr.push(this.getViewedPostIdsFromByte(byte, index))
+            });
+            resolve(arr.flat().filter(n => n !== 0));
+        });
+    }
+
+    /**
+     * Decodes a single byte representation into the according post IDs
+     * @param {number} byte 
+     * @param {number} index
+     * @returns {number[]}
+     */
+    getViewedPostIdsFromByte(byte, index) {   
+        let arr = []
+
+        /*
+         * Example: 
+         *   Byte: 0xB3 (10110011)
+         *   Index: 3
+         * 
+         * | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | Index |
+         * |---|---|---|---|---|---|---|---|-------|
+         * | 1 | 0 | 1 | 1 | 0 | 0 | 1 | 1 |   3   |
+         * 
+         * Contains the follwing post IDs:
+         *   - 16 (seen)
+         *   - 17 
+         *   - 18 (seen)
+         *   - 19 (seen)
+         *   - 20
+         *   - 21
+         *   - 22 (seen)
+         *   - 23 (seen)
+         */
+        for(let i = 0; i < 8; i++) {
+            if((byte & (1 << i)) !== 0) {
+                arr.push((7 - i) + 8 * index)
+            }
+        }
+
+        return arr;
     }
 }
