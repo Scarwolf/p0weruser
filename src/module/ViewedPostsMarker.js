@@ -20,10 +20,16 @@ export default class ViewedPostsMarker {
              * it should be fired. This is the case for every event which accesses items.
              */
             if(settings.url.startsWith('/api/items/get')) {
-                if(this.markOwnFavoritesAsViewed || !(await this.wouldLoadUserCollection(settings.url))) {   
-                    this.viewedPosts.forEach(post => {
-                        ViewedPostsMarker.markAsViewed(post);
-                    });
+                if(this.markOwnFavoritesAsViewed || !(await this.wouldLoadUserCollection(settings.url))) {
+                    if(request.responseJSON.items.length > 0) {
+                        const loadedItems = request.responseJSON.items.map(item => item.id);
+                        
+                        // Intersect loaded and viewed items
+                        loadedItems.filter(item => this.viewedPosts.includes(item))
+                            .forEach(post => {
+                                ViewedPostsMarker.markAsViewed(post);
+                            });
+                    }
                 }
             }
         });
