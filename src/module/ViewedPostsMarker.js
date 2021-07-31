@@ -10,7 +10,7 @@ export default class ViewedPostsMarker {
     }
 
     load() {
-        let _this = this;
+        const _this = this;
         this.styles = require('../style/viewedPostsMarker.less');
         this.viewedPosts = ViewedPostsMarker.getViewedPosts();
 
@@ -47,7 +47,7 @@ export default class ViewedPostsMarker {
     }
 
     static markAsViewed(id) {
-        let elem = document.getElementById('item-' + id);
+        const elem = document.getElementById('item-' + id);
 
         if (elem) {
             elem.classList.add('viewed');
@@ -55,7 +55,7 @@ export default class ViewedPostsMarker {
     }
 
     static getViewedPosts() {
-        let posts = Settings.get('viewed_posts');
+        const posts = Settings.get('viewed_posts');
 
         if (posts === true) {
             return [];
