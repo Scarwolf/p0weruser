@@ -11,10 +11,17 @@ export default class ViewedPostsMarker {
     }
 
     load() {
-        const _this = this;
         this.styles = require('../style/viewedPostsMarker.less');
-        this.viewedPosts = ViewedPostsMarker.getViewedPosts();
+        this.getViewedPosts()
+            .then(arr => {
+                console.log(arr);
+                this.viewedPosts = arr
+                this.loadViewedPosts();
+            });
+    }
 
+    loadViewedPosts() {
+        const _this = this;
         // TODO: Fire event only once
         $(document).ajaxComplete(async (event, request, settings) => {
             /* Since this is a global event handler for every ajax we need to specify on which event 
@@ -28,7 +35,7 @@ export default class ViewedPostsMarker {
                         // Intersect loaded and viewed items
                         loadedItems.filter(item => this.viewedPosts.includes(item))
                             .forEach(post => {
-                                ViewedPostsMarker.markAsViewed(post);
+                                this.markAsViewed(post);
                             });
                     }
                 }
@@ -40,6 +47,7 @@ export default class ViewedPostsMarker {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
 
                 _this.addViewedPost(itemData.id);
+                _this.markAsViewed(itemData.id);
             }
         });
 
@@ -47,7 +55,11 @@ export default class ViewedPostsMarker {
         Utils.addVideoConstants();
     }
 
-    static markAsViewed(id) {
+    /**
+     * 
+     * @param {number} id 
+     */
+    markAsViewed(id) {
         const elem = document.getElementById('item-' + id);
 
         if (elem) {
@@ -55,14 +67,28 @@ export default class ViewedPostsMarker {
         }
     }
 
-    static getViewedPosts() {
+    /**
+     * 
+     * @returns {Promise<number[]>}
+     */
+    async getViewedPosts() {
         const posts = Settings.get('viewed_posts');
 
         if (posts === true) {
             return [];
         }
 
-        return JSON.parse(posts);
+        const parsed = JSON.parse(posts);
+
+        // If array is loaded, it is the old implementation (using array of post numbers)
+        // -> convert it into a Uint8Array
+        if(Array.isArray(parsed)) {
+            return parsed;
+        }
+        if(parsed.type === "bitmap") {
+            const bitmap = Uint8Array.from(atob(parsed.value), c => c.charCodeAt(0))
+            return this.getViewedPostIds(await this.decompressBitmap(bitmap));
+        }
     }
 
     getSettings() {
@@ -75,16 +101,25 @@ export default class ViewedPostsMarker {
         ];
     }
 
-    addViewedPost(id) {
-        if (this.viewedPosts.length >= 10000) {
-            this.viewedPosts = this.viewedPosts.slice(-10000);
-        }
-
+    /**
+     * @param {number} id
+     * @returns {Promise<void>}
+     */
+    async addViewedPost(id) {
         if (this.viewedPosts.indexOf(id) === -1) {
             this.viewedPosts.push(id);
         }
 
-        Settings.set('viewed_posts', JSON.stringify(this.viewedPosts));
+        // TODO: Don't do that for each ID, maybe a interval?
+        const bitmap = await this.arrayToBitmap(this.viewedPosts);
+        const compressed = await this.compressBitmap(bitmap);
+
+        const viewedPostObj = {
+            type: "bitmap",
+            value: btoa(String.fromCharCode(...compressed))
+        }
+
+        Settings.set('viewed_posts', JSON.stringify(viewedPostObj));
     }
 
     /**
@@ -154,7 +189,10 @@ export default class ViewedPostsMarker {
      * @returns {Promise<Uint8Array>} 
      */
     compressBitmap(bitmap) {
-        return deflate(bitmap, { level: 9 });
+        return new Promise((resolve, reject) => {
+            const compressed = deflate(bitmap, { level: 9 });
+            resolve(compressed);
+        });
     }
 
     /**
