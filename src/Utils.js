@@ -35,10 +35,10 @@ export default class Utils {
         url = url.split('?');
         let params = url[1].split('&');
 
-        for (let i = 0; i < params.length; i++) {
-            let param = params[i].split('=');
-            result[param[0]] = param[1];
-        }
+        params.forEach(param => {
+            let p = param.split('=');
+            result[p[0]] = p[1];
+        });
 
         return {
             url: url[0],

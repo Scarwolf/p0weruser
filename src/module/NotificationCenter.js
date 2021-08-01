@@ -79,32 +79,32 @@ export default class NotificationCenter {
                 return false;
             }
 
-            for (let i = 0; i < messages.length; i++) {
+            messages.forEach(message => {
                 this.addEntry(NotificationCenter.getTitle(
-                    messages[i]),
-                    messages[i].name,
-                    messages[i].created,
-                    messages[i].thumb,
-                    messages[i].mark,
-                    messages[i].itemId,
-                    messages[i].id,
-                    messages[i].message
+                    message),
+                    message.name,
+                    message.created,
+                    message.thumb,
+                    message.mark,
+                    message.itemId,
+                    message.id,
+                    message.message
                 );
-            }
-            new SimpleBar(this.messageContainer);
+            });
+            new SimpleBar(this.messageContainer); // NOSONAR
 
-            this.getNotifications(false).then((notifications) => {
-                let messages = notifications.messages;
+            this.getNotifications(false).then((notifications2) => {
+                let messages2 = notifications2.messages;
 
-                if (messages.length <= 0) {
+                if (messages2.length <= 0) {
                     return false;
                 }
 
-                for (let i = 0; i < messages.length; i++) {
-                    let element = $(this.messageContainer).find(`#notification-${messages[i].id}`)[0];
+                messages2.forEach(message => {
+                    let element = $(this.messageContainer).find(`#notification-${message.id}`)[0];
                     if(element !== undefined)
                         element.classList.add('new');
-                }
+                });
             });
         });
     }

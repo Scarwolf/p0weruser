@@ -92,8 +92,8 @@ export default class Pr0p0ll {
 
 
     addLinks(links) {
-        for (let i = 0; i < links.length; i++) {
-            const url = new URL(links[i].href);
+        links.forEach(link => {
+            const url = new URL(link.href);
             let icon = document.createElement('a');
             icon.className = 'fa fa-bar-chart pr0p0ll-link';
 
@@ -106,8 +106,8 @@ export default class Pr0p0ll {
                 this.showDiagramm(id);
             });
 
-            links[i].after(icon);
-        }
+            link.after(icon);
+        });
     }
 
 
@@ -139,8 +139,8 @@ export default class Pr0p0ll {
                     data: result
                 });
 
-                const diag = new Pr0p0llDiagramm(result);
-                new SimpleBar(document.getElementById('overlay-box'));
+                const diag = new Pr0p0llDiagramm(result); // NOSONAR
+                new SimpleBar(document.getElementById('overlay-box')); // NOSONAR
             },
             error => {
                 window.alert(error);

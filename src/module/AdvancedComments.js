@@ -41,7 +41,7 @@ export default class AdvancedComments {
 
             const comments = $('.comments .comment-box .comment');
             comments.tooltip();
-            for (let i = 0; i < comments.length; i++) {
+            comments.each(i => {
                 const container = $(comments[i]);
                 const comment = $(container.parents('.comment-box')[0]).prev('.comment');
                 const userHref = container.find('.comment-foot > a.user')[0].href;
@@ -62,7 +62,7 @@ export default class AdvancedComments {
                         AdvancedComments.handleMouseover(pId, elem);
                     });
                 }
-            }
+            });
         });
     }
 }

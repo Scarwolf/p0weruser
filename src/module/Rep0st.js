@@ -61,7 +61,7 @@ export default class Rep0st {
         bar.append(this.loader);
         container.find('.image-main').after(bar);
 
-        new SimpleBar(bar[0]);
+        new SimpleBar(bar[0]); // NOSONAR
 
         closeBtn[0].addEventListener('click', () => {
             this.visible = false;
@@ -132,17 +132,17 @@ export default class Rep0st {
     displayImages(bar, urls) {
         bar = bar.find('.simplebar-content');
 
-        for (let i = 0; i < urls.length; i++) {
-            let probabilityContainer = `<div class="probability">${urls[i].probability}</div>`;
+        urls.forEach(url => {
+            let probabilityContainer = `<div class="probability">${url.probability}</div>`;
 
-            let container = bar.append($(`<a href=${urls[i].url} target="_blank"><img src=${urls[i].img} class="rep0st-thumb" />${probabilityContainer}<span title="Als Repost markieren" class="fa fa-comment"></span></a>`));
+            let container = bar.append($(`<a href=${url.url} target="_blank"><img src=${url.img} class="rep0st-thumb" />${probabilityContainer}<span title="Als Repost markieren" class="fa fa-comment"></span></a>`));
 
-            let comment = container.find(`a[href='${urls[i].url}'] > .fa.fa-comment`)[0];
+            let commentContainer = container.find(`a[href='${url.url}'] > .fa.fa-comment`)[0];
 
-            comment.addEventListener('click', (e) => {
+            commentContainer.addEventListener('click', (e) => {
                 e.preventDefault();
                 let body = $(document.body);
-                const comment = `Re: ${urls[i].url}`;
+                const comment = `Re: ${url.url}`;
                 let commentField = body.find('.comment:not(.reply)');
                 let tagsForm = body.find('.tag-form');
 
@@ -151,6 +151,6 @@ export default class Rep0st {
                 tagsForm.find('.item-tagsinput')[0].value = 'repost';
                 tagsForm.find('input[type="submit"]').click();
             });
-        }
+        });
     }
 }

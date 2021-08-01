@@ -1,5 +1,4 @@
 import Settings from '../Settings';
-import Utils from '../Utils';
 
 export default class BenisInNavbar {
     constructor() {

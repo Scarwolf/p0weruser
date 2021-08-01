@@ -138,12 +138,12 @@ export default class WidescreenMode {
 
     addHeaderListener() {
         let headerLinks = document.querySelectorAll('#head-menu > a');
-        for (let i = 0; i < headerLinks.length; i++) {
-            $(headerLinks[i]).unbind('click');
-            headerLinks[i].addEventListener('click', e => {
+        headerLinks.forEach(headerLink => {
+            $(headerLink).unbind('click');
+            headerLink.addEventListener('click', e => {
                 e.preventDefault();
 
-                let href = headerLinks[i].attributes.href.nodeValue;
+                let href = headerLink.attributes.href.nodeValue;
                 if (href.charAt(0) === '/') {
                     href = href.slice(1);
                 }
@@ -154,7 +154,7 @@ export default class WidescreenMode {
                     p.navigateTo(href);
                 }
             });
-        }
+        });
     }
 
 
@@ -169,6 +169,7 @@ export default class WidescreenMode {
             });
 
             window.addEventListener('locationChange', (e) => {
+                console.log(e.origin);
                 if (e.mode === 0 || !e.isPost) {
                     document.body.classList.remove('fixed');
                 }
@@ -260,7 +261,7 @@ export default class WidescreenMode {
                 _this.commentsContainer[0].classList.toggle('wide', _this.commentsWide);
                 _this.commentsContainer[0].classList.toggle('closed', _this.commentsClosed);
                 _this.commentsContainer[0].classList.add('loaded');
-                new SimpleBar(this.$container[0]);
+                new SimpleBar(this.$container[0]); // NOSONAR
 
                 let commentSwitch = this.$container.find('.comments-switch')[0];
                 let commentsClose = this.$container.find('.comments-toggle')[0];
@@ -300,9 +301,7 @@ export default class WidescreenMode {
         p.View.Stream.Main.prototype.buildItemRows = function (items) {
             let result = '';
 
-            for (let i = 0; i < items.length; i++) {
-                result += this.buildItem(items[i]);
-            }
+            items.forEach(item => result += this.buildItem(item));
 
             return `<div class="item-row">${result}</div>`;
         };
@@ -388,11 +387,7 @@ export default class WidescreenMode {
 
     hasUnsentComments() {
         if (p.user.id) {
-            for (let i = 0; i < this.comments.length; i++) {
-                if (this.comments[i].value !== '') {
-                    return true;
-                }
-            }
+            return this.comments.some(comment => comment.value !== '');
         }
 
         return false;
@@ -432,11 +427,9 @@ export default class WidescreenMode {
             this.toggleNavigation();
         });
 
-        for (let i = 0; i < this.nav.links.length; i++) {
-            this.nav.links[i].addEventListener('click', () => {
+        this.nav.links.forEach(link => link.addEventListener('click', () => {
                 this.toggleNavigation();
-            });
-        }
+            }));
 
         // Init additional menuitems
         this.addMenuItem('pr0p0ll', 'https://pr0p0ll.com', ' fa-bar-chart');

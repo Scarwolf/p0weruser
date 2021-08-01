@@ -22,7 +22,7 @@ export default class Chat {
                 pane.css('height', `calc(100vh - ${top}px)`);
 
                 let cPane = pane.find('.conversations-pane');
-                let cScroll = new SimpleBar(cPane[0]);
+                new SimpleBar(cPane[0]); // NOSONAR
 
                 this.parent();
             }

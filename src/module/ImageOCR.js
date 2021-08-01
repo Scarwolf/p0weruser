@@ -74,7 +74,7 @@ export default class ImageOCR {
                     lang: 'deu'
                 }).then(result => {
                     this.togglePopup(result.text);
-                    new SimpleBar(this.popup);
+                    new SimpleBar(this.popup); // NOSONAR
                 }).catch(err => {
                     this.togglePopup();
                 });

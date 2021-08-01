@@ -29,9 +29,7 @@ export default class Settings {
         let actives = moduleList.querySelectorAll(':checked');
 
         // Get list of checked modules
-        for (let i = 0; i < actives.length; i++) {
-            result.push(actives[i].dataset.module);
-        }
+        actives.forEach(active => result.push(active.dataset.module));
         P0weruser.saveActivatedModules(result);
 
         Settings.saveModuleSettings();
@@ -43,20 +41,20 @@ export default class Settings {
     static saveModuleSettings() {
         const elements = document.querySelectorAll('#module-settings input');
 
-        for (let i = 0; i < elements.length; i++) {
-            switch (elements[i].type) {
+        elements.forEach(element => {
+            switch (element.type) {
                 case 'text':
-                    Settings.set(elements[i].id, elements[i].value);
+                    Settings.set(element.id, element.value);
                     break;
                 case 'number':
-                    Settings.set(elements[i].id, parseInt(elements[i].value) || 1);
+                    Settings.set(element.id, parseInt(element.value) || 1);
                     break;
                 case 'checkbox':
-                    console.log(elements[i]);
-                    Settings.set(elements[i].id, elements[i].checked);
+                    console.log(element);
+                    Settings.set(element.id, element.checked);
                     break;
             }
-        }
+        });
     }
 
 
@@ -181,8 +179,8 @@ export default class Settings {
         let wrapper = document.createElement('div');
         wrapper.id = 'module-settings';
 
-        for (let i = 0; i < activated.length; i++) {
-            let module = modules[activated[i]];
+        activated.forEach(active => {
+            let module = modules[active];
 
             if(typeof module === 'object') {
                 if (typeof module.getSettings === 'function') {
@@ -191,31 +189,31 @@ export default class Settings {
                     headline.innerText = module.name;
                     wrapper.append(headline);
 
-                    for (let i = 0; i < settings.length; i++) {
-                        const id = `${module.id}.settings.${settings[i].id}`;
+                    settings.forEach(setting => {
+                        const id = `${module.id}.settings.${setting.id}`;
                         let currentValue = Settings.get(id);
                         let container = document.createElement('div');
                         container.className = 'box-from-label';
 
-                        switch (settings[i].type) {
+                        switch (setting.type) {
                             case 'number':
                                 currentValue = (currentValue === true) ? 1 : currentValue;
-                                container.innerHTML = `<div class="text-type"><span class="title">${settings[i].title}</span><span class="description">${settings[i].description}</span><input id="${id}" type="number" value="${currentValue}" /></div>`;
+                                container.innerHTML = `<div class="text-type"><span class="title">${setting.title}</span><span class="description">${setting.description}</span><input id="${id}" type="number" value="${currentValue}" /></div>`;
                                 break;
                             case 'text':
                                 currentValue = (currentValue === true) ? '' : currentValue;
-                                container.innerHTML = `<div class="text-type"><span class="title">${settings[i].title}</span><span class="description">${settings[i].description}</span><input id="${id}" type="text" value="${currentValue}" /></div>`;
+                                container.innerHTML = `<div class="text-type"><span class="title">${setting.title}</span><span class="description">${setting.description}</span><input id="${id}" type="text" value="${currentValue}" /></div>`;
                                 break;
                             default:
-                                container.innerHTML = `<input id="${id}" type="${settings[i].type ? settings[i].type : 'checkbox'}" class="box-from-label" ${currentValue ? 'checked' : ''} /><label for="${id}">${settings[i].title}<span>${settings[i].description}</span></label>`;
+                                container.innerHTML = `<input id="${id}" type="${setting.type ? setting.type : 'checkbox'}" class="box-from-label" ${currentValue ? 'checked' : ''} /><label for="${id}">${setting.title}<span>${setting.description}</span></label>`;
                                 break;
                         }
 
                         headline.after(container);
-                    }
+                    });
                 }
             }
-        }
+        });
 
         beforeElement.after(wrapper);
     }
