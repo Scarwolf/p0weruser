@@ -15,12 +15,12 @@ export default class ViewedPostsMarker {
         this.viewedPosts = ViewedPostsMarker.getViewedPosts();
 
         // TODO: Fire event only once
-        $(document).ajaxComplete(async (event, request, settings) => {
+        $(document).ajaxComplete((event, request, settings) => {
             /* Since this is a global event handler for every ajax we need to specify on which event 
              * it should be fired. This is the case for every event which accesses items.
              */
             if(settings.url.startsWith('/api/items/get')) {
-                if(this.markOwnFavoritesAsViewed || !(await this.wouldLoadUserCollection(settings.url))) {   
+                if(this.markOwnFavoritesAsViewed || !(this.wouldLoadUserCollection(settings.url))) {   
                     this.viewedPosts.forEach(post => {
                         ViewedPostsMarker.markAsViewed(post);
                     });
@@ -85,7 +85,7 @@ export default class ViewedPostsMarker {
      * @param {string} url API Request URL
      * @returns {boolean}
      */
-    async wouldLoadUserCollection(url) {
+    wouldLoadUserCollection(url) {
         const name = p.user.name;
         const queryParams = new URLSearchParams(url);
 
