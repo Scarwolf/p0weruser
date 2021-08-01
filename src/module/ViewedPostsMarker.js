@@ -81,39 +81,12 @@ export default class ViewedPostsMarker {
     }
 
     /**
-     * Retrieves the current logged in username by accessing the API
-     * @returns {Promise<string>}
-     */
-    getLoggedInUserName() {
-        return new Promise((resolve, reject) => {
-            GM_xmlhttpRequest({
-                method: "GET",
-                url: "https://pr0gramm.com/api/user/name",
-                headers: {
-                    Accept: "application/json"
-                },
-                onerror: (/**@type {Response}*/err) => {
-                    reject(err);
-                },
-                onload: (/**@type {Response}*/res) => {
-                    let body = JSON.parse(res.response);
-                    let name = body.name;
-                    if(name) {
-                        resolve(name);
-                    }
-                    reject('Name not found')
-                }
-            })
-        });
-    }
-
-    /**
      * Checks any url whether this url would load any of the logged in users collection
      * @param {string} url API Request URL
      * @returns {boolean}
      */
     async wouldLoadUserCollection(url) {
-        const name = await this.getLoggedInUserName();
+        const name = p.user.name;
         const queryParams = new URLSearchParams(url);
 
         // If the current request would retrieve any of the users collection
