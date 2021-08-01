@@ -3,16 +3,34 @@ import Utils from '../Utils';
 
 /**
  * @typedef {{
- *   type: "message" | "comment" | "notifcation",
+ *   blocked: number,
+ *   collection?: unknown,
+ *   flags: number,
  *   id: number,
- *   name: string,
- *   itemId?: number,
  *   image?: unknown,
- *   thumb?: string,
- *   created: number,
+ *   itemId?: number,
+ *   keyword?: unknown,
  *   mark: number,
  *   message: string
+ *   name: string, 
+ *   owner?: unknown,
+ *   ownerMark?: unknwon
+ *   read: number,
+ *   score: number,
+ *   senderId: number,
+ *   thumb?: string
+ *   type: "message" | "comment" | "notifcation"
  * }} Message
+ */
+
+/**
+ * @typedef {{
+ *   mark: number,
+ *   name: string,
+ *   lastMessage: number,
+ *   unreadCount: number,
+ *   blocked: number
+ * }} Conversation
  */
 
 export default class NotificationCenter {
@@ -51,13 +69,15 @@ export default class NotificationCenter {
 
 
     addListener() {
-        this.icon.unbind('click');
+        this.icon.off('click');
+        // Click on icon -> opens Menu
         this.icon[0].addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
             this.toggleMenu();
         });
 
+        // Click elsewhere -> closes Menu
         window.addEventListener('click', (e) => {
             if (this.menuOpen) {
                 if (!$(e.target).parents('#notification-center')[0]) {
@@ -73,16 +93,22 @@ export default class NotificationCenter {
         this.menuOpen = !this.menuOpen;
         this.icon[0].classList.toggle('active');
         this.elem.classList.toggle('visible');
+
+        // Set Loading indicator
         this.messageContainer.innerHTML = '<span class="fa fa-spinner fa-spin"></span>';
         this.messageContainer.classList.add('loading');
 
-        this.getNotifications(true).then((notifications) => {
+        // Get dem notifications
+        this.getInbox().then((notifications) => {
             /** @type {Message[]} */
             const messages = notifications.messages;
-            let unreadMessages = messages.filter(message => !message.read).length;
+            let unreadMessages = messages.filter(message => !message.read);
 
             this.messageContainer.innerHTML = '';
+            
+            // Rmove da loading
             this.messageContainer.classList.remove('loading');
+            
             p.user.setInboxLink({
                 notifications: 0,
                 mentions: 0,
@@ -91,6 +117,7 @@ export default class NotificationCenter {
                 follows: 0
             });
 
+            // If no unread messages are present
             if (unreadMessages.length <= 0) {
                 let elem = document.createElement('li');
                 elem.innerText = 'Keine neuen Benachrichtigungen!';
@@ -99,6 +126,7 @@ export default class NotificationCenter {
                 return false;
             }
 
+            // Add messages to notification center
             messages.forEach(message => {
                 this.addEntry(NotificationCenter.getTitle(
                     message),
@@ -113,30 +141,39 @@ export default class NotificationCenter {
             });
             new SimpleBar(this.messageContainer); // NOSONAR
 
-            this.getNotifications(false).then((notifications2) => {
-                let messages2 = notifications2.messages;
+            this.getConversations().then((conversation) => {
+                let conversations = conversation.conversations;
 
-                if (messages2 && messages2.length <= 0) {
+                if (conversations && conversations.length <= 0) {
                     return false;
                 }
-
-                messages2.forEach(message => {
-                    let element = $(this.messageContainer).find(`#notification-${message.id}`)[0];
+                /* TODO: No ID is present on conversations, what shall we do?
+                conversations.forEach(conv => {
+                    let element = $(this.messageContainer).find(`#notification-${conv.id}`)[0];
                     if(element !== undefined)
                         element.classList.add('new');
-                });
+                }); */
             });
         });
     }
 
     /**
-     * @param {boolean} all 
-     * @returns {Promise<unknown>}
+     * @returns {Promise<{
+     *   messages: Message[]
+     * }>}
      */
-    getNotifications(all = false) {
-        return new Promise((resolve, reject) => {
-            p.api.get(all ? 'inbox.all' : 'inbox.conversations', {}, resolve, reject);
-        });
+    getInbox() {
+        return new Promise((resolve, reject) => p.api.get('inbox.all', {}, resolve, reject));
+    }
+
+    /**
+     * 
+     * @returns {Promise<{
+     *   conversations: Conversation[]
+     * }>}
+     */
+    getConversations() {
+        return new Promise((resolve, reject) => p.api.get('inbox.conversations', {}, resolve, reject));
     }
 
 

@@ -67,14 +67,18 @@ export default class P0weruser {
     }
 
 
+    /**
+     * Add Styles to the DOM
+     */
     static addStyles() {
-        // FontAwesome (Icons)
+        // Add FontAwesome Icons
         let fa = document.createElement('link');
         fa.type = 'text/css';
         fa.rel = 'stylesheet';
         fa.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css';
         document.getElementsByTagName('head')[0].appendChild(fa);
 
+        // Add Simplebar style
         let scrollbar = document.createElement('style');
         scrollbar.innerText = scrollbarCSS;
         document.getElementsByTagName('head')[0].appendChild(scrollbar);
@@ -88,16 +92,16 @@ export default class P0weruser {
 
         if (!modules) {
             window.localStorage.setItem('activated_modules', '[]');
-            modules = '[]';
-        }
-
-        if (modules === '[]') {
             Settings.addHint();
+            return [];
         }
 
         return JSON.parse(modules);
     }
 
+    /**
+     * @param {string[]} selection 
+     */
     static saveActivatedModules(selection) {
         window.localStorage.setItem('activated_modules', JSON.stringify(selection));
     }
@@ -107,9 +111,10 @@ export default class P0weruser {
         let activated = P0weruser.getActivatedModules();
 
         activated.forEach(module => {
-            if(typeof this.modules[module] === 'object')
+            if(typeof this.modules[module] === 'object' && typeof this.modules[module].load === 'function') {
                 this.modules[module].load();
-            console.debug(`Loaded module: ${module}`);
+                console.debug(`Loaded module: ${module}`);
+            }
         });
     }
 

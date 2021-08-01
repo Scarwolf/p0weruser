@@ -33,6 +33,7 @@ export default class AnonymousTitle {
 
 
     changeTitle() {
+        // If a custom title is present (weird false check tho)
         if (this.customTitle !== true && this.customTitle !== '') {
             document.title = p.user.inboxCount > 0 ? '[' + p.user.inboxCount + '] ' + this.customTitle : this.customTitle;
         } else {

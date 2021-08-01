@@ -48,6 +48,7 @@ export default class BenisInNavbar {
 
 
     addListener() {
+        // If the benis is updated due to a sync
         window.addEventListener('userSync', (e) => {
             this.benis = e.data.score;
 
