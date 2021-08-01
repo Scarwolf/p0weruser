@@ -39,6 +39,9 @@ export default class ViewedPostsMarker {
         }
     }
 
+    /**
+     * @returns {number[]}
+     */
     static getViewedPosts() {
         let posts = Settings.get('viewed_posts');
 
@@ -49,6 +52,9 @@ export default class ViewedPostsMarker {
         return JSON.parse(posts);
     }
 
+    /**
+     * @param {number} id 
+     */
     addViewedPost(id) {
         if (this.viewedPosts.length >= 10000) {
             this.viewedPosts = this.viewedPosts.slice(-10000);

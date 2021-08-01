@@ -21,7 +21,9 @@ export default class AdvancedComments {
         this.prepareComments();
     }
 
-
+    /**
+     * @returns {import("../P0weruser.js").P0weruserSetting[]}
+     */
     getSettings() {
         return [
             {

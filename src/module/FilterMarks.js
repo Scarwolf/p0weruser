@@ -24,6 +24,11 @@ export default class FilterMarks {
     }
 
 
+    /**
+     * 
+     * @param {import("../P0weruser.js").ItemData} itemData 
+     * @returns {string}
+     */
     static getFilter(itemData) {
         switch (itemData.flags) {
             case 1:
@@ -38,6 +43,9 @@ export default class FilterMarks {
     }
 
 
+    /**
+     * @returns {import("../P0weruser.js").P0weruserSetting[]}
+     */
     getSettings() {
         return [
             {

@@ -23,6 +23,11 @@ export default class WidescreenMode {
     }
 
 
+    /**
+     * 
+     * @param {WheelEvent} e 
+     * @returns {void | false}
+     */
     handleWheelChange(e) {
         if (this.isMoveable) {
             this.img.animate({
@@ -83,7 +88,9 @@ export default class WidescreenMode {
         }
     }
 
-
+    /**
+     * @returns {import("../P0weruser.js").P0weruserSetting[]}
+     */
     getSettings() {
         return [
             {
@@ -202,7 +209,7 @@ export default class WidescreenMode {
 
         p.View.Stream.Item = p.View.Stream.Item.extend({
             template: require('../template/streamItem.html'),
-            show: function (rowIndex, itemData, defaultHeight, jumpToComment, cacheBust) {
+            show: function (rowIndex, /** @type {import("../P0weruser.js").ItemData} */itemData, defaultHeight, jumpToComment, cacheBust) {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment, cacheBust);
                 this.syncVotes(p.user.voteCache.votes);
 
@@ -307,10 +314,21 @@ export default class WidescreenMode {
         };
     }
 
+    /**
+     * @param {number} up 
+     * @param {number} down 
+     * @param {number} date 
+     * @returns {number}
+     */
     calculateBenisUntilTop(up, down, date) {
         return Math.ceil(7.2857 * down + ((date.getHours() >= 22 || date.getHours() <= 6) ? 15 : 16) - up);
     }
 
+    /**
+     * 
+     * @param {HTMLImageElement} image 
+     * @param {import("../P0weruser.js").ItemData} itemData 
+     */
     addItemListener(image, itemData) {
         this.img = image;
         this.container = this.img[0].parentNode;
@@ -349,6 +367,11 @@ export default class WidescreenMode {
     }
 
 
+    /**
+     * @param {KeyboardEvent} e 
+     * @param {boolean} isInput 
+     * @returns {true | void}
+     */
     handleKeypress(e, isInput = false) {
         if (isInput) {
             if (event.ctrlKey && e.code === 'Enter') {
@@ -385,6 +408,9 @@ export default class WidescreenMode {
     }
 
 
+    /**
+     * @returns {boolean}
+     */
     hasUnsentComments() {
         if (p.user.id) {
             return this.comments.some(comment => comment.value !== '');

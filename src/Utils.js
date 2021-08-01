@@ -1,6 +1,21 @@
+/**
+ * @typedef {{
+ *   url: string,
+ *   params: Record<string, string>
+ * }} URLParams
+ */
+
+/**
+ * Utilities
+ */
 export default class Utils {
+    /**
+     * Waits for a particular element to appear on the DOM
+     * @param {string} selector 
+     * @returns {Promise<unknown[]>} 
+     */
     static waitForElement(selector) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, _reject) => {
             let element = [];
             let check = () => {
                 if (!element[0]) {
@@ -18,18 +33,31 @@ export default class Utils {
         });
     }
 
-
+    /**
+     * Escapes particular HTML Chars from string
+     * @param {string} input 
+     * @returns {string} 
+     */
     static escapeHtml(input) {
         return String(input).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
 
+    /**
+     * Sets location
+     * @param {string} newLocation 
+     * @returns {void}
+     */
     static changeLocation(newLocation) {
         p.location = newLocation;
         window.history.pushState({}, 'pr0gramm.com', newLocation);
     }
 
-
+    /**
+     * Retrieves URL params from a given URL
+     * @param {string} url 
+     * @returns {URLParams}
+     */
     static getUrlParams(url) {
         let result = {};
         url = url.split('?');
@@ -46,7 +74,7 @@ export default class Utils {
         };
     }
 
-
+    // TODO: Unused ?
     static isElementInViewport(el) {
         if (typeof jQuery === 'function' && el instanceof jQuery) {
             el = el[0];
@@ -62,7 +90,12 @@ export default class Utils {
         );
     }
 
-
+    /**
+     * Create a URL from parameters
+     * @param {string} url 
+     * @param {URLParams} params 
+     * @returns {string}
+     */
     static getUrlFromParams(url, params) {
         let result = url + '?';
 
@@ -79,11 +112,15 @@ export default class Utils {
     }
 
 
+    // TODO: unsued?
     static insertAfter(node, reference) {
         reference.parentNode.insertBefore(node, reference.nextSibling);
     }
 
 
+    /**
+     * @returns {void}
+     */
     static addPrototypes() {
         String.prototype.replaceArray = function (find, replace) {
             let replaceString = this;
@@ -95,7 +132,10 @@ export default class Utils {
     }
 
 
-    // Add constants, related to video-controls
+    /**
+     * Add constants, related to video-controls
+     * @returns {void}
+     */
     static addVideoConstants() {
         p.View.Stream.Item.TARGET = {
             NOTHING: 0,

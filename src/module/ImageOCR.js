@@ -83,6 +83,10 @@ export default class ImageOCR {
     }
 
 
+    /**
+     * @param {boolean} text 
+     * @returns {false | void}
+     */
     togglePopup(text = false) {
         if (!text) {
             this.popup.classList.remove('visible');

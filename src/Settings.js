@@ -24,6 +24,10 @@ export default class Settings {
     }
 
 
+    /**
+     * 
+     * @param {Element} moduleList 
+     */
     static saveSettings(moduleList) {
         let result = [];
         let actives = moduleList.querySelectorAll(':checked');
@@ -123,6 +127,10 @@ export default class Settings {
     }
 
 
+    /**
+     * 
+     * @param {HTMLAnchorElement} button 
+     */
     toggleSettingsTab(button) {
         Utils.changeLocation('/settings/addons');
         let moduleList = document.createElement('div');
@@ -173,6 +181,10 @@ export default class Settings {
         })
     }
 
+    /**
+     * 
+     * @param {HTMLDivElement} beforeElement 
+     */
     addModuleSettings(beforeElement) {
         const modules = this.app.modules;
         const activated = P0weruser.getActivatedModules();
@@ -219,6 +231,11 @@ export default class Settings {
     }
 
 
+    /**
+     * 
+     * @param {string} name 
+     * @returns {boolean | string}
+     */
     static get(name) {
         const item = window.localStorage.getItem(name);
 
@@ -236,6 +253,11 @@ export default class Settings {
     }
 
 
+    /**
+     * @param {string} name 
+     * @param {string} value 
+     * @returns {string}
+     */
     static set(name, value) {
         window.localStorage.setItem(name, value);
 

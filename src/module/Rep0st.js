@@ -32,6 +32,9 @@ export default class Rep0st {
     }
 
 
+    /**
+     * @param {unknown | jQuery} container 
+     */
     addButton(container) {
         const imgElement = container.find('.item-image-actual:not([src*=".gif"])');
         this.loader = $(`<span class="fa fa-spinner fa-spin loader"></span>`);
@@ -50,6 +53,10 @@ export default class Rep0st {
     }
 
 
+    /**
+     * @param {unknown} container 
+     * @param {unknown} imgElement 
+     */
     checkImage(container, imgElement) {
         let dta = new FormData();
         let result = $('<div></div>');
@@ -122,6 +129,9 @@ export default class Rep0st {
         });
     }
 
+    /**
+     * @returns {string}
+     */
     getCurrentPostId() {
         return parseInt(window.location.href
             .replace('pr0gramm', '')
@@ -129,6 +139,14 @@ export default class Rep0st {
     }
 
 
+    /**
+     * @param {unknown} bar 
+     * @param {Array<{
+     *   url: string,
+     *   img: string,
+     *   probability: string
+     * }>} urls 
+     */
     displayImages(bar, urls) {
         bar = bar.find('.simplebar-content');
 

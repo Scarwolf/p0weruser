@@ -26,6 +26,9 @@ export default class AnonymousTitle {
         }
     }
 
+    /**
+     * @returns {import("../P0weruser.js").P0weruserSetting[]}
+     */
     getSettings() {
         return [
             {

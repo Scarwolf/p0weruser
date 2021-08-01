@@ -10,6 +10,9 @@ export default class RepostMarker {
     }
 
 
+    /**
+     * @param {number|string} id 
+     */
     static markRepost(id) {
         let elem = document.getElementById('item-' + id);
 
@@ -32,6 +35,10 @@ export default class RepostMarker {
         });
     }
 
+    /**
+     * @param {string} url 
+     * @returns {false | void}
+     */
     handleAjax(url) {
         return new Promise((resolve, reject) => {
             if (url.indexOf('/api/items/get') === -1 || url.indexOf('repost') !== -1) {

@@ -41,6 +41,9 @@ export default class Pr0p0ll {
     }
 
 
+    /**
+     * @returns {import("../P0weruser.js").P0weruserSetting[]}
+     */
     getSettings() {
         return [
             {
@@ -91,6 +94,9 @@ export default class Pr0p0ll {
     }
 
 
+    /**
+     * @param {Element[]} links 
+     */
     addLinks(links) {
         links.forEach(link => {
             const url = new URL(link.href);
@@ -111,6 +117,9 @@ export default class Pr0p0ll {
     }
 
 
+    /**
+     * @param {number | string} id 
+     */
     showDiagramm(id) {
         let getDiagramm = () => {
             return new Promise((resolve, reject) => {
@@ -149,8 +158,11 @@ export default class Pr0p0ll {
     }
 
 
+    /**
+     * @returns {Promise<unknown>}
+     */
     fetchCounter() {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, _reject) => {
             GM_xmlhttpRequest({
                 url: `https://pr0p0ll.com/?p=notify&token=${this.token}`,
                 method: 'GET',
@@ -165,11 +177,14 @@ export default class Pr0p0ll {
     }
 
 
+    /**
+     * @param {string} score 
+     */
     updateCounter(score) {
-        score = parseInt(score) || 0;
-        if (this.showNotification && Settings.get('Pr0p0ll.settings.last_count') < score) {
+        const scoreAsNumber = parseInt(score) || 0;
+        if (this.showNotification && Settings.get('Pr0p0ll.settings.last_count') < scoreAsNumber) {
             GM_notification(
-                'Du hast ' + (score === 1 ? 'eine neue Umfrage!' : score + ' neue Umfragen!'),
+                'Du hast ' + (scoreAsNumber === 1 ? 'eine neue Umfrage!' : scoreAsNumber + ' neue Umfragen!'),
                 'pr0p0ll',
                 'https://pr0p0ll.com/src/favicon.png',
                 function () {
@@ -179,8 +194,8 @@ export default class Pr0p0ll {
             );
         }
 
-        this.target.parentNode.classList.toggle('empty', score === 0 || !score);
-        this.target.innerText = score;
-        Settings.set('Pr0p0ll.settings.last_count', score);
+        this.target.parentNode.classList.toggle('empty', scoreAsNumber === 0 || !scoreAsNumber);
+        this.target.innerText = scoreAsNumber;
+        Settings.set('Pr0p0ll.settings.last_count', scoreAsNumber);
     }
 }

@@ -17,6 +17,43 @@ import ImageOCR from './module/ImageOCR';
 import AnonymousTitle from './module/AnonymousTitle';
 import StatisticsLinkInNavbar from './module/StatisticsLinkInNavbar';
 
+/**
+ * @typedef {{
+ *   load: () => void ,
+ *   getSettings?: () => P0weruserSetting[]
+ * }} P0weruserModule
+ */
+
+/**
+ * @typedef {{
+ *   id: string,
+ *   title: string,
+ *   description: string
+ * }} P0weruserSetting
+ */
+
+/**
+ * @typedef {{
+ *   audio: boolean,
+ *   created: number,
+ *   down: number,
+ *   flags: number,
+ *   fullsize: string,
+ *   gift: number,
+ *   height: number,
+ *   id: number,
+ *   image: string,
+ *   mark: number,
+ *   promoted: number,
+ *   source: string,
+ *   thumb: string,
+ *   up: number,
+ *   user: string,
+ *   userId: number,
+ *   width: number
+ * }} ItemData
+ */
+
 export default class P0weruser {
     constructor() {
         Utils.addPrototypes();
@@ -43,7 +80,9 @@ export default class P0weruser {
         document.getElementsByTagName('head')[0].appendChild(scrollbar);
     }
 
-
+    /**
+     * @returns {string[]}
+     */
     static getActivatedModules() {
         let modules = window.localStorage.getItem('activated_modules');
 
@@ -75,6 +114,9 @@ export default class P0weruser {
     }
 
 
+    /**
+     * @returns {Record<string, P0weruserModule>}
+     */
     getModules() {
         if (!this.modules) {
             this.modules = {

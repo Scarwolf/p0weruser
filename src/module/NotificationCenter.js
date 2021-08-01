@@ -1,6 +1,20 @@
 import SimpleBar from 'simplebar';
 import Utils from '../Utils';
 
+/**
+ * @typedef {{
+ *   type: "message" | "comment" | "notifcation",
+ *   id: number,
+ *   name: string,
+ *   itemId?: number,
+ *   image?: unknown,
+ *   thumb?: string,
+ *   created: number,
+ *   mark: number,
+ *   message: string
+ * }} Message
+ */
+
 export default class NotificationCenter {
     constructor() {
         this.id = 'NotificationCenter';
@@ -8,7 +22,12 @@ export default class NotificationCenter {
         this.description = 'Öffnet neue Benachrichtigungen in einem kleinen Menü';
     }
 
-
+    /**
+     * @param {{
+     *   thumb: any
+     * } | Message} message 
+     * @returns {string}
+     */
     static getTitle(message) {
         return message.thumb === null ? 'Private Nachricht' : 'Kommentar';
     }
@@ -58,7 +77,8 @@ export default class NotificationCenter {
         this.messageContainer.classList.add('loading');
 
         this.getNotifications(true).then((notifications) => {
-            let messages = notifications.messages;
+            /** @type {Message[]} */
+            const messages = notifications.messages;
             let unreadMessages = messages.filter(message => !message.read).length;
 
             this.messageContainer.innerHTML = '';
@@ -96,7 +116,7 @@ export default class NotificationCenter {
             this.getNotifications(false).then((notifications2) => {
                 let messages2 = notifications2.messages;
 
-                if (messages2.length <= 0) {
+                if (messages2 && messages2.length <= 0) {
                     return false;
                 }
 
@@ -109,7 +129,10 @@ export default class NotificationCenter {
         });
     }
 
-
+    /**
+     * @param {boolean} all 
+     * @returns {Promise<unknown>}
+     */
     getNotifications(all = false) {
         return new Promise((resolve, reject) => {
             p.api.get(all ? 'inbox.all' : 'inbox.conversations', {}, resolve, reject);
@@ -117,6 +140,17 @@ export default class NotificationCenter {
     }
 
 
+    /**
+     * 
+     * @param {string} title 
+     * @param {string} user 
+     * @param {number} date 
+     * @param {unknown?} image 
+     * @param {number} mark 
+     * @param {number?} id 
+     * @param {number} cId 
+     * @param {string} msg 
+     */
     addEntry(title, user, date, image, mark, id, cId, msg) {
         let elem = document.createElement('li');
         elem.id = `notification-${cId}`;
