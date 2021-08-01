@@ -33,7 +33,7 @@ export default class Rep0st {
 
 
     /**
-     * @param {unknown | jQuery} container 
+     * @param {JQuery} container 
      */
     addButton(container) {
         const imgElement = container.find('.item-image-actual:not([src*=".gif"])');

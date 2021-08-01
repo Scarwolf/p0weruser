@@ -23,39 +23,6 @@ export default class WidescreenMode {
     }
 
 
-    /**
-     * 
-     * @param {WheelEvent} e 
-     * @returns {void | false}
-     */
-    handleWheelChange(e) {
-        if (this.isMoveable) {
-            this.img.animate({
-                top: (e.deltaY > 0 ? '-=' : '+=') + (20 * this.scrollMultiplicator)
-            }, 0);
-
-            return false;
-        }
-
-        if (this.hasUnsentComments()) {
-            let state = window.confirm('Du hast noch nicht abgeschickte Kommentare! Willst du dieses Medium wirklich verlassen?');
-
-            if (!state) {
-                return false;
-            }
-        }
-
-        let el = {};
-        if (e.deltaY < 0) {
-            el = document.getElementsByClassName('stream-prev')[0];
-        } else {
-            el = document.getElementsByClassName('stream-next')[0];
-        }
-
-        el.click();
-    }
-
-
     load() {
         this.comments = [];
         this.commentsWide = window.localStorage.getItem('comments_wide') === 'true';
@@ -80,13 +47,7 @@ export default class WidescreenMode {
         }
     }
 
-    checkScoreDisplay() {
-        if (this.displayBenis) {
-            p.shouldShowScore = () => {
-                return true;
-            };
-        }
-    }
+    
 
     /**
      * @returns {import("../P0weruser.js").P0weruserSetting[]}
@@ -140,6 +101,47 @@ export default class WidescreenMode {
                 description: 'Wenn aktiviert bringt dich ein Klick auf das pr0gramm Logo nach /new statt /top.'
             },
         ];
+    }
+
+
+    /**
+     * 
+     * @param {WheelEvent} e 
+     * @returns {void | false}
+     */
+    handleWheelChange(e) {
+        if (this.isMoveable) {
+            this.img.animate({
+                top: (e.deltaY > 0 ? '-=' : '+=') + (20 * this.scrollMultiplicator)
+            }, 0);
+
+            return false;
+        }
+
+        if (this.hasUnsentComments()) {
+            let state = window.confirm('Du hast noch nicht abgeschickte Kommentare! Willst du dieses Medium wirklich verlassen?');
+
+            if (!state) {
+                return false;
+            }
+        }
+
+        let el = {};
+        if (e.deltaY < 0) {
+            el = document.getElementsByClassName('stream-prev')[0];
+        } else {
+            el = document.getElementsByClassName('stream-next')[0];
+        }
+
+        el.click();
+    }
+
+    checkScoreDisplay() {
+        if (this.displayBenis) {
+            p.shouldShowScore = () => {
+                return true;
+            };
+        }
     }
 
 

@@ -13,6 +13,35 @@ export default class FilterMarks {
     }
 
 
+    load() {
+        this.styles = require('../style/filterMarks.less');
+        this.overrideViews();
+    }
+
+    
+    /**
+     * @returns {import("../P0weruser.js").P0weruserSetting[]}
+     */
+    getSettings() {
+        return [
+            {
+                id: 'stream_filters',
+                title: 'Filter in Streams',
+                description: 'Filterecken in Listen anzeigen?'
+            },
+            {
+                id: 'detail_filters',
+                title: 'Filter in Medienansicht',
+                description: 'Filterlabel in der Detailansicht einblenden?'
+            },
+            {
+                id: 'stream_benis',
+                title: 'Benis beim Mouseover',
+                description: 'Benis in der Übersicht einblenden?'
+            }
+        ];
+    }
+
     static displayFilterLabel(itemData, $container) {
         let filter = FilterMarks.getFilter(itemData);
         let badge = document.createElement('span');
@@ -43,34 +72,6 @@ export default class FilterMarks {
     }
 
 
-    /**
-     * @returns {import("../P0weruser.js").P0weruserSetting[]}
-     */
-    getSettings() {
-        return [
-            {
-                id: 'stream_filters',
-                title: 'Filter in Streams',
-                description: 'Filterecken in Listen anzeigen?'
-            },
-            {
-                id: 'detail_filters',
-                title: 'Filter in Medienansicht',
-                description: 'Filterlabel in der Detailansicht einblenden?'
-            },
-            {
-                id: 'stream_benis',
-                title: 'Benis beim Mouseover',
-                description: 'Benis in der Übersicht einblenden?'
-            }
-        ];
-    }
-
-
-    load() {
-        this.styles = require('../style/filterMarks.less');
-        this.overrideViews();
-    }
 
 
     overrideViews() {

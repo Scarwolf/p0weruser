@@ -12,20 +12,6 @@ export default class AnonymousTitle {
         this.addListeners();
     }
 
-    addListeners() {
-        p.mainView.setTitle = () => this.changeTitle();
-        window.addEventListener('userSync', (e) => this.changeTitle());
-    }
-
-
-    changeTitle() {
-        if (this.customTitle !== true && this.customTitle !== '') {
-            document.title = p.user.inboxCount > 0 ? '[' + p.user.inboxCount + '] ' + this.customTitle : this.customTitle;
-        } else {
-            document.title = `${p.user.inboxCount > 0 ? '[' + p.user.inboxCount + ']' : ''} pr0gramm.com – Die Datingplattform für Kellerkinder`;
-        }
-    }
-
     /**
      * @returns {import("../P0weruser.js").P0weruserSetting[]}
      */
@@ -38,5 +24,19 @@ export default class AnonymousTitle {
                 type: 'text'
             }
         ];
+    }
+
+    addListeners() {
+        p.mainView.setTitle = () => this.changeTitle();
+        window.addEventListener('userSync', (e) => this.changeTitle());
+    }
+
+
+    changeTitle() {
+        if (this.customTitle !== true && this.customTitle !== '') {
+            document.title = p.user.inboxCount > 0 ? '[' + p.user.inboxCount + '] ' + this.customTitle : this.customTitle;
+        } else {
+            document.title = `${p.user.inboxCount > 0 ? '[' + p.user.inboxCount + ']' : ''} pr0gramm.com – Die Datingplattform für Kellerkinder`;
+        }
     }
 }
