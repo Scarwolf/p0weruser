@@ -296,6 +296,19 @@ export default class WidescreenMode {
             }
         });
 
+        p.View.Stream.Comments.SortConfidenceTime = (itemUser) => function (a, b) {
+            if (a.confidence >= 0.2 && itemUser === a.name && itemUser !== b.name) {
+                return -1;
+            } else if (b.confidence >= 0.2 && itemUser === b.name && itemUser !== a.name) {
+                return 1;
+            }
+            return (b.confidence === a.confidence ? a.created - b.created : b.confidence - a.confidence);
+        };
+
+        p.View.Stream.Comments.SortTime = function (a, b) {
+            return (a.created - b.created);
+        };
+
         // Handle stream-building
         p.View.Stream.Main.prototype.buildItemRows = function (items) {
             let result = '';
