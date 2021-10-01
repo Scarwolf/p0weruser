@@ -71,8 +71,7 @@ export default class DefaultFilters {
         if(p.location === 'top' || p.location === 'new') {
             const filter = this.getFilter();
             if(filter) {
-                $('#search-form-inline > input[type="text"]').val(filter);
-                $('.search-submit-wrap > input[type="submit"]').submit();
+                window.location.href = '/new/' + encodeURIComponent(filter);
             }
         }
     }
