@@ -16,7 +16,11 @@ export default class DefaultFilters {
     constructor() {
         this.id = 'DefaultFilter';
         this.name = 'Standard Filter';
-        this.description = 'Standardfilter, der mit dem Aufruf von pr0 gesetzt wird';
+        this.description = 'Standardfilter, der mit dem Aufruf von pr0 gesetzt wird. ' + 
+                           'Der Filter greift <b><u>nur</u> beim Aufruf der Content-Seite und beim Wechseln ' +
+                           'zwischen SFW/NSFW/NSFL.</b> ' + 
+                           'Danach kann der Filter vom User angepasst werden. Der Filter greift ' + 
+                           '<b><u>nicht</u> beim Betrachten von User-Uploads oder Sammlungen</b>';
 
         this.sfwFilter = Settings.get(`${this.id}.settings.sfw_filter`);
         this.nsfwFilter = Settings.get(`${this.id}.settings.nsfw_filter`);
@@ -29,19 +33,34 @@ export default class DefaultFilters {
             {
                 id: 'sfw_filter',
                 title: 'SFW Filter',
-                description: 'Standardfilter für SFW (ohne führendes !)',
+                description: 'Standardfilter für SFW (ohne führendes !) <br />' +
+                             'Beispiele:' +
+                             '<ul>' + 
+                             '<li> oc | "original content"</li>' + 
+                             '<li> s:shit | s:500 & (oc | "original content")</li>' +
+                             '</ul>',
                 type: 'text'
             },
             {
                 id: 'nsfw_filter',
                 title: 'NSFW Filter',
-                description: 'Standardfilter für NSFW (ohne führendes !)',
+                description: 'Standardfilter für NSFW (ohne führendes !) <br />' +
+                             'Beispiele:' +
+                             '<ul>' + 
+                             '<li> oc | "original content"</li>' + 
+                             '<li> s:shit | s:500 & (oc | "original content")</li>' +
+                             '</ul>',
                 type: 'text'
             },
             {
                 id: 'nsfl_filter',
                 title: 'NSFL Filter',
-                description: 'Standardfilter für NSFL (ohne führendes !)',
+                description: 'Standardfilter für NSFL (ohne führendes !) <br />' +
+                             'Beispiele:' +
+                             '<ul>' + 
+                             '<li> oc | "original content"</li>' + 
+                             '<li> s:shit | s:500 & (oc | "original content")</li>' +
+                             '</ul>',
                 type: 'text'
             },
         ];
@@ -49,17 +68,20 @@ export default class DefaultFilters {
 
 
     load() {
-        // TODO: It should be only loaded the FIRST TIME the page is loaded and should never 
-        // override custom filters
-        $('#search-form-inline > input[type="text"]').val(that.getFilters());
-        $('.search-submit-wrap > input[type="submit"]').submit();
+        if(p.location === 'top' || p.location === 'new') {
+            const filter = this.getFilter();
+            if(filter) {
+                $('#search-form-inline > input[type="text"]').val(filter);
+                $('.search-submit-wrap > input[type="submit"]').submit();
+            }
+        }
     }
 
     /**
      * 
      * @returns {string}
      */
-    getFilters() {
+    getFilter() {
         const currFilters = this.getCurrentFilters();
         let selectedFilters = [];
         if(currFilters.includes(filters.SFW)) {
@@ -71,7 +93,6 @@ export default class DefaultFilters {
         if(currFilters.includes(filters.NSFL)) {
             selectedFilters.push(`(${this.nsflFilter.trim()})`);
         }
-        console.log(selectedFilters);
         
         if(selectedFilters.length > 0) {
             return "! " + selectedFilters.join(" | ");
@@ -105,8 +126,6 @@ export default class DefaultFilters {
         if((flags & 1 << 2) !== 0) {
             active_filters.push(filters.NSFL);
         }
-
-        console.log(active_filters);
 
         return active_filters;
     }
