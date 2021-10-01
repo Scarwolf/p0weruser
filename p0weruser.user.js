@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        p0weruser - Rel0aded
-// @version     1.7.8
+// @version     1.7.9
 // @author      PoTTii - Created by Florian Maak
 // @description A modularized userScript for pr0gramm.com - Developed by FlorianMaak, Modified by Scarwolf
 // @homepage    https://github.com/Scarwolf/p0weruser
