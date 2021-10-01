@@ -203,7 +203,7 @@ export default class Settings {
                                 container.innerHTML = `<div class="text-type"><span class="title">${settings[i].title}</span><span class="description">${settings[i].description}</span><input id="${id}" type="number" value="${currentValue}" /></div>`;
                                 break;
                             case 'text':
-                                currentValue = (currentValue === true) ? '' : currentValue;
+                                currentValue = Utils.escapeHtml((currentValue === true) ? '' : currentValue);
                                 container.innerHTML = `<div class="text-type"><span class="title">${settings[i].title}</span><span class="description">${settings[i].description}</span><input id="${id}" type="text" value="${currentValue}" /></div>`;
                                 break;
                             default:
