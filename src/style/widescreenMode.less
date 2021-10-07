@@ -38,13 +38,25 @@ body[class] {
         display: block;
         margin: 0 auto;
 
-        a.thumb {
-          display: inline-block;
-          float: left;
-        }
-
         .stream-row {
           clear: none;
+        }
+
+        .item-row {
+          display: flex;
+          flex-wrap: wrap;
+
+          a.thumb {
+            img {
+              width: 100%;
+            }
+            flex: 1 1 128px;
+            background-color: transparent;
+            margin: 0;
+            width: auto;
+            height: auto;
+            margin: 1px; // Looks more "natural" with margin
+          }
         }
       }
     }
