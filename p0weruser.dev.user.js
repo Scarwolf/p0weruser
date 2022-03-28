@@ -19,6 +19,7 @@
 // @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
 // @updateURL   https://scarwolf.github.io/p0weruser/p0weruser.dev.user.js
+// @downloadURL https://scarwolf.github.io/p0weruser/p0weruser.dev.user.js
 // ==/UserScript==
 
 /******/ (function(modules) { // webpackBootstrap
