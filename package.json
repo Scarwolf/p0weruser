@@ -49,9 +49,6 @@
         "dev": "webpack  --config webpack.config.js --watch --mode development",
         "build": "webpack  --config webpack.config.js --mode production",
         "build:dev": "webpack  --config webpack.config.js --mode development",
-        "build:major": "webpack  --config webpack.config.js --mode production --env.major",
-        "build:minor": "webpack  --config webpack.config.js --mode production --env.minor",
-        "build:patch": "webpack  --config webpack.config.js --mode production --env.patch",
         "test": "webpack --config webpack.config.js"
     }
 }
