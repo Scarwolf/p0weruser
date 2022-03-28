@@ -12,9 +12,9 @@ const filterFlags: Record<Filter, number> = {
 declare const p: P;
 
 export default class DefaultFilters {
-    readonly id: string = 'DefaultFilter';
-    readonly name: string = 'Standard Filter';
-    readonly description: string = 'Standardfilter, der mit dem Aufruf von pr0 gesetzt wird. ' + 
+    readonly id = 'DefaultFilter';
+    readonly name = 'Standard Filter';
+    readonly description = 'Standardfilter, der mit dem Aufruf von pr0 gesetzt wird. ' + 
                                     'Der Filter greift <b><u>nur</u> beim Aufruf der Content-Seite und beim Wechseln ' +
                                     'zwischen SFW/NSFW/NSFL.</b> ' + 
                                     'Danach kann der Filter vom User angepasst werden. Der Filter greift ' + 
