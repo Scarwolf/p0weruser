@@ -1,31 +1,29 @@
-import { P } from 'core-js/modules/_export';
 import Settings from '../Settings';
-import Utils from '../Utils';
+import { P } from '../types';
 
-/**
- * @enum
- */
-const filters = {
+type Filter = 'SFW' | 'NSFW' | 'NSFL';
+
+const filterFlags: Record<Filter, number> = {
     SFW: 0,
     NSFW: 1,
     NSFL: 2
 };
 
+declare const p: P;
+
 export default class DefaultFilters {
+    readonly id: string = 'DefaultFilter';
+    readonly name: string = 'Standard Filter';
+    readonly description: string = 'Standardfilter, der mit dem Aufruf von pr0 gesetzt wird. ' + 
+                                    'Der Filter greift <b><u>nur</u> beim Aufruf der Content-Seite und beim Wechseln ' +
+                                    'zwischen SFW/NSFW/NSFL.</b> ' + 
+                                    'Danach kann der Filter vom User angepasst werden. Der Filter greift ' + 
+                                    '<b><u>nicht</u> beim Betrachten von User-Uploads oder Sammlungen</b>';
+    readonly sfwFilter = Settings.get(`${this.id}.settings.sfw_filter`) as string;
+    readonly nsfwFilter = Settings.get(`${this.id}.settings.nsfw_filter`) as string;
+    readonly nsflFilter = Settings.get(`${this.id}.settings.nsfl_filter`) as string;
 
-    constructor() {
-        this.id = 'DefaultFilter';
-        this.name = 'Standard Filter';
-        this.description = 'Standardfilter, der mit dem Aufruf von pr0 gesetzt wird. ' + 
-                           'Der Filter greift <b><u>nur</u> beim Aufruf der Content-Seite und beim Wechseln ' +
-                           'zwischen SFW/NSFW/NSFL.</b> ' + 
-                           'Danach kann der Filter vom User angepasst werden. Der Filter greift ' + 
-                           '<b><u>nicht</u> beim Betrachten von User-Uploads oder Sammlungen</b>';
-
-        this.sfwFilter = Settings.get(`${this.id}.settings.sfw_filter`);
-        this.nsfwFilter = Settings.get(`${this.id}.settings.nsfw_filter`);
-        this.nsflFilter = Settings.get(`${this.id}.settings.nsfl_filter`);
-    }
+    constructor() { }
 
 
     getSettings() {
@@ -83,13 +81,13 @@ export default class DefaultFilters {
     getFilter() {
         const currFilters = this.getCurrentFilters();
         let selectedFilters = [];
-        if(currFilters.includes(filters.SFW)) {
+        if(currFilters.includes(filterFlags.SFW)) {
             selectedFilters.push(`(${this.sfwFilter.trim()})`);
         }
-        if(currFilters.includes(filters.NSFW)) {
+        if(currFilters.includes(filterFlags.NSFW)) {
             selectedFilters.push(`(${this.nsfwFilter.trim()})`);
         }
-        if(currFilters.includes(filters.NSFL)) {
+        if(currFilters.includes(filterFlags.NSFL)) {
             selectedFilters.push(`(${this.nsflFilter.trim()})`);
         }
         
@@ -113,17 +111,17 @@ export default class DefaultFilters {
 
         // SFW
         if((flags & 1 << 0) !== 0) {
-            active_filters.push(filters.SFW);
+            active_filters.push(filterFlags.SFW);
         }
 
         // NSFW
         if((flags & 1 << 1) !== 0) {
-            active_filters.push(filters.NSFW);
+            active_filters.push(filterFlags.NSFW);
         }
 
         // NSFL
         if((flags & 1 << 2) !== 0) {
-            active_filters.push(filters.NSFL);
+            active_filters.push(filterFlags.NSFL);
         }
 
         return active_filters;

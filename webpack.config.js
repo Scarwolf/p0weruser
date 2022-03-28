@@ -19,6 +19,9 @@ module.exports = (env, argv) => {
         performance: {
             hints: false
         },
+        resolve: {
+            extensions: ['.ts', '.js', '.html', '.less', '.css'],
+        },
         plugins: [
             new WebpackUserscript({
                 headers: {
@@ -45,6 +48,11 @@ module.exports = (env, argv) => {
         ],
         module: {
             rules: [
+                {
+                    test: /\.ts$/,
+                    use: 'ts-loader',
+                    exclude: /node_modules/,
+                },
                 {
                     test: /\.html$/,
                     use: [{
