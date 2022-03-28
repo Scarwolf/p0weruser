@@ -6,6 +6,7 @@ export default class ViewedPostsMarker {
         this.id = 'ViewedPostsMarker';
         this.name = '"Bereits gesehen"-Markierung';
         this.description = 'Markiert bereits gesehene Medien.';
+        this.markOwnFavoritesAsViewed = Settings.get('ViewedPostsMarker.settings.mark_own_favorites_as_viewed');
     }
 
     load() {
@@ -13,9 +14,17 @@ export default class ViewedPostsMarker {
         this.styles = require('../style/viewedPostsMarker.less');
         this.viewedPosts = ViewedPostsMarker.getViewedPosts();
 
+        // TODO: Fire event only once
         $(document).ajaxComplete((event, request, settings) => {
-            for (let i = 0; i < this.viewedPosts.length; i++) {
-                ViewedPostsMarker.markAsViewed(this.viewedPosts[i]);
+            /* Since this is a global event handler for every ajax we need to specify on which event 
+             * it should be fired. This is the case for every event which accesses items.
+             */
+            if(settings.url.startsWith('/api/items/get')) {
+                if(this.markOwnFavoritesAsViewed || !(this.wouldLoadUserCollection(settings.url))) {   
+                    this.viewedPosts.forEach(post => {
+                        ViewedPostsMarker.markAsViewed(post);
+                    });
+                }
             }
         });
 
@@ -49,6 +58,16 @@ export default class ViewedPostsMarker {
         return JSON.parse(posts);
     }
 
+    getSettings() {
+        return [
+            {
+                id: 'mark_own_favorites_as_viewed',
+                title: 'Eigene Favoriten ebenfalls als gelesen markieren',
+                description: 'Markiert Posts in den persönlichen Sammlungen als gelesen'
+            }
+        ];
+    }
+
     addViewedPost(id) {
         if (this.viewedPosts.length >= 10000) {
             this.viewedPosts = this.viewedPosts.slice(-10000);
@@ -59,5 +78,18 @@ export default class ViewedPostsMarker {
         }
 
         Settings.set('viewed_posts', JSON.stringify(this.viewedPosts));
+    }
+
+    /**
+     * Checks any url whether this url would load any of the logged in users collection
+     * @param {string} url API Request URL
+     * @returns {boolean}
+     */
+    wouldLoadUserCollection(url) {
+        const name = p.user.name;
+        const queryParams = new URLSearchParams(url);
+
+        // If the current request would retrieve any of the users collection
+        return queryParams.has("collection") && queryParams.get("user") === name;
     }
 }
