@@ -37,6 +37,7 @@ module.exports = (env, argv) => {
                     // append another suffix (Maybe Date or GitHub Run ID).
                     version: package.version + (argv.mode === 'production' ? '' : '-dev'),
                     updateURL: argv.mode === 'production' ? 'https://scarwolf.github.io/p0weruser/p0weruser.user.js' : 'https://scarwolf.github.io/p0weruser/p0weruser.dev.user.js',
+                    downloadURL: argv.mode === 'production' ? 'https://scarwolf.github.io/p0weruser/p0weruser.user.js' : 'https://scarwolf.github.io/p0weruser/p0weruser.dev.user.js',
                 },
                 metajs: false
             }),
