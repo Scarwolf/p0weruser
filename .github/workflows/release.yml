@@ -1,0 +1,52 @@
+name: Release a new version
+on:
+  workflow_dispatch:
+    inputs:
+      version-bump:
+        description: 'Version Bump'     
+        required: true
+        default: 'minor' 
+        type: choice
+        options:
+        - patch
+        - minor
+        - major
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install
+        run: |
+          npm ci
+          
+      - name: Bump version
+        id: version
+        run: |
+          npm version ${{ github.event.inputs.version-bump }}
+          echo "::set-output new-version::$(npm pkg get version)"
+
+      - name: Build
+        run: |
+          npm run build
+
+      - name: Commit and push updated package.json
+        run: |
+          # Configure git
+          git config user.name "$(git log -n 1 --pretty=format:%an)"
+          git config user.email "$(git log -n 1 --pretty=format:%ae)"
+          git add package.json
+          git commit -m 'Bump to ${{ steps.vars.outputs.version.new-version }}'
+          git push --follow-tags origin master
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.2.5
+        with:
+          branch: gh-pages
+          folder: dist
