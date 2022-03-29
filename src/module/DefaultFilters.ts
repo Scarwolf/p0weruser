@@ -80,7 +80,8 @@ export default class DefaultFilters {
      */
     getFilter() {
         const currFilters = this.getCurrentFilters();
-        let selectedFilters = [];
+        const selectedFilters: string[] = [];
+
         if(currFilters.includes(filterFlags.SFW)) {
             if (!!this.sfwFilter) {
                 selectedFilters.push(`${this.sfwFilter.trim()}`);
@@ -105,17 +106,13 @@ export default class DefaultFilters {
         return "";      
     }
 
-    /**
-     * 
-     * @returns {Array<filters>}
-     */
-    getCurrentFilters() {
+    getCurrentFilters(): number[] {
         const flags = Number(p.user.flags);
         if(isNaN(flags)) {
             throw new Error("Flags could not be parsed");
         }
 
-        const active_filters = [];
+        const active_filters: number[] = [];
 
         // SFW
         if((flags & 1 << 0) !== 0) {
