@@ -36,7 +36,7 @@ jobs:
         id: version
         run: |
           npm version ${{ github.event.inputs.version-bump }}
-          echo "::set-output new-version::$(npm pkg get version)"
+          echo "::set-output name=new-version::$(npm pkg get version)"
 
       - name: Build
         run: |
