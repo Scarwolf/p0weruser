@@ -82,17 +82,25 @@ export default class DefaultFilters {
         const currFilters = this.getCurrentFilters();
         let selectedFilters = [];
         if(currFilters.includes(filterFlags.SFW)) {
-            selectedFilters.push(`(${this.sfwFilter.trim()})`);
+            if (!!this.sfwFilter) {
+                selectedFilters.push(`${this.sfwFilter.trim()}`);
+            }
         }
         if(currFilters.includes(filterFlags.NSFW)) {
-            selectedFilters.push(`(${this.nsfwFilter.trim()})`);
+            if (!!this.nsfwFilter) {
+                selectedFilters.push(`${this.nsfwFilter.trim()}`);
+            }
         }
         if(currFilters.includes(filterFlags.NSFL)) {
-            selectedFilters.push(`(${this.nsflFilter.trim()})`);
+            if (!!this.nsflFilter) {
+                selectedFilters.push(`${this.nsflFilter.trim()}`);
+            }
         }
         
         if(selectedFilters.length > 0) {
-            return "! " + selectedFilters.join(" | ");
+            return "! " + selectedFilters
+                .filter(filter => !!filter)
+                .map(filter => `(${filter})`).join(" | ");
         }
         return "";      
     }
