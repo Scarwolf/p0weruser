@@ -26,6 +26,12 @@ jobs:
         run: |
           npm ci
           
+      - name: Configure git
+        run: |
+          # Configure git
+          git config user.name "$(git log -n 1 --pretty=format:%an)"
+          git config user.email "$(git log -n 1 --pretty=format:%ae)"
+
       - name: Bump version
         id: version
         run: |
@@ -36,13 +42,8 @@ jobs:
         run: |
           npm run build
 
-      - name: Commit and push updated package.json
+      - name: Push
         run: |
-          # Configure git
-          git config user.name "$(git log -n 1 --pretty=format:%an)"
-          git config user.email "$(git log -n 1 --pretty=format:%ae)"
-          git add package.json
-          git commit -m 'Bump to ${{ steps.vars.outputs.version.new-version }}'
           git push --follow-tags origin master
 
       - name: Deploy 🚀
