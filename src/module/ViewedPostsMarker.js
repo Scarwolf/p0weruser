@@ -33,6 +33,7 @@ export default class ViewedPostsMarker {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
 
                 _this.addViewedPost(itemData.id);
+                ViewedPostsMarker.markAsViewed(itemData.id);
             }
         });
 
