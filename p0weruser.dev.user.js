@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        p0weruser - Rel0aded [Dev]
-// @version     1.8.1-dev
+// @version     1.8.2-dev
 // @author      PoTTii - Created by Florian Maak
 // @description A modularized userScript for pr0gramm.com - Developed by FlorianMaak, Modified by Scarwolf
 // @homepage    https://github.com/Scarwolf/p0weruser
@@ -17,7 +17,7 @@
 // @run-at      document-end
 // @grant       GM_notification
 // @grant       GM_xmlhttpRequest
-// @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
+// @require     https://code.jquery.com/ui/1.13.1/jquery-ui.min.js
 // @updateURL   https://scarwolf.github.io/p0weruser/p0weruser.dev.user.js
 // @downloadURL https://scarwolf.github.io/p0weruser/p0weruser.dev.user.js
 // ==/UserScript==
