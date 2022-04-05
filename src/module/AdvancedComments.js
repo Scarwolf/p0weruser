@@ -40,7 +40,6 @@ export default class AdvancedComments {
             }
 
             const comments = $('.comments .comment-box .comment');
-            comments.tooltip();
             for (let i = 0; i < comments.length; i++) {
                 const container = $(comments[i]);
                 const comment = $(container.parents('.comment-box')[0]).prev('.comment');
