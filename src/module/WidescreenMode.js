@@ -202,6 +202,7 @@ export default class WidescreenMode {
         p.View.Stream.Item = p.View.Stream.Item.extend({
             template: require('../template/streamItem.html'),
             show: function (rowIndex, itemData, defaultHeight, jumpToComment, cacheBust) {
+                itemData.trimmedUrl = itemData.image.replace(/^\/\//g, "")
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment, cacheBust);
                 this.syncVotes(p.user.voteCache.votes);
 
