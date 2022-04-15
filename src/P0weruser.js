@@ -17,6 +17,7 @@ import ImageOCR from './module/ImageOCR';
 import AnonymousTitle from './module/AnonymousTitle';
 import StatisticsLinkInNavbar from './module/StatisticsLinkInNavbar';
 import DefaultFilters from './module/DefaultFilters';
+import StyleCustomization from './module/StyleCustomization';
 
 export default class P0weruser {
     constructor() {
@@ -93,7 +94,8 @@ export default class P0weruser {
                 'Chat': new Chat(),
                 'AnonymousTitle': new AnonymousTitle(),
                 'StatisticsLinkInNavbar': new StatisticsLinkInNavbar(),
-                'DefaultFilters': new DefaultFilters()
+                'DefaultFilters': new DefaultFilters(),
+                'StyleCustomization': new StyleCustomization()
             };
         }
         return this.modules;
