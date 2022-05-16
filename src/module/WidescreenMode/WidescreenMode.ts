@@ -154,10 +154,12 @@ export default class WidescreenMode implements PoweruserModule {
             element.addEventListener('click', e => {
                 e.preventDefault();
 
-                let href = element.href;
-                if (href.charAt(0) === '/') {
-                    href = href.slice(1);
+                const hrefAttr = element.getAttribute("href");
+                if(hrefAttr == null) {
+                    throw new Error("Could not parse navigation link from anchor element. There is no href attribute");
                 }
+                const href = hrefAttr.startsWith("/") ? hrefAttr.slice(1) : hrefAttr;
+                console.log(href);
 
                 if (href === p.location) {
                     p.reload();
