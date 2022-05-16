@@ -1,4 +1,4 @@
-import Settings from "@/Settings";
+import Settings from "@/core/Settings/Settings";
 import { ModuleSetting, PoweruserModule } from "@/types";
 import "./styleCustomization.css";
 

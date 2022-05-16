@@ -1,7 +1,6 @@
 import Chat from './module/Chat/Chat';
 import Pr0p0ll from './module/Pr0poll/Pr0p0ll';
 import ViewedPostsMarker from './module/ViewedPostsMarker/ViewedPostsMarker';
-import Settings from './Settings';
 import Utils from './Utils';
 import EventHandler from './EventHandler';
 import WidescreenMode from './module/WidescreenMode/WidescreenMode';
@@ -18,6 +17,7 @@ import DefaultFilters from './module/DefaultFilters/DefaultFilters';
 import FilterMarks from './module/FilterMarks/FilterMarks';
 import ImageOCR from './module/ImageOCR/ImageOCR';
 import Rep0st from './module/Rep0st/Rep0st';
+import Settings from './core/Settings/Settings';
 
 export const modules: PoweruserModule[] = [
     new StyleCustomization(),
@@ -68,9 +68,10 @@ const addStyles = () => {
 };
 
 
+const activatedModules = getActivatedModules();
+
 Utils.addPrototypes();
 new EventHandler();
-new Settings();
+new Settings(modules, activatedModules);
 addStyles();
-const activatedModules = getActivatedModules();
 loadModules(activatedModules);

@@ -1,5 +1,5 @@
 import SimpleBar from 'simplebar';
-import Settings from '../../Settings';
+import Settings from '@/core/Settings/Settings';
 import Utils from '../../Utils';
 
 import "./widescreenMode.less";

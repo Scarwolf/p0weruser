@@ -1,5 +1,5 @@
 import { ModuleSetting, P, PoweruserModule } from '@/types';
-import Settings from '@/Settings';
+import Settings from '@/core/Settings/Settings';
 
 export default class AnonymousTitle implements PoweruserModule {
     readonly id = 'AnonymousTitle';

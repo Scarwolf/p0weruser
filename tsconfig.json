@@ -6,6 +6,7 @@
     "compilerOptions": {
       "outDir": "./dist/",
       "allowSyntheticDefaultImports": true,
+      "resolveJsonModule": true,
       "noImplicitAny": true,
       "module": "ESNext",
       "target": "es2019",
