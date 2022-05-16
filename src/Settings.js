@@ -1,6 +1,5 @@
 import settingsStyle from './style/settings.less';
 import Utils from './Utils';
-import P0weruser from './P0weruser';
 
 export default class Settings {
     constructor(modules) {
@@ -31,7 +30,7 @@ export default class Settings {
         for (let i = 0; i < actives.length; i++) {
             result.push(actives[i].dataset.module);
         }
-        P0weruser.saveActivatedModules(result);
+        window.localStorage.setItem('activated_modules', JSON.parse(result));
 
         Settings.saveModuleSettings();
 
@@ -99,6 +98,7 @@ export default class Settings {
 
     addListeners() {
         window.addEventListener('settingsLoaded', () => {
+            console.log("Settings loaded");
             this.addSettingsTab();
         })
     }

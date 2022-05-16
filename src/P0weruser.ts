@@ -67,9 +67,9 @@ const addStyles = () => {
     document.getElementsByTagName('head')[0].appendChild(scrollbar);
 };
 
-export default function() {
-    Utils.addPrototypes();
-    new EventHandler();
-    addStyles();
-    loadModules(getActivatedModules());
-}
+
+Utils.addPrototypes();
+new EventHandler();
+new Settings();
+addStyles();
+loadModules(getActivatedModules());
