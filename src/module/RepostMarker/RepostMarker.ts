@@ -1,17 +1,16 @@
-import Utils from '../Utils';
-import style from "../../assets/style/repostMarker.less?raw"; // TODO
+import Utils from '@/Utils';
+import "./repostMarker.less";
+import { PoweruserModule } from '@/types';
 
 // Inspired by Mopsalarms repost-script
 // https://github.com/mopsalarm/pr0gramm-reposts-userscript
-export default class RepostMarker {
-    constructor() {
-        this.id = 'RepostMarker';
-        this.name = 'Repost Markierung';
-        this.description = 'Markiert Reposts in der Übersicht'
-    }
+export default class RepostMarker implements PoweruserModule {
+    readonly id = 'RepostMarker';
+    readonly name = 'Repost Markierung';
+    readonly description = 'Markiert Reposts in der Übersicht';
 
 
-    static markRepost(id) {
+    static markRepost(id: string | number) {
         let elem = document.getElementById('item-' + id);
 
         if (elem) {
@@ -21,11 +20,9 @@ export default class RepostMarker {
 
 
     load() {
-        this.styles = style;
-
         // Get reposts, if not searched before
         $(document).ajaxComplete((event, request, settings) => {
-            this.handleAjax(settings.url).then((data) => {
+            this.handleAjax(settings.url!).then((data: any) => {
                 for (let id of data) {
                     RepostMarker.markRepost(id);
                 }
@@ -33,15 +30,14 @@ export default class RepostMarker {
         });
     }
 
-    handleAjax(url) {
+    handleAjax(url: string) {
         return new Promise((resolve, reject) => {
             if (url.indexOf('/api/items/get') === -1 || url.indexOf('repost') !== -1) {
                 return false
             }
 
-            // Prepare url
-            url = Utils.getUrlParams(url);
-            let params = url.params;
+            const urlParams = Utils.getUrlParams(url);
+            const params: any = urlParams.params;
             if (!params.tags) {
                 params.tags = 'repost';
             } else {
@@ -50,11 +46,11 @@ export default class RepostMarker {
 
             // Send manipulated request
             let xhr = new XMLHttpRequest();
-            xhr.open('GET', Utils.getUrlFromParams(url.url, params));
+            xhr.open('GET', Utils.getUrlFromParams(urlParams.url, params));
             xhr.addEventListener('load', () => {
                 if (xhr.status >= 200 && xhr.status < 300) {
                     let response = JSON.parse(xhr.responseText);
-                    resolve(response.items.map((item) => {
+                    resolve(response.items.map((item: any) => {
                         return item.id;
                     }));
                 } else {
