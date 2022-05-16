@@ -1,4 +1,4 @@
-import Settings from '@/Settings';
+import Settings from '@/core/Settings/Settings';
 import { ModuleSetting, P, PoweruserModule } from '@/types';
 import './advancedComments.less';
 

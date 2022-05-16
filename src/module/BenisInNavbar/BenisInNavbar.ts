@@ -1,6 +1,6 @@
 import './benisInNavbar.less';
 import { ModuleSetting, PoweruserModule, UserSyncEvent } from '@/types';
-import Settings from '@/Settings';
+import Settings from '@/core/Settings/Settings';
 
 export default class BenisInNavbar implements PoweruserModule {
     readonly id = 'BenisInNavbar';

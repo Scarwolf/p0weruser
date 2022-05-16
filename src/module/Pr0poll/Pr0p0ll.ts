@@ -1,7 +1,7 @@
-import Settings from '../../Settings';
+import Settings from '@/core/Settings/Settings';
 import SimpleBar from 'simplebar';
 import moment from 'moment';
-import Pr0p0llDiagramm from '../../lib/Pr0p0llDiagramm';
+import Pr0p0llDiagramm from '@/lib/Pr0p0llDiagramm';
 // @ts-ignore
 import template from '../../../assets/template/pr0p0llOverlay.html?raw'; // TODO
 import './pr0p0ll.less';
@@ -108,7 +108,7 @@ export default class Pr0p0ll implements PoweruserModule{
                 const pollId = url.searchParams.get('pollid');
                 const id = parseInt(pollId !== null ? pollId : url.searchParams.get('id')!);
 
-                Settings.set('Pr0p0ll.settings.last_count', 0);
+                Settings.set('Pr0p0ll.settings.last_count', String(0));
 
                 this.showDiagramm(id);
             });

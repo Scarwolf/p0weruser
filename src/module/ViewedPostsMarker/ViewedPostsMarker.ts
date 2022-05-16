@@ -1,5 +1,5 @@
 import { ModuleSetting, PoweruserModule } from '@/types';
-import Settings from '../../Settings';
+import Settings from '@/core/Settings/Settings';
 import Utils from '../../Utils';
 import './viewedPostsMarker.less';
 
