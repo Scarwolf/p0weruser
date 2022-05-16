@@ -1,15 +1,19 @@
 {
     "include": [ 
-        "src" 
+      "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx"
     ],
     "exclude": [],
     "compilerOptions": {
       "outDir": "./dist/",
       "noImplicitAny": true,
-      "module": "commonjs",
+      "module": "ESNext",
       "target": "es2019",
       "allowJs": true,
       "strict": true,
-      "moduleResolution": "node"
-    }
+      "moduleResolution": "node",
+      "baseUrl": "./",
+      "paths": {
+        "@/*": ["src/*"]
+      }
+    },
 }

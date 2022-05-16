@@ -25,7 +25,7 @@ export default class P0weruser {
         P0weruser.addStyles();
         this.eventHandler = new EventHandler();
         this.modules = this.getModules();
-        this.settings = new Settings(this);
+        this.settings = new Settings(this.modules);
 
         // Load activated modules
         this.loadModules();
@@ -104,5 +104,5 @@ export default class P0weruser {
 
 
 // Load script
-window.p0weruser = new P0weruser();
-
+const p0werUser = new P0weruser();
+window.p0weruser = p0werUser;
