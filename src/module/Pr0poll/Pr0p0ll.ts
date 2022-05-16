@@ -1,38 +1,40 @@
-import Settings from '../Settings';
+import Settings from '../../Settings';
 import SimpleBar from 'simplebar';
 import moment from 'moment';
-import Pr0p0llDiagramm from '../lib/Pr0p0llDiagramm';
-import template from '../../assets/template/pr0p0llOverlay.html?raw'; // TODO
-import style from '../../assets/style/pr0p0ll.less?raw'; // TODO
+import Pr0p0llDiagramm from '../../lib/Pr0p0llDiagramm';
+// @ts-ignore
+import template from '../../../assets/template/pr0p0llOverlay.html?raw'; // TODO
+import './pr0p0ll.less';
+import { ModuleSetting, PoweruserModule } from '@/types';
 
-export default class Pr0p0ll {
+export default class Pr0p0ll implements PoweruserModule{
+    readonly id = 'Pr0p0ll';
+    readonly name = 'Pr0p0ll Integration';
+    readonly description = 'Erhalte Benachrichtigungen über neue Umfragen!';
+    readonly showNotification = Settings.get('Pr0p0ll.settings.show_notification');
+    token = Settings.get('Pr0p0ll.settings.user_token') as string;
+    readonly showDiagramms = Settings.get('Pr0p0ll.settings.show_diagramms');
+    readonly apiUrl = 'https://pr0p0ll.com/?p=viewjson&id=';
+
+    inboxLink = document.getElementById('inbox-link')!;
+    target = this.inboxLink.nextSibling!.firstChild! as HTMLElement;
+    template = `<a href="https://pr0p0ll.com/?p=user" target="_blank" class="empty pr0p0ll-count fa fa-edit head-link"><span>0</span></a>`;
+
     constructor() {
-        this.id = 'Pr0p0ll';
-        this.name = 'Pr0p0ll Integration';
-        this.description = 'Erhalte Benachrichtigungen über neue Umfragen!';
-        this.showNotification = Settings.get('Pr0p0ll.settings.show_notification');
-        this.token = Settings.get('Pr0p0ll.settings.user_token');
-        this.showDiagramms = Settings.get('Pr0p0ll.settings.show_diagramms');
-        this.apiUrl = 'https://pr0p0ll.com/?p=viewjson&id=';
-
         moment.locale('de');
     }
 
 
     load() {
-        this.styles = style;
-        this.inboxLink = document.getElementById('inbox-link');
-        this.template = `<a href="https://pr0p0ll.com/?p=user" target="_blank" class="empty pr0p0ll-count fa fa-edit head-link"><span>0</span></a>`;
-        this.inboxLink.after($(this.template)[0]);
-        this.target = this.inboxLink.nextSibling.firstChild;
+        this.inboxLink.after($(template)[0]);
 
-        if (this.token !== 'true') {
+        if (this.token) {
             this.addListener();
         }
 
         p.View.Overlay.Pr0p0llDiagramm = p.View.Base.extend({
             template: template,
-            init: function (container, parent, params) {
+            init: function (container: any, parent: any, params: any) {
                 this.data.p0ll = params.data;
                 this.data.dateTo = moment(params.data.info.endedOn, 'X').format('LL');
                 this.data.dateFrom = moment(params.data.info.endedOn - params.data.info.duration, 'X').format('LL');
@@ -43,17 +45,19 @@ export default class Pr0p0ll {
     }
 
 
-    getSettings() {
+    getSettings(): ModuleSetting[] {
         return [
             {
                 id: 'show_notification',
                 title: 'Desktopbenachrichtigung',
                 description: 'Zeige eine Desktopbenachrichtigung bei neuen Umfragen!',
+                type: "checkbox"
             },
             {
                 id: 'show_diagramms',
                 title: 'Diagramme anzeigen',
-                description: 'Diagramme hinter pr0p0ll-links verlinken'
+                description: 'Diagramme hinter pr0p0ll-links verlinken',
+                type: "checkbox"
             },
             {
                 id: 'user_token',
@@ -65,20 +69,21 @@ export default class Pr0p0ll {
     }
 
 
-    addListener() {
-        if (this.token !== true && this.token.length > 0) {
-            if (RegExp("^([0-9a-f]{64})$").test(this.token.trim())) {
-                this.token = this.token.trim().match("^([0-9a-f]{64})$")[0];
+    addListener() {    
+        const trimmedToken = this.token.trim();
+        if (trimmedToken) {
+            if (/^([0-9a-f]{64})$/.test(trimmedToken)) {
+                this.token = trimmedToken.match("^([0-9a-f]{64})$")![0];
                 Settings.set('Pr0p0ll.settings.user_token', this.token);
 
                 window.addEventListener('userSync', () => {
-                    this.fetchCounter().then(res => {
+                    this.fetchCounter().then((res: any) => {
                         this.updateCounter(res.openPolls);
                     });
                 });
 
                 if (this.showDiagramms) {
-                    window.addEventListener('commentsLoaded', e => {
+                    window.addEventListener('commentsLoaded', (e: any) => {
                         let links = e.data.find('a[href*="pr0p0ll"][href*="id="]');
                         this.addLinks(links);
                     });
@@ -93,30 +98,30 @@ export default class Pr0p0ll {
     }
 
 
-    addLinks(links) {
-        for (let i = 0; i < links.length; i++) {
-            const url = new URL(links[i].href);
+    addLinks(links: any) {
+        for (const element of links) {
+            const url = new URL(element.href);
             let icon = document.createElement('a');
             icon.className = 'fa fa-bar-chart pr0p0ll-link';
 
             icon.addEventListener('click', () => {
                 const pollId = url.searchParams.get('pollid');
-                const id = parseInt(pollId ? pollId : url.searchParams.get('id'));
+                const id = parseInt(pollId !== null ? pollId : url.searchParams.get('id')!);
 
                 Settings.set('Pr0p0ll.settings.last_count', 0);
 
                 this.showDiagramm(id);
             });
 
-            links[i].after(icon);
+            element.after(icon);
         }
     }
 
 
-    showDiagramm(id) {
+    showDiagramm(id: number) {
         let getDiagramm = () => {
             return new Promise((resolve, reject) => {
-                GM_xmlhttpRequest({
+                GM.xmlHttpRequest({
                     url: this.apiUrl + id,
                     method: 'GET',
                     headers: {
@@ -142,7 +147,7 @@ export default class Pr0p0ll {
                 });
 
                 const diag = new Pr0p0llDiagramm(result);
-                new SimpleBar(document.getElementById('overlay-box'));
+                new SimpleBar(document.getElementById('overlay-box')!);
             },
             error => {
                 window.alert(error);
@@ -153,7 +158,7 @@ export default class Pr0p0ll {
 
     fetchCounter() {
         return new Promise((resolve, reject) => {
-            GM_xmlhttpRequest({
+            GM.xmlHttpRequest({
                 url: `https://pr0p0ll.com/?p=notify&token=${this.token}`,
                 method: 'GET',
                 headers: {
@@ -167,10 +172,10 @@ export default class Pr0p0ll {
     }
 
 
-    updateCounter(score) {
+    updateCounter(score: number | any) {
         score = parseInt(score) || 0;
         if (this.showNotification && Settings.get('Pr0p0ll.settings.last_count') < score) {
-            GM_notification(
+            GM.notification(
                 'Du hast ' + (score === 1 ? 'eine neue Umfrage!' : score + ' neue Umfragen!'),
                 'pr0p0ll',
                 'https://pr0p0ll.com/src/favicon.png',
@@ -181,7 +186,7 @@ export default class Pr0p0ll {
             );
         }
 
-        this.target.parentNode.classList.toggle('empty', score === 0 || !score);
+        (this.target.parentNode! as HTMLElement).classList.toggle('empty', score === 0 || !score);
         this.target.innerText = score;
         Settings.set('Pr0p0ll.settings.last_count', score);
     }
