@@ -6,7 +6,7 @@ import * as pkg from "./package.json";
 export default defineConfig(({ mode }) => ({
     plugins: [
         monkeyPlugin({
-            entry: 'src/P0weruser.js',
+            entry: 'src/P0weruser.ts',
             userscript: {
                 name: 'p0weruser - Rel0aded' + (mode === 'production' ? '' : ' [Dev]'),
                 author: 'PoTTii - Created by Florian Maak',
