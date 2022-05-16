@@ -1,0 +1,16 @@
+#head {
+	width: 100% !important;
+	display: flex;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.9);
+}
+@supports(backdrop-filter: blur()) {
+	#head {
+		background-color: rgba(0, 0, 0, 0.58) !important;
+		backdrop-filter: blur(30px);
+	}
+}
+#head-content {
+	background-color: transparent;
+	width: 1052px;
+}
