@@ -8,7 +8,7 @@ import WidescreenMode from './module/WidescreenMode';
 import RepostMarker from './module/RepostMarker/RepostMarker';
 import NotificationCenter from './module/NotificationCenter';
 import DesktopNotifications from './module/DesktopNotifications/DesktopNotifications';
-import StatisticsLinkInNavbar from './module/StatisticsLinkInNavbar';
+import StatisticsLinkInNavbar from './module/StatisticsInNavbar/StatisticsLinkInNavbar';
 import StyleCustomization from './module/StyleCustomization/StyleCustomization';
 import { PoweruserModule } from './types';
 import AdvancedComments from './module/AdvancedComments/AdvancedComments';
@@ -45,7 +45,8 @@ export const modules: PoweruserModule | any[] = [
     new FilterMarks(),
     new ImageOCR(),
     new Rep0st(),
-    new RepostMarker()
+    new RepostMarker(),
+    new StatisticsLinkInNavbar()
 ];
 
 const getActivatedModules = (): PoweruserModule[] => {

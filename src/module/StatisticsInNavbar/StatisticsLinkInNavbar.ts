@@ -1,9 +1,10 @@
-export default class StatisticsLinkInNavbar {
-    constructor() {
-        this.id = 'StatisticsLinkInNavbar';
-        this.name = 'Link to Statistics';
-        this.description = '(Pr0mium) Verlinkt in der Navigation-Bar rechts oben auf die neue Statistik-Seite';
-    }
+import { PoweruserModule } from "@/types";
+
+export default class StatisticsLinkInNavbar implements PoweruserModule{
+    readonly id = 'StatisticsLinkInNavbar';
+    readonly name = 'Link to Statistics';
+    readonly description = '(Pr0mium) Verlinkt in der Navigation-Bar rechts oben auf die neue Statistik-Seite';
+    target = document.getElementsByClassName('user-info user-only')[0];
 
 
     load() {
@@ -11,7 +12,6 @@ export default class StatisticsLinkInNavbar {
     }
 
     addStatsLink() {
-        this.target = document.getElementsByClassName('user-info user-only')[0];
         let elem = document.createElement("a");
         let text = document.createTextNode("Statistiken");
         elem.classList.add('head-link');
