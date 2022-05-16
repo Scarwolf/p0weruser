@@ -7,7 +7,7 @@ import EventHandler from './EventHandler';
 import WidescreenMode from './module/WidescreenMode';
 import RepostMarker from './module/RepostMarker';
 import NotificationCenter from './module/NotificationCenter';
-import DesktopNotifications from './module/DesktopNotifications';
+import DesktopNotifications from './module/DesktopNotifications/DesktopNotifications';
 import FilterMarks from './module/FilterMarks';
 import Rep0st from './module/Rep0st';
 import ImageOCR from './module/ImageOCR';
@@ -40,7 +40,8 @@ export const modules: PoweruserModule | any[] = [
     new AnonymousTitle(),
     new BenisInNavbar(),
     new Chat(),
-    new DefaultFilters()
+    new DefaultFilters(),
+    new DesktopNotifications()
 ];
 
 const getActivatedModules = (): PoweruserModule[] => {
