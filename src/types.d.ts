@@ -23,6 +23,7 @@ export type P = {
     location: 'top' | 'new';
     user: User;
     mainView: any;
+    View: any;
     reload(): any;
 }
 
