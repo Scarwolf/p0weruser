@@ -1,5 +1,6 @@
 import Settings from '../Settings';
 import Utils from '../Utils';
+import style from '../../assets/style/viewedPostsMarker.less?raw'; // TODO
 
 export default class ViewedPostsMarker {
     constructor() {
@@ -11,7 +12,7 @@ export default class ViewedPostsMarker {
 
     load() {
         let _this = this;
-        this.styles = require('../style/viewedPostsMarker.less');
+        this.styles = style;
         this.viewedPosts = ViewedPostsMarker.getViewedPosts();
 
         // TODO: Fire event only once

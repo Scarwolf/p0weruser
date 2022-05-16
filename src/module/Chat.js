@@ -1,4 +1,5 @@
 import SimpleBar from 'simplebar';
+import style from '../../assets/style/chat.less?raw'; // TODO
 
 export default class Chat {
     constructor() {
@@ -8,7 +9,7 @@ export default class Chat {
     }
 
     load() {
-        this.styles = require('../style/chat.less');
+        this.styles = style;
 
         this.overrideView();
     }

@@ -1,9 +1,10 @@
-import settingsStyle from './style/settings.less';
+import style from '../assets/style/settings.less?raw'; // TODO
+import template from '../assets/template/settingsTab.html?raw'; // TODO
 import Utils from './Utils';
 
 export default class Settings {
     constructor(modules) {
-        this.style = settingsStyle;
+        this.style = style;
         this.modules = modules;
         this.tabs = {};
         this.tabContent = {};
@@ -129,7 +130,7 @@ export default class Settings {
         let moduleList = document.createElement('div');
         let modules = this.modules;
 
-        this.tabContent.innerHTML = require('./template/settingsTab.html');
+        this.tabContent.innerHTML = template;
         let list = this.tabContent.querySelectorAll('#addon-list')[0];
 
         // Add list of modules

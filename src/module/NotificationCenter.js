@@ -1,5 +1,8 @@
 import SimpleBar from 'simplebar';
 import Utils from '../Utils';
+import template from '../../assets/template/notificationCenter.html?raw'; // TODO
+import templateEntry from '../../assets/template/notificationEntry.html?raw'; // TODO
+import style from '../../assets/style/notificationCenter.less?raw'; // TODO
 
 export default class NotificationCenter {
     constructor() {
@@ -16,9 +19,9 @@ export default class NotificationCenter {
 
     load() {
         this.menuOpen = false;
-        this.template = require('../template/notificationCenter.html');
-        this.templateEntry = require('../template/notificationEntry.html');
-        this.style = require('../style/notificationCenter.less');
+        this.template = template;
+        this.templateEntry = templateEntry;
+        this.style = style;
         this.icon = $('#inbox-link');
         this.elem = document.createElement('div');
         this.elem.innerHTML = this.template;

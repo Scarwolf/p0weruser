@@ -1,5 +1,6 @@
 import SimpleBar from 'simplebar';
 import Utils from '../Utils';
+import style from '../../assets/style/rep0st.less?raw'; // TODO
 
 export default class Rep0st {
     constructor() {
@@ -13,7 +14,7 @@ export default class Rep0st {
     load() {
         let _this = this;
         this.visible = false;
-        this.styles = require('../style/rep0st.less');
+        this.styles = style;
 
         p.View.Stream.Item = p.View.Stream.Item.extend({
             show: function (rowIndex, itemData, defaultHeight, jumpToComment) {

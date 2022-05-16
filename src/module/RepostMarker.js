@@ -1,4 +1,5 @@
 import Utils from '../Utils';
+import style from "../../assets/style/repostMarker.less?raw"; // TODO
 
 // Inspired by Mopsalarms repost-script
 // https://github.com/mopsalarm/pr0gramm-reposts-userscript
@@ -20,7 +21,7 @@ export default class RepostMarker {
 
 
     load() {
-        this.styles = require('../style/repostMarker.less');
+        this.styles = style;
 
         // Get reposts, if not searched before
         $(document).ajaxComplete((event, request, settings) => {

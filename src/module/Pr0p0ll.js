@@ -2,6 +2,8 @@ import Settings from '../Settings';
 import SimpleBar from 'simplebar';
 import moment from 'moment';
 import Pr0p0llDiagramm from '../lib/Pr0p0llDiagramm';
+import template from '../../assets/template/pr0p0llOverlay.html?raw'; // TODO
+import style from '../../assets/style/pr0p0ll.less?raw'; // TODO
 
 export default class Pr0p0ll {
     constructor() {
@@ -18,7 +20,7 @@ export default class Pr0p0ll {
 
 
     load() {
-        this.styles = require('../style/pr0p0ll.less');
+        this.styles = style;
         this.inboxLink = document.getElementById('inbox-link');
         this.template = `<a href="https://pr0p0ll.com/?p=user" target="_blank" class="empty pr0p0ll-count fa fa-edit head-link"><span>0</span></a>`;
         this.inboxLink.after($(this.template)[0]);
@@ -29,7 +31,7 @@ export default class Pr0p0ll {
         }
 
         p.View.Overlay.Pr0p0llDiagramm = p.View.Base.extend({
-            template: require('../template/pr0p0llOverlay.html'),
+            template: template,
             init: function (container, parent, params) {
                 this.data.p0ll = params.data;
                 this.data.dateTo = moment(params.data.info.endedOn, 'X').format('LL');

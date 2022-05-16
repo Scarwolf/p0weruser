@@ -1,5 +1,6 @@
 import Settings from '../Settings';
 import Utils from '../Utils';
+import style from '../../assets/style/filterMarks.less?raw'; // TODO
 
 export default class FilterMarks {
     constructor() {
@@ -60,7 +61,7 @@ export default class FilterMarks {
 
 
     load() {
-        this.styles = require('../style/filterMarks.less');
+        this.styles = style;
         this.overrideViews();
     }
 
