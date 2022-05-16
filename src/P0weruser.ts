@@ -16,11 +16,11 @@ import ImageOCR from './module/ImageOCR';
 import AnonymousTitle from './module/AnonymousTitle';
 import StatisticsLinkInNavbar from './module/StatisticsLinkInNavbar';
 import DefaultFilters from './module/DefaultFilters';
-import StyleCustomization from './module/StyleCustomization';
+import StyleCustomization from './module/StyleCustomization/StyleCustomization';
 import { PoweruserModule } from './types';
 
 export const modules: PoweruserModule | any[] = [
-    new WidescreenMode(),
+    /*new WidescreenMode(),
     new RepostMarker(),
     new BenisInNavbar(),
     new AdvancedComments(),
@@ -34,7 +34,7 @@ export const modules: PoweruserModule | any[] = [
     new Chat(),
     new AnonymousTitle(),
     new StatisticsLinkInNavbar(),
-    new DefaultFilters(),
+    new DefaultFilters(),*/
     new StyleCustomization()
 ];
 
@@ -54,7 +54,7 @@ const loadModule = (module: PoweruserModule) => {
     module.load();
     console.debug(`Loaded module: ${module.id}`);
 }
-const loadModules = (module: PoweruserModule[]) => module.forEach(m => loadModule(m));
+const loadModules = (modules: PoweruserModule[]) => modules.forEach(m => loadModule(m));
 const addStyles = () => {
     // FontAwesome (Icons)
     let fa = document.createElement('link');
@@ -72,4 +72,5 @@ Utils.addPrototypes();
 new EventHandler();
 new Settings();
 addStyles();
-loadModules(getActivatedModules());
+const activatedModules = getActivatedModules();
+loadModules(activatedModules);

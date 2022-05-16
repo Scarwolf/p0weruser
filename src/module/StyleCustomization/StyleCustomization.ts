@@ -1,16 +1,15 @@
-import Settings from "../Settings";
-import style from "../../assets/style/styleCustomization.less?raw"; // TODO
+import Settings from "@/Settings";
+import "./styleCustomization.css";
 
 export default class StyleCustomization {
     id = 'StyleCustomization';
     name = 'Stilisierung';
-    description = 'Einzelne Style-Anpassungen am pr0, die nicht so richtig in ein Modul gehören.';
-    transparentNavbar = Settings.get(`${this.id}.settings.transparent_navbar`);
-    styles = style;
+    description = '';
+    isTransparentNavbarEnabled = Settings.get(`${this.id}.settings.transparent_navbar`);
 
 
     load() {
-        if(this.transparentNavbar === true) {
+        if(this.isTransparentNavbarEnabled === true) {
             document.getElementById("head")?.classList.add("transparent");
         }
     }
