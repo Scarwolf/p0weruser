@@ -1,20 +1,19 @@
-import Settings from '../Settings';
-import Utils from '../Utils';
-import style from '../../assets/style/filterMarks.less?raw'; // TODO
+import Settings from '@/Settings';
+import { ModuleSetting, PoweruserModule } from '@/types';
+import Utils from '@/Utils';
+import './filterMarks.less';
 
-export default class FilterMarks {
-    constructor() {
-        this.id = 'FilterMarks';
-        this.name = 'Filtermarkierung';
-        this.description = 'Markiert Medien entsprechend ihres Filters.';
+export default class FilterMarks implements PoweruserModule{
+    readonly id = 'FilterMarks';
+    readonly name = 'Filtermarkierung';
+    readonly description = 'Markiert Medien entsprechend ihres Filters.';
 
-        this.displayLabelDetails = Settings.get('FilterMarks.settings.detail_filters');
-        this.displayLabelStream = Settings.get('FilterMarks.settings.stream_filters');
-        this.displayBenisStream = Settings.get('FilterMarks.settings.stream_benis');
-    }
+    displayLabelDetails = Settings.get('FilterMarks.settings.detail_filters');
+    displayLabelStream = Settings.get('FilterMarks.settings.stream_filters');
+    displayBenisStream = Settings.get('FilterMarks.settings.stream_benis');
 
 
-    static displayFilterLabel(itemData, $container) {
+    static displayFilterLabel(itemData: any, $container: any) {
         let filter = FilterMarks.getFilter(itemData);
         let badge = document.createElement('span');
         badge.className = 'badge';
@@ -25,7 +24,7 @@ export default class FilterMarks {
     }
 
 
-    static getFilter(itemData) {
+    static getFilter(itemData: any) {
         switch (itemData.flags) {
             case 1:
                 return 'sfw';
@@ -35,33 +34,37 @@ export default class FilterMarks {
                 return 'nsfl';
             case 8:
                 return 'nsfp';
+            default:
+                throw new Error("Uknown Filter");
         }
     }
 
 
-    getSettings() {
+    getSettings(): ModuleSetting[] {
         return [
             {
                 id: 'stream_filters',
                 title: 'Filter in Streams',
-                description: 'Filterecken in Listen anzeigen?'
+                description: 'Filterecken in Listen anzeigen?',
+                type: "checkbox"
             },
             {
                 id: 'detail_filters',
                 title: 'Filter in Medienansicht',
-                description: 'Filterlabel in der Detailansicht einblenden?'
+                description: 'Filterlabel in der Detailansicht einblenden?',
+                type: "checkbox"
             },
             {
                 id: 'stream_benis',
                 title: 'Benis beim Mouseover',
-                description: 'Benis in der Übersicht einblenden?'
+                description: 'Benis in der Übersicht einblenden?',
+                type: "checkbox"
             }
         ];
     }
 
 
     load() {
-        this.styles = style;
         this.overrideViews();
     }
 
@@ -70,7 +73,7 @@ export default class FilterMarks {
         let _this = this;
 
         // Handle stream-view
-        p.View.Stream.Main.prototype.buildItem = function (item) {
+        p.View.Stream.Main.prototype.buildItem = function (item: any) {
             let content = `<a class="silent thumb filter ${_this.displayLabelStream ? FilterMarks.getFilter(item) : ''}" id="item-${item.id}" href="${this.baseURL + item.id}"><img onload="this.classList.add(\'loaded\')" src="${item.thumb}"/> ${item.promoted > 1000000000 ? '<div class="sticky-badge"></div>' : ''}`;
 
             if (_this.displayBenisStream) {
@@ -84,7 +87,7 @@ export default class FilterMarks {
 
         // Handle detail-view
         p.View.Stream.Item = p.View.Stream.Item.extend({
-            show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
+            show: function (rowIndex: any, itemData: any, defaultHeight: any, jumpToComment: any) {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
 
                 if (_this.displayLabelDetails) {

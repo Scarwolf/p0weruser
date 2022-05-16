@@ -8,7 +8,6 @@ import WidescreenMode from './module/WidescreenMode';
 import RepostMarker from './module/RepostMarker';
 import NotificationCenter from './module/NotificationCenter';
 import DesktopNotifications from './module/DesktopNotifications/DesktopNotifications';
-import FilterMarks from './module/FilterMarks';
 import Rep0st from './module/Rep0st';
 import ImageOCR from './module/ImageOCR';
 import StatisticsLinkInNavbar from './module/StatisticsLinkInNavbar';
@@ -18,6 +17,7 @@ import AdvancedComments from './module/AdvancedComments/AdvancedComments';
 import AnonymousTitle from './module/AnonymousTitle/AnonymousTitle';
 import BenisInNavbar from './module/BenisInNavbar/BenisInNavbar';
 import DefaultFilters from './module/DefaultFilters/DefaultFilters';
+import FilterMarks from './module/FilterMarks/FilterMarks';
 
 export const modules: PoweruserModule | any[] = [
     /*new WidescreenMode(),
@@ -41,7 +41,8 @@ export const modules: PoweruserModule | any[] = [
     new BenisInNavbar(),
     new Chat(),
     new DefaultFilters(),
-    new DesktopNotifications()
+    new DesktopNotifications(),
+    new FilterMarks()
 ];
 
 const getActivatedModules = (): PoweruserModule[] => {
