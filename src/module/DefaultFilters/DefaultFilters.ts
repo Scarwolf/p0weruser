@@ -1,5 +1,5 @@
-import Settings from '../Settings';
-import { P } from '../types';
+import Settings from '@/Settings';
+import { ModuleSetting, PoweruserModule } from '@/types';
 
 type Filter = 'SFW' | 'NSFW' | 'NSFL';
 
@@ -9,9 +9,7 @@ const filterFlags: Record<Filter, number> = {
     NSFL: 2
 };
 
-declare const p: P;
-
-export default class DefaultFilters {
+export default class DefaultFilters implements PoweruserModule {
     readonly id = 'DefaultFilter';
     readonly name = 'Standard Filter';
     readonly description = 'Standardfilter, der mit dem Aufruf von pr0 gesetzt wird. ' + 
@@ -23,10 +21,10 @@ export default class DefaultFilters {
     readonly nsfwFilter = Settings.get(`${this.id}.settings.nsfw_filter`) as string;
     readonly nsflFilter = Settings.get(`${this.id}.settings.nsfl_filter`) as string;
 
-    constructor() { }
+    constructor() { /* */  }
 
 
-    getSettings() {
+    getSettings(): ModuleSetting[] {
         return [
             {
                 id: 'sfw_filter',

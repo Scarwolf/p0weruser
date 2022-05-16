@@ -20,7 +20,7 @@ export default class Chat implements PoweruserModule {
                 pane.css('height', `calc(100vh - ${top}px)`);
 
                 let cPane = pane.find('.conversations-pane');
-                new SimpleBar(cPane[0]);
+                let cScroll = new SimpleBar(cPane[0]);
 
                 this.parent();
             }

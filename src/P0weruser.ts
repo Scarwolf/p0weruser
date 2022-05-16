@@ -12,12 +12,12 @@ import FilterMarks from './module/FilterMarks';
 import Rep0st from './module/Rep0st';
 import ImageOCR from './module/ImageOCR';
 import StatisticsLinkInNavbar from './module/StatisticsLinkInNavbar';
-import DefaultFilters from './module/DefaultFilters';
 import StyleCustomization from './module/StyleCustomization/StyleCustomization';
 import { PoweruserModule } from './types';
 import AdvancedComments from './module/AdvancedComments/AdvancedComments';
 import AnonymousTitle from './module/AnonymousTitle/AnonymousTitle';
 import BenisInNavbar from './module/BenisInNavbar/BenisInNavbar';
+import DefaultFilters from './module/DefaultFilters/DefaultFilters';
 
 export const modules: PoweruserModule | any[] = [
     /*new WidescreenMode(),
@@ -39,7 +39,8 @@ export const modules: PoweruserModule | any[] = [
     new AdvancedComments(),
     new AnonymousTitle(),
     new BenisInNavbar(),
-    new Chat()
+    new Chat(),
+    new DefaultFilters()
 ];
 
 const getActivatedModules = (): PoweruserModule[] => {
