@@ -22,6 +22,7 @@ export type Flag = 'sfw' | 'nsfw' | 'nsfl';
 export type P = {
     location: 'top' | 'new';
     user: User;
+    mainView: any;
     reload(): any;
 }
 
@@ -30,4 +31,9 @@ export type User = {
     id: string;
     flags: number;
     name: string;
+    inboxCount: number;
+}
+
+declare global {
+    const p: P;
 }
