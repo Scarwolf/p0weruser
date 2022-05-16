@@ -1,8 +1,9 @@
+import { ModuleSetting, PoweruserModule } from '@/types';
 import Settings from '../../Settings';
 import Utils from '../../Utils';
 import './viewedPostsMarker.less';
 
-export default class ViewedPostsMarker {
+export default class ViewedPostsMarker implements PoweruserModule {
     readonly id = 'ViewedPostsMarker';
     readonly name = '"Bereits gesehen"-Markierung';
     readonly description = 'Markiert bereits gesehene Medien.';
@@ -58,12 +59,13 @@ export default class ViewedPostsMarker {
         return JSON.parse(posts as string);
     }
 
-    getSettings() {
+    getSettings(): ModuleSetting[] {
         return [
             {
                 id: 'mark_own_favorites_as_viewed',
                 title: 'Eigene Favoriten ebenfalls als gelesen markieren',
-                description: 'Markiert Posts in den persönlichen Sammlungen als gelesen'
+                description: 'Markiert Posts in den persönlichen Sammlungen als gelesen',
+                type: "checkbox"
             }
         ];
     }

@@ -19,22 +19,7 @@ import FilterMarks from './module/FilterMarks/FilterMarks';
 import ImageOCR from './module/ImageOCR/ImageOCR';
 import Rep0st from './module/Rep0st/Rep0st';
 
-export const modules: PoweruserModule | any[] = [
-    /*new WidescreenMode(),
-    new RepostMarker(),
-    new BenisInNavbar(),
-    new AdvancedComments(),
-    new NotificationCenter(),
-    new DesktopNotifications(),
-    new FilterMarks(),
-    new Rep0st(),
-    new ImageOCR(),
-    new Pr0p0ll(),
-    new ViewedPostsMarker(),
-    new Chat(),
-    new AnonymousTitle(),
-    new StatisticsLinkInNavbar(),
-    new DefaultFilters(),*/
+export const modules: PoweruserModule[] = [
     new StyleCustomization(),
     new AdvancedComments(),
     new AnonymousTitle(), 
