@@ -1,4 +1,5 @@
 import Settings from '../Settings';
+import style from '../../assets/style/advancedComments.less?raw'; // TODO
 
 export default class AdvancedComments {
     constructor() {
@@ -16,7 +17,7 @@ export default class AdvancedComments {
 
 
     load() {
-        this.styles = require('../style/advancedComments.less');
+        this.styles = style;
 
         this.prepareComments();
     }

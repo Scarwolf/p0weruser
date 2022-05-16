@@ -1,6 +1,8 @@
 import Tesseract from 'tesseract.js';
 import SimpleBar from 'simplebar';
 import Utils from '../Utils';
+import style from '../../assets/style/imageOCR.less?raw'; // TODO
+import template from '../../assets/template/ocrPopup.html?raw'; // TODO
 
 export default class ImageOCR {
     constructor() {
@@ -11,8 +13,8 @@ export default class ImageOCR {
 
 
     load() {
-        this.styles = require('../style/imageOCR.less');
-        this.template = require('../template/ocrPopup.html');
+        this.styles = style;
+        this.template = template;
         this.searchWording = 'Verarbeite Bild...';
         this.popup = document.createElement('div');
         this.popup.id = 'ocr-popup';

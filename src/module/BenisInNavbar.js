@@ -1,5 +1,6 @@
 import Settings from '../Settings';
 import Utils from '../Utils';
+import style from '../../assets/style/benisInNavbar.less?raw'; //TODO
 
 export default class BenisInNavbar {
     constructor() {
@@ -11,7 +12,7 @@ export default class BenisInNavbar {
 
     load() {
         this.benis = '-';
-        this.styles = require('../style/benisInNavbar.less');
+        this.styles = style;
         this.target = document.getElementById('user-profile-name');
 
         if (Settings.get('BenisInNavbar.settings.legacy_icon')) {

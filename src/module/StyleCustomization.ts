@@ -1,5 +1,5 @@
 import Settings from "../Settings";
-import { classes } from "../style/styleCustomization.module.css";
+import style from "../../assets/style/styleCustomization.less?raw"; // TODO
 
 export default class StyleCustomization {
     id = 'StyleCustomization';

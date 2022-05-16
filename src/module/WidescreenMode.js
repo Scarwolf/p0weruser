@@ -2,6 +2,10 @@ import SimpleBar from 'simplebar';
 import Settings from '../Settings';
 import Utils from '../Utils';
 
+import style from "../../assets/style/widescreenMode.less?raw"; // TODO
+import streamItemTemplate from "../../assets/template/streamItem.html?raw"; // TODO
+import streamItemCommentsTemplate from "../../assets/template/streamItemComments.html?raw"; // TODO
+
 export default class WidescreenMode {
     constructor() {
         this.id = 'WidescreenMode';
@@ -55,7 +59,7 @@ export default class WidescreenMode {
         this.comments = [];
         this.commentsWide = window.localStorage.getItem('comments_wide') === 'true';
         this.commentsClosed = window.localStorage.getItem('comments_closed') === 'true';
-        this.styles = require('../style/widescreenMode.less');
+        this.styles = style;
         this.header = document.getElementById('head-content');
 
         this.nav = {
@@ -200,7 +204,7 @@ export default class WidescreenMode {
         let _this = this;
 
         p.View.Stream.Item = p.View.Stream.Item.extend({
-            template: require('../template/streamItem.html'),
+            template: streamItemTemplate,
             show: function (rowIndex, itemData, defaultHeight, jumpToComment, cacheBust) {
                 itemData.trimmedUrl = itemData.image.replace(/^\/\//g, "")
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment, cacheBust);
@@ -253,7 +257,7 @@ export default class WidescreenMode {
 
         // Extend comments-rendering and template
         p.View.Stream.Comments = p.View.Stream.Comments.extend({
-            template: require('../template/streamItemComments.html'),
+            template: streamItemCommentsTemplate,
             render: function () {
                 this.parent();
                 _this.comments = [this.$commentForm.find('textarea')[0]];
