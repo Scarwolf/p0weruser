@@ -34,6 +34,20 @@ export type User = {
     inboxCount: number;
 }
 
+export type UserSyncEvent = {
+    type: "userSync";
+    data: {
+        score: number;
+        inbox: {
+            comments: number;
+            mentions: number;
+            messages: number;
+            notifications: number;
+            follows: number;
+        }
+    }
+};
+
 declare global {
     const p: P;
 }

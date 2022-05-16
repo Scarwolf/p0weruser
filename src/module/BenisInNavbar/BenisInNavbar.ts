@@ -1,5 +1,5 @@
 import './benisInNavbar.less';
-import { ModuleSetting, PoweruserModule } from '@/types';
+import { ModuleSetting, PoweruserModule, UserSyncEvent } from '@/types';
 import Settings from '@/Settings';
 
 export default class BenisInNavbar implements PoweruserModule {
@@ -53,9 +53,8 @@ export default class BenisInNavbar implements PoweruserModule {
 
 
     addListener() {
-        window.addEventListener('userSync', (e: any) => {
-            console.log(e);
-            this.benis = e.data.score;
+        window.addEventListener('userSync', (e: unknown) => {
+            this.benis = String((e as UserSyncEvent).data.score);
 
             this.addBenis();
         });
