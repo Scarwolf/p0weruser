@@ -1,6 +1,6 @@
 import Chat from './module/Chat/Chat';
 import Pr0p0ll from './module/Pr0p0ll';
-import ViewedPostsMarker from './module/ViewedPowersMarker/ViewedPostsMarker';
+import ViewedPostsMarker from './module/ViewedPostsMarker/ViewedPostsMarker';
 import Settings from './Settings';
 import Utils from './Utils';
 import EventHandler from './EventHandler';
@@ -37,7 +37,7 @@ export const modules: PoweruserModule | any[] = [
     new DefaultFilters(),*/
     new StyleCustomization(),
     new AdvancedComments(),
-    new AnonymousTitle(),
+    new AnonymousTitle(), 
     new BenisInNavbar(),
     new Chat(),
     new DefaultFilters(),
