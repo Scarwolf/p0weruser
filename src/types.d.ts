@@ -25,6 +25,7 @@ export type P = {
     mainView: any;
     View: any;
     reload(): any;
+    api: any;
 }
 
 export type User = {
@@ -34,6 +35,7 @@ export type User = {
     flags: number;
     name: string;
     inboxCount: number;
+    setInboxLink: (inbox: any) => any;
 }
 
 export type UserSyncEvent = {
