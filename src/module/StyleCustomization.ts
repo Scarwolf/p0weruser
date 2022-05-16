@@ -1,11 +1,12 @@
 import Settings from "../Settings";
+import { classes } from "../style/styleCustomization.module.css";
 
 export default class StyleCustomization {
     id = 'StyleCustomization';
     name = 'Stilisierung';
     description = 'Einzelne Style-Anpassungen am pr0, die nicht so richtig in ein Modul gehören.';
     transparentNavbar = Settings.get(`${this.id}.settings.transparent_navbar`);
-    styles = require('../style/styleCustomization.less');
+    styles = style;
 
 
     load() {

@@ -1,12 +1,11 @@
-import settingsTpl from './template/settingsTab.html';
 import settingsStyle from './style/settings.less';
 import Utils from './Utils';
 import P0weruser from './P0weruser';
 
 export default class Settings {
-    constructor(app) {
+    constructor(modules) {
         this.style = settingsStyle;
-        this.app = app;
+        this.modules = modules;
         this.tabs = {};
         this.tabContent = {};
         this.hintIsShown = false;
@@ -128,9 +127,9 @@ export default class Settings {
     toggleSettingsTab(button) {
         Utils.changeLocation('/settings/addons');
         let moduleList = document.createElement('div');
-        let modules = this.app.modules;
+        let modules = this.modules;
 
-        this.tabContent.innerHTML = settingsTpl;
+        this.tabContent.innerHTML = require('./template/settingsTab.html');
         let list = this.tabContent.querySelectorAll('#addon-list')[0];
 
         // Add list of modules
@@ -176,7 +175,7 @@ export default class Settings {
     }
 
     addModuleSettings(beforeElement) {
-        const modules = this.app.modules;
+        const modules = this.modules;
         const activated = P0weruser.getActivatedModules();
         let wrapper = document.createElement('div');
         wrapper.id = 'module-settings';

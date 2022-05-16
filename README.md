@@ -42,6 +42,5 @@ branch-style and follow the commits conventions. If your work is done, please su
 pull request. 
 
 ## [Dev] Installation
-After checkout run ```npm install``` and [npm](https://www.npmjs.com/) will install all needed dependencies and creates a new build in ```/dist```-Folder. After installation run
-```npm run dev``` to start filewatchers, which are starting a new build after each filechange. Just create a new UserScript in Tapermonkey and add your local file (found in
-```dist``` folder) to test your script. 
+After checkout run `npm install` and [npm](https://www.npmjs.com/) will install all needed dependencies. After installation run
+`npm run dev dev` to start dev server, which opens a browser window to install the dev version. File changes will automatically apply 
