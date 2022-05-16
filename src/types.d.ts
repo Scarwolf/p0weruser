@@ -28,6 +28,7 @@ export type P = {
 }
 
 export type User = {
+    flagsName: any;
     admin: boolean;
     id: string;
     flags: number;

@@ -1,23 +1,21 @@
 import SimpleBar from 'simplebar';
-import Utils from '../Utils';
-import style from '../../assets/style/rep0st.less?raw'; // TODO
+import Utils from '@/Utils';
+import { PoweruserModule } from '@/types';
+import "./Rep0st.less";
 
-export default class Rep0st {
-    constructor() {
-        this.closeBtn = {};
-        this.id = 'Rep0st';
-        this.name = 'Rep0st Check';
-        this.description = 'Frage rene8888, ob es sich um einen rep0st handelt.';
-    }
-
+export default class Rep0st implements PoweruserModule {
+    closeBtn = {};
+    readonly id = 'Rep0st';
+    readonly name = 'Rep0st Check';
+    readonly description = 'Frage rene8888, ob es sich um einen rep0st handelt.';
+    visible = false;
+    $loader?: JQuery<HTMLElement>;
 
     load() {
         let _this = this;
-        this.visible = false;
-        this.styles = style;
 
         p.View.Stream.Item = p.View.Stream.Item.extend({
-            show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
+            show: function (rowIndex: any, itemData: any, defaultHeight: any, jumpToComment: any) {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
 
                 _this.addButton(this.$container);
@@ -33,9 +31,9 @@ export default class Rep0st {
     }
 
 
-    addButton(container) {
+    addButton(container: any) {
         const imgElement = container.find('.item-image-actual:not([src*=".gif"])');
-        this.loader = $(`<span class="fa fa-spinner fa-spin loader"></span>`);
+        this.$loader = $(`<span class="fa fa-spinner fa-spin loader"></span>`);
 
         if (imgElement[0] && imgElement[0].tagName !== 'VIDEO') {
             const template = $(`<a title="Prüfe, ob es sich um einen Repost handelt" class="repost-link"><span class="fa fa-copy"></span> rep0st?</a>`);
@@ -51,7 +49,7 @@ export default class Rep0st {
     }
 
 
-    checkImage(container, imgElement) {
+    checkImage(container: any, imgElement:any) {
         let dta = new FormData();
         let result = $('<div></div>');
         let bar = $('<div class="rep0sts"></div>');
@@ -59,7 +57,7 @@ export default class Rep0st {
         let closeBtn = $(`<span class=" fa fa-close close"></span>`);
         template.append(closeBtn);
         bar.append(template);
-        bar.append(this.loader);
+        bar.append(this.$loader!);
         container.find('.image-main').after(bar);
 
         new SimpleBar(bar[0]);
@@ -82,22 +80,23 @@ export default class Rep0st {
             dta.append('filter', filter);
         }
 
-        GM_xmlhttpRequest({
+        GM.xmlHttpRequest({
             url: 'https://rep0st.rene8888.at/',
             method: 'POST',
             headers: {
                 'cache-control': 'no-cache',
-                'Upgrade-Insecure-Requests': 1,
+                'Upgrade-Insecure-Requests': '1',
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
             },
             overrideMimeType: 'multipart/form-data',
+            // @ts-ignore
             data: dta,
             onload: (res) => {
                 let output = [];
                 this.visible = true;
-                this.loader.remove();
-                result.html($(res.responseText));
-                const images = result.find('.search-results a');
+                this.$loader!.remove();
+                result.html(res.responseText);
+                const images = result.find('.search-results a') as JQuery<HTMLAnchorElement>;
 
                 let currentPostId = this.getCurrentPostId();
                 for (let i = 1; i < images.length; i++) {
@@ -108,7 +107,7 @@ export default class Rep0st {
 
                         let postUrl = images[i].href;
                         let probability = childrenList.children[0].innerHTML;
-                        let imgSrc = childrenList.children[1].src;
+                        let imgSrc = (childrenList.children[1] as HTMLImageElement).src;
 
                         output.push({
                             url: postUrl,
@@ -130,26 +129,26 @@ export default class Rep0st {
     }
 
 
-    displayImages(bar, urls) {
+    displayImages(bar: any, urls: any) {
         bar = bar.find('.simplebar-content');
 
-        for (let i = 0; i < urls.length; i++) {
-            let probabilityContainer = `<div class="probability">${urls[i].probability}</div>`;
+        for (const element of urls) {
+            let probabilityContainer = `<div class="probability">${element.probability}</div>`;
 
-            let container = bar.append($(`<a href=${urls[i].url} target="_blank"><img src=${urls[i].img} class="rep0st-thumb" />${probabilityContainer}<span title="Als Repost markieren" class="fa fa-comment"></span></a>`));
+            let container = bar.append($(`<a href=${element.url} target="_blank"><img src=${element.img} class="rep0st-thumb" />${probabilityContainer}<span title="Als Repost markieren" class="fa fa-comment"></span></a>`));
 
-            let comment = container.find(`a[href='${urls[i].url}'] > .fa.fa-comment`)[0];
+            let comment = container.find(`a[href='${element.url}'] > .fa.fa-comment`)[0];
 
-            comment.addEventListener('click', (e) => {
+            comment.addEventListener('click', (e: MouseEvent) => {
                 e.preventDefault();
                 let body = $(document.body);
-                const comment = `Re: ${urls[i].url}`;
+                const comment = `Re: ${element.url}`;
                 let commentField = body.find('.comment:not(.reply)');
                 let tagsForm = body.find('.tag-form');
 
-                commentField[0].value = comment;
+                (commentField[0] as any).value = comment;
                 commentField.parent().find('input[type="submit"]')[0].click();
-                tagsForm.find('.item-tagsinput')[0].value = 'repost';
+                (tagsForm.find('.item-tagsinput')[0] as any).value = 'repost';
                 tagsForm.find('input[type="submit"]').click();
             });
         }
