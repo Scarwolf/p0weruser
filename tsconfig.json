@@ -5,6 +5,7 @@
     "exclude": [],
     "compilerOptions": {
       "outDir": "./dist/",
+      "allowSyntheticDefaultImports": true,
       "noImplicitAny": true,
       "module": "ESNext",
       "target": "es2019",

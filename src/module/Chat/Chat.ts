@@ -1,16 +1,13 @@
+import { PoweruserModule } from '@/types';
 import SimpleBar from 'simplebar';
-import style from '../../assets/style/chat.less?raw'; // TODO
+import './chat.less';
 
-export default class Chat {
-    constructor() {
-        this.id = 'Chat';
-        this.name = '[WIP] Chat';
-        this.description = 'Missbrauche die PMs als Chat.';
-    }
+export default class Chat implements PoweruserModule {
+    readonly id = 'Chat';
+    readonly name = '[WIP] Chat';
+    readonly description = 'Missbrauche die PMs als Chat.';
 
     load() {
-        this.styles = style;
-
         this.overrideView();
     }
 
@@ -23,7 +20,7 @@ export default class Chat {
                 pane.css('height', `calc(100vh - ${top}px)`);
 
                 let cPane = pane.find('.conversations-pane');
-                let cScroll = new SimpleBar(cPane[0]);
+                new SimpleBar(cPane[0]);
 
                 this.parent();
             }

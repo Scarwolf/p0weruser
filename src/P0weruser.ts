@@ -1,4 +1,4 @@
-import Chat from './module/Chat';
+import Chat from './module/Chat/Chat';
 import Pr0p0ll from './module/Pr0p0ll';
 import ViewedPostsMarker from './module/ViewedPostsMarker';
 import Settings from './Settings';
@@ -38,7 +38,8 @@ export const modules: PoweruserModule | any[] = [
     new StyleCustomization(),
     new AdvancedComments(),
     new AnonymousTitle(),
-    new BenisInNavbar()
+    new BenisInNavbar(),
+    new Chat()
 ];
 
 const getActivatedModules = (): PoweruserModule[] => {
