@@ -1,10 +1,10 @@
 import Chat from './module/Chat/Chat';
-import Pr0p0ll from './module/Pr0p0ll';
+import Pr0p0ll from './module/Pr0poll/Pr0p0ll';
 import ViewedPostsMarker from './module/ViewedPostsMarker/ViewedPostsMarker';
 import Settings from './Settings';
 import Utils from './Utils';
 import EventHandler from './EventHandler';
-import WidescreenMode from './module/WidescreenMode';
+import WidescreenMode from './module/WidescreenMode/WidescreenMode';
 import RepostMarker from './module/RepostMarker/RepostMarker';
 import NotificationCenter from './module/NotificationCenter/NotificationCenter';
 import DesktopNotifications from './module/DesktopNotifications/DesktopNotifications';
@@ -48,7 +48,8 @@ export const modules: PoweruserModule | any[] = [
     new RepostMarker(),
     new StatisticsLinkInNavbar(),
     new ViewedPostsMarker(),
-    new NotificationCenter()
+    new NotificationCenter(),
+    new Pr0p0ll()
 ];
 
 const getActivatedModules = (): PoweruserModule[] => {
