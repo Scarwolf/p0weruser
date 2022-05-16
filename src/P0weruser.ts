@@ -6,7 +6,7 @@ import Utils from './Utils';
 import EventHandler from './EventHandler';
 import WidescreenMode from './module/WidescreenMode';
 import RepostMarker from './module/RepostMarker/RepostMarker';
-import NotificationCenter from './module/NotificationCenter';
+import NotificationCenter from './module/NotificationCenter/NotificationCenter';
 import DesktopNotifications from './module/DesktopNotifications/DesktopNotifications';
 import StatisticsLinkInNavbar from './module/StatisticsInNavbar/StatisticsLinkInNavbar';
 import StyleCustomization from './module/StyleCustomization/StyleCustomization';
@@ -47,7 +47,8 @@ export const modules: PoweruserModule | any[] = [
     new Rep0st(),
     new RepostMarker(),
     new StatisticsLinkInNavbar(),
-    new ViewedPostsMarker()
+    new ViewedPostsMarker(),
+    new NotificationCenter()
 ];
 
 const getActivatedModules = (): PoweruserModule[] => {
