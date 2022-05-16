@@ -5,7 +5,7 @@ import Settings from './Settings';
 import Utils from './Utils';
 import EventHandler from './EventHandler';
 import WidescreenMode from './module/WidescreenMode';
-import RepostMarker from './module/RepostMarker';
+import RepostMarker from './module/RepostMarker/RepostMarker';
 import NotificationCenter from './module/NotificationCenter';
 import DesktopNotifications from './module/DesktopNotifications/DesktopNotifications';
 import StatisticsLinkInNavbar from './module/StatisticsLinkInNavbar';
@@ -44,7 +44,8 @@ export const modules: PoweruserModule | any[] = [
     new DesktopNotifications(),
     new FilterMarks(),
     new ImageOCR(),
-    new Rep0st()
+    new Rep0st(),
+    new RepostMarker()
 ];
 
 const getActivatedModules = (): PoweruserModule[] => {
