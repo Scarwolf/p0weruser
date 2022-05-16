@@ -1,34 +1,34 @@
-import Settings from '../Settings';
-import style from '../../assets/style/advancedComments.less?raw'; // TODO
+import Settings from '@/Settings';
+import { ModuleSetting, P, PoweruserModule } from '@/types';
+import './advancedComments.less';
 
-export default class AdvancedComments {
-    constructor() {
-        this.id = 'AdvancedComments';
-        this.name = 'Erweiterte Kommentare';
-        this.description = 'Erweitert die Kommentare um Farben und weitere Funktionen';
-        this.displayColors = Settings.get('AdvancedComments.settings.display_colors');
-    }
+declare const p: P;
+
+export default class AdvancedComments implements PoweruserModule {
+    readonly id = 'AdvancedComments';
+    readonly name = 'Erweiterte Kommentare';
+    readonly description = 'Erweitert die Kommentare um Farben und weitere Funktionen';
+    readonly isDisplayColorsEnabled = Settings.get('AdvancedComments.settings.display_colors');
 
 
-    static handleMouseover(pId, source) {
-        const elem = document.querySelectorAll(`#${pId} .comment-content`);
+    static handleMouseover(pId: string, source: HTMLElement) {
+        const elem = $(`#${pId} .comment-content`);
         source.title = elem[0].innerText;
     }
 
 
     load() {
-        this.styles = style;
-
         this.prepareComments();
     }
 
 
-    getSettings() {
+    getSettings(): ModuleSetting[] {
         return [
             {
                 id: 'display_colors',
                 title: 'Kommentarfarben',
-                description: 'Färbe Kommentarebenen ein!'
+                description: 'Färbe Kommentarebenen ein!',
+                type: "checkbox"
             }
         ];
     }
@@ -36,15 +36,15 @@ export default class AdvancedComments {
 
     prepareComments() {
         window.addEventListener('commentsLoaded', () => {
-            if (!this.displayColors) {
+            if (!this.isDisplayColorsEnabled) {
                 $('.comments').addClass('no-colors');
             }
 
             const comments = $('.comments .comment-box .comment');
-            for (let i = 0; i < comments.length; i++) {
-                const container = $(comments[i]);
+            for (const element of comments) {
+                const container = $(element);
                 const comment = $(container.parents('.comment-box')[0]).prev('.comment');
-                const userHref = container.find('.comment-foot > a.user')[0].href;
+                const userHref = (container.find('.comment-foot > a.user')[0] as HTMLAnchorElement).href;
                 const isOwnComment = userHref.substr(userHref.lastIndexOf('/') + 1) === p.user.name;
 
                 if (comment[0]) {

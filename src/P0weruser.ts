@@ -7,7 +7,6 @@ import EventHandler from './EventHandler';
 import WidescreenMode from './module/WidescreenMode';
 import RepostMarker from './module/RepostMarker';
 import BenisInNavbar from './module/BenisInNavbar';
-import AdvancedComments from './module/AdvancedComments';
 import NotificationCenter from './module/NotificationCenter';
 import DesktopNotifications from './module/DesktopNotifications';
 import FilterMarks from './module/FilterMarks';
@@ -18,6 +17,7 @@ import StatisticsLinkInNavbar from './module/StatisticsLinkInNavbar';
 import DefaultFilters from './module/DefaultFilters';
 import StyleCustomization from './module/StyleCustomization/StyleCustomization';
 import { PoweruserModule } from './types';
+import AdvancedComments from './module/AdvancedComments/AdvancedComments';
 
 export const modules: PoweruserModule | any[] = [
     /*new WidescreenMode(),
@@ -35,7 +35,8 @@ export const modules: PoweruserModule | any[] = [
     new AnonymousTitle(),
     new StatisticsLinkInNavbar(),
     new DefaultFilters(),*/
-    new StyleCustomization()
+    new StyleCustomization(),
+    new AdvancedComments()
 ];
 
 const getActivatedModules = (): PoweruserModule[] => {
