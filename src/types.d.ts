@@ -8,7 +8,7 @@ export type PoweruserModule = {
     getSettings?: () => ModuleSetting[]
 };
 
-export type ModuleSettingType = 'text';
+export type ModuleSettingType = 'text' | 'number' | 'checkbox';
 
 export type ModuleSetting = {
     id: string;
