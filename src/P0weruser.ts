@@ -49,7 +49,8 @@ export const modules: PoweruserModule | any[] = [
     new StatisticsLinkInNavbar(),
     new ViewedPostsMarker(),
     new NotificationCenter(),
-    new Pr0p0ll()
+    new Pr0p0ll(),
+    new WidescreenMode()
 ];
 
 const getActivatedModules = (): PoweruserModule[] => {

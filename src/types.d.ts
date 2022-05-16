@@ -20,15 +20,20 @@ export type ModuleSetting = {
 export type Flag = 'sfw' | 'nsfw' | 'nsfl';
 
 export type P = {
+    currentView: any;
+    NAVIGATE: any;
     location: 'top' | 'new';
     user: User;
     mainView: any;
     View: any;
     reload(): any;
     api: any;
+    shouldShowScore: (thing: any) => any;
+    navigateTo: (location: any, mode?: any) => any;
 }
 
 export type User = {
+    voteCache: any;
     flagsName: any;
     admin: boolean;
     id: string;
@@ -36,6 +41,13 @@ export type User = {
     name: string;
     inboxCount: number;
     setInboxLink: (inbox: any) => any;
+}
+
+export type GlobalPr0Config = {
+    READ_ONLY: boolean;
+    HOST: string;
+    ABSOLUTE_PATH: string;
+    HEADER_HEIGHT: number;
 }
 
 export type UserSyncEvent = {
@@ -54,4 +66,5 @@ export type UserSyncEvent = {
 
 declare global {
     const p: P;
+    const CONFIG: GlobalPr0Config;
 }

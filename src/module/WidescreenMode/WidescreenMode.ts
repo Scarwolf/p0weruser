@@ -1,33 +1,49 @@
 import SimpleBar from 'simplebar';
-import Settings from '../Settings';
-import Utils from '../Utils';
+import Settings from '../../Settings';
+import Utils from '../../Utils';
 
-import style from "../../assets/style/widescreenMode.less?raw"; // TODO
-import streamItemTemplate from "../../assets/template/streamItem.html?raw"; // TODO
-import streamItemCommentsTemplate from "../../assets/template/streamItemComments.html?raw"; // TODO
+import "./widescreenMode.less";
+// @ts-ignore
+import streamItemTemplate from "../../../assets/template/streamItem.html?raw"; // TODO
+// @ts-ignore
+import streamItemCommentsTemplate from "../../../assets/template/streamItemComments.html?raw"; // TODO
+import { ModuleSetting, PoweruserModule } from '@/types';
 
-export default class WidescreenMode {
-    constructor() {
-        this.id = 'WidescreenMode';
-        this.name = 'Widescreen Mode';
-        this.container = {};
-        this.commentsContainer = {};
-        this.resized = false;
-        this.listenerAdded = false;
-        this.description = 'Stellt das pr0 im Breitbildmodus dar.';
-        this.displayBenis = Settings.get('WidescreenMode.settings.display_benis');
-        this.closeOnBackgroundClick = Settings.get('WidescreenMode.settings.close_on_background');
-        this.mouseControl = Settings.get('WidescreenMode.settings.mouse_control');
-        this.displayBenisbar = Settings.get('WidescreenMode.settings.display_benisbar');
-        this.scrollMultiplicator = parseInt(Settings.get('WidescreenMode.settings.scroll_speed')) || 1;
-        this.displayBenisUntilTop = Settings.get("WidescreenMode.settings.display_benis_until_top");
-        this.biggerStreamNavIcons = Settings.get("WidescreenMode.settings.bigger_stream_nav_icons");
-        this.commentsLeft = Settings.get("WidescreenMode.settings.comments_left");
-        this.logoLinksToNew = Settings.get('WidescreenMode.settings.logo_links_to_new');
-    }
+export default class WidescreenMode implements PoweruserModule {
+    readonly id = 'WidescreenMode';
+    readonly name = 'Widescreen Mode';
+    container: any = {};
+    commentsContainer: any = {};
+    resized: boolean = false;
+    listenerAdded = false;
+    readonly description = 'Stellt das pr0 im Breitbildmodus dar.';
+    readonly displayBenis = Settings.get('WidescreenMode.settings.display_benis');
+    readonly closeOnBackgroundClick = Settings.get('WidescreenMode.settings.close_on_background');
+    readonly mouseControl = Settings.get('WidescreenMode.settings.mouse_control');
+    readonly displayBenisbar = Settings.get('WidescreenMode.settings.display_benisbar');
+    readonly scrollMultiplicator = Number(Settings.get('WidescreenMode.settings.scroll_speed') as string) || 1;
+    readonly displayBenisUntilTop = Settings.get("WidescreenMode.settings.display_benis_until_top");
+    readonly biggerStreamNavIcons = Settings.get("WidescreenMode.settings.bigger_stream_nav_icons");
+    readonly commentsLeft = Settings.get("WidescreenMode.settings.comments_left");
+    readonly logoLinksToNew = Settings.get('WidescreenMode.settings.logo_links_to_new');
+
+    commentsWide = window.localStorage.getItem('comments_wide') === 'true';
+    commentsClosed = window.localStorage.getItem('comments_closed') === 'true';
+    comments: any[] = [];
+    header = document.getElementById('head-content');
+    nav: { button: any, links: any, container: any } = {
+        button: null,
+        links: null,
+        container: document.getElementById('footer-links')
+    };
+    logoLink?: HTMLAnchorElement;
+    moveLink = document.getElementsByClassName('move-link')[0]!;
+    img?: any;
+    isMoveable: boolean = false;
 
 
-    handleWheelChange(e) {
+
+    handleWheelChange(e: WheelEvent) {
         if (this.isMoveable) {
             this.img.animate({
                 top: (e.deltaY > 0 ? '-=' : '+=') + (20 * this.scrollMultiplicator)
@@ -44,37 +60,20 @@ export default class WidescreenMode {
             }
         }
 
-        let el = {};
-        if (e.deltaY < 0) {
-            el = document.getElementsByClassName('stream-prev')[0];
-        } else {
-            el = document.getElementsByClassName('stream-next')[0];
-        }
+        const el: HTMLElement = e.deltaY < 0 ? (document.getElementsByClassName('stream-prev')[0] as HTMLElement) : (document.getElementsByClassName('stream-next')[0] as HTMLElement);
 
         el.click();
     }
 
 
     load() {
-        this.comments = [];
-        this.commentsWide = window.localStorage.getItem('comments_wide') === 'true';
-        this.commentsClosed = window.localStorage.getItem('comments_closed') === 'true';
-        this.styles = style;
-        this.header = document.getElementById('head-content');
-
-        this.nav = {
-            button: null,
-            links: null,
-            container: document.getElementById('footer-links')
-        };
-
         this.checkScoreDisplay();
         this.addInputListeners();
         this.addHeaderListener();
         this.overrideViews();
         this.addNavigation();
 
-        if (this.logoLinksToNew) {
+        if(this.logoLinksToNew) {
             this.modifyLogo();
         }
     }
@@ -88,37 +87,43 @@ export default class WidescreenMode {
     }
 
 
-    getSettings() {
+    getSettings(): ModuleSetting[] {
         return [
             {
                 id: 'display_benis_until_top',
                 title: 'Benis bis beliebt anzeigen',
-                description: 'Zeigt an, wie viel Benis ungefähr bis beliebt fehlt. (Nur mit Benisleiste möglich)'
+                description: 'Zeigt an, wie viel Benis ungefähr bis beliebt fehlt. (Nur mit Benisleiste möglich)',
+                type: "checkbox"
             },
             {
                 id: 'display_benis',
                 title: 'Benis sofort anzeigen',
-                description: 'Zeigt den Benis direkt ohne Wartezeit an!'
+                description: 'Zeigt den Benis direkt ohne Wartezeit an!',
+                type: "checkbox"
             },
             {
                 id: 'mouse_control',
                 title: 'Steuerung mit der Maus',
-                description: 'Wechsle mit dem Mausrad zwischen Medien.'
+                description: 'Wechsle mit dem Mausrad zwischen Medien.',
+                type: "checkbox"
             },
             {
                 id: 'close_on_background',
                 title: 'Hintergrund schließt',
-                description: 'Bei Klick auf Hintergrund Medium schließen.'
+                description: 'Bei Klick auf Hintergrund Medium schließen.',
+                type: "checkbox"
             },
             {
                 id: 'display_benisbar',
                 title: 'Benisleiste anzeigen',
-                description: 'Zeigt die Benisverteilung als Leiste an.'
+                description: 'Zeigt die Benisverteilung als Leiste an.',
+                type: "checkbox"
             },
             {
                 id: 'bigger_stream_nav_icons',
                 title: 'Post-Navigationslinks vergrößern',
-                description: 'Vergrößert die Links um zum nächsten/vorherigen Post zu kommen. (Nur ohne pr0mium)'
+                description: 'Vergrößert die Links um zum nächsten/vorherigen Post zu kommen. (Nur ohne pr0mium)',
+                type: "checkbox"
             },
             {
                 id: 'scroll_speed',
@@ -130,24 +135,26 @@ export default class WidescreenMode {
                 id: 'comments_left',
                 title: 'Kommentare auf der linken Seite',
                 description: 'Wenn deaktiviert werden Kommentare auf der rechten Seite des Bildschirms angezeigt.',
+                type: "checkbox"
             },
             {
                 id: 'logo_links_to_new',
                 title: 'Logo-Verlinkung auf Neu',
-                description: 'Wenn aktiviert bringt dich ein Klick auf das pr0gramm Logo nach /new statt /top.'
+                description: 'Wenn aktiviert bringt dich ein Klick auf das pr0gramm Logo nach /new statt /top.',
+                type: "checkbox"
             },
         ];
     }
 
 
     addHeaderListener() {
-        let headerLinks = document.querySelectorAll('#head-menu > a');
-        for (let i = 0; i < headerLinks.length; i++) {
-            $(headerLinks[i]).unbind('click');
-            headerLinks[i].addEventListener('click', e => {
+        const headerLinks: NodeListOf<HTMLAnchorElement> = document.querySelectorAll('#head-menu > a');
+        for (const element of headerLinks) {
+            $(element).unbind('click');
+            element.addEventListener('click', e => {
                 e.preventDefault();
 
-                let href = headerLinks[i].attributes.href.nodeValue;
+                let href = element.href;
                 if (href.charAt(0) === '/') {
                     href = href.slice(1);
                 }
@@ -167,12 +174,12 @@ export default class WidescreenMode {
             this.listenerAdded = true;
             document.addEventListener('keydown', (e) => {
                 this.handleKeypress(e,
-                    document.activeElement.tagName === 'TEXTAREA' ||
-                    document.activeElement.tagName === 'INPUT'
+                    document.activeElement!.tagName === 'TEXTAREA' ||
+                    document.activeElement!.tagName === 'INPUT'
                 );
             });
 
-            window.addEventListener('locationChange', (e) => {
+            window.addEventListener('locationChange', (e: any) => {
                 if (e.mode === 0 || !e.isPost) {
                     document.body.classList.remove('fixed');
                 }
@@ -182,10 +189,10 @@ export default class WidescreenMode {
 
 
     modifyLogo() {
-        let originalLink = document.getElementById('pr0gramm-logo-link');
+        const originalLink: HTMLAnchorElement = document.getElementById('pr0gramm-logo-link')! as HTMLAnchorElement;
 
-        this.logoLink = originalLink.cloneNode(true);
-        originalLink.parentNode.replaceChild(this.logoLink, originalLink);
+        this.logoLink = originalLink.cloneNode(true) as HTMLAnchorElement;
+        originalLink.parentNode!.replaceChild(this.logoLink, originalLink);
         this.logoLink.href = '/new';
 
         this.logoLink.addEventListener('click', (e) => {
@@ -205,12 +212,12 @@ export default class WidescreenMode {
 
         p.View.Stream.Item = p.View.Stream.Item.extend({
             template: streamItemTemplate,
-            show: function (rowIndex, itemData, defaultHeight, jumpToComment, cacheBust) {
+            show: function (rowIndex: number, itemData: any, defaultHeight: any, jumpToComment: any, cacheBust: any) {
                 itemData.trimmedUrl = itemData.image.replace(/^\/\//g, "")
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment, cacheBust);
                 this.syncVotes(p.user.voteCache.votes);
 
-                let benisbar = document.getElementsByClassName('benisbar')[0];
+                const benisbar: HTMLElement = document.getElementsByClassName('benisbar')[0] as HTMLElement;
                 if (_this.displayBenisbar) {
                     if (itemData.down > 0) {
                         let percentage = itemData.up / (itemData.up + itemData.down);
@@ -219,30 +226,30 @@ export default class WidescreenMode {
                     }
 
                     if (_this.displayBenisUntilTop) {
-                        var now = new Date();
+                        const now = Date.now();
                         if (Math.abs(now - itemData.date) / 36e5 < 3 && itemData.promoted == 0) {
                             benisbar.dataset.afterText += " (" + _this.calculateBenisUntilTop(itemData.up, itemData.down, itemData.date) + " bis beliebt)";
                         }
                     }
-
-                    benisbar.classList.add('show', _this.displayBenisbar);
+                    
+                    benisbar.classList.add('show', String(_this.displayBenisbar));
                 }
 
                 _this.addItemListener(this.$image, itemData);
                 document.body.classList.add('fixed');
 
-                if (_this.biggerStreamNavIcons) {
+                if(_this.biggerStreamNavIcons) {
                     let prev = document.getElementsByClassName('stream-prev-icon')[0];
                     let next = document.getElementsByClassName('stream-next-icon')[0];
 
-                    if (prev !== undefined)
+                    if(prev !== undefined)
                         prev.classList.add('stream-prev-icon-xl');
 
-                    if (next !== undefined)
+                    if(next !== undefined)
                         next.classList.add('stream-next-icon-xl');
                 }
 
-                if (!_this.commentsLeft) {
+                if(!_this.commentsLeft) {
                     document.getElementsByClassName('item-container-content')[0].classList.add('right');
                 }
             },
@@ -273,17 +280,17 @@ export default class WidescreenMode {
                     this.$container[0].classList.toggle('wide');
                     _this.commentsWide = this.$container[0].classList.contains('wide');
 
-                    window.localStorage.setItem('comments_wide', _this.commentsWide);
+                    window.localStorage.setItem('comments_wide', String(_this.commentsWide));
                 });
 
                 commentsClose.addEventListener('click', () => {
                     this.$container[0].classList.toggle('closed');
                     _this.commentsClosed = this.$container[0].classList.contains('closed');
 
-                    window.localStorage.setItem('comments_closed', _this.commentsClosed);
+                    window.localStorage.setItem('comments_closed', String(_this.commentsClosed));
                 })
             },
-            focusComment(comment) {
+            focusComment(comment: any) {
                 let target = this.$container.find('#' + comment);
                 if (target.length) {
                     Utils.waitForElement('.simplebar-scroll-content').then((el) => {
@@ -294,14 +301,14 @@ export default class WidescreenMode {
                     });
                 }
             },
-            showReplyForm(ev) {
+            showReplyForm(ev: any) {
                 this.parent(ev);
                 let id = ev.currentTarget.href.split(':comment')[1];
                 _this.comments.push(document.querySelectorAll(`#comment${id} textarea`)[0]);
             }
         });
 
-        p.View.Stream.Comments.SortConfidenceTime = (itemUser) => function (a, b) {
+        p.View.Stream.Comments.SortConfidenceTime = (itemUser: any) => function (a: any, b: any) {
             if (a.confidence >= 0.2 && itemUser === a.name && itemUser !== b.name) {
                 return -1;
             } else if (b.confidence >= 0.2 && itemUser === b.name && itemUser !== a.name) {
@@ -310,33 +317,31 @@ export default class WidescreenMode {
             return (b.confidence === a.confidence ? a.created - b.created : b.confidence - a.confidence);
         };
 
-        p.View.Stream.Comments.SortTime = function (a, b) {
+        p.View.Stream.Comments.SortTime = function (a: any, b: any) {
             return (a.created - b.created);
         };
 
         // Handle stream-building
-        p.View.Stream.Main.prototype.buildItemRows = function (items) {
+        p.View.Stream.Main.prototype.buildItemRows = function (items: any) {
             let result = '';
 
             for (const element of items) {
                 result += this.buildItem(element);
             }
 
-            return `<div class="stream-row">${result}</div>`;
+            return `<div class="item-row">${result}</div>`;
         };
     }
 
-    calculateBenisUntilTop(up, down, date) {
+    calculateBenisUntilTop(up: any, down: any, date: any) {
         return Math.ceil(7.2857 * down + ((date.getHours() >= 22 || date.getHours() <= 6) ? 15 : 16) - up);
     }
 
-    addItemListener(image, itemData) {
+    addItemListener(image: any, itemData: any) {
         this.img = image;
         this.container = this.img[0].parentNode;
         this.resized = (itemData.height > this.container.offsetHeight || itemData.width > this.container.offsetWidth);
         this.container.classList.toggle('resized', this.resized);
-        this.moveLink = document.getElementsByClassName('move-link')[0];
-
         // Enable draggable
         if (this.resized) {
             this.container.classList.add('oversize');
@@ -346,7 +351,7 @@ export default class WidescreenMode {
 
         // Handle wheel-change
         if (this.mouseControl) {
-            this.container.addEventListener('wheel', (e) => {
+            this.container.addEventListener('wheel', (e: any) => {
                 e.preventDefault();
 
                 this.handleWheelChange(e);
@@ -360,7 +365,7 @@ export default class WidescreenMode {
             });
         }
 
-        this.container.addEventListener('click', e => {
+        this.container.addEventListener('click', (e: any) => {
             if (e.target === this.container && this.closeOnBackgroundClick) {
                 p.currentView.hideItem();
             }
@@ -368,10 +373,10 @@ export default class WidescreenMode {
     }
 
 
-    handleKeypress(e, isInput = false) {
+    handleKeypress(e: any, isInput: boolean = false) {
         if (isInput) {
-            if (event.ctrlKey && e.code === 'Enter') {
-                $(document.activeElement).parents('form').find('input[type="submit"]')[0].click();
+            if (e.ctrlKey && e.code === 'Enter') {
+                $(document.activeElement!).parents('form').find('input[type="submit"]')[0].click();
             }
 
             return true;
@@ -406,8 +411,8 @@ export default class WidescreenMode {
 
     hasUnsentComments() {
         if (p.user.id) {
-            for (let i = 0; i < this.comments.length; i++) {
-                if (this.comments[i].value !== '') {
+            for (const element of this.comments) {
+                if (element.value !== '') {
                     return true;
                 }
             }
@@ -444,14 +449,14 @@ export default class WidescreenMode {
         this.nav.button = document.createElement('a');
         this.nav.links = this.nav.container.querySelectorAll('a');
         this.nav.button.className = 'fa fa-bars sidebar-toggle';
-        this.header.insertBefore(this.nav.button, this.header.firstChild);
+        this.header!.insertBefore(this.nav.button, this.header!.firstChild);
 
         this.nav.button.addEventListener('click', () => {
             this.toggleNavigation();
         });
 
-        for (let i = 0; i < this.nav.links.length; i++) {
-            this.nav.links[i].addEventListener('click', () => {
+        for (const element of this.nav.links) {
+            element.addEventListener('click', () => {
                 this.toggleNavigation();
             });
         }
@@ -462,17 +467,17 @@ export default class WidescreenMode {
 
 
     toggleNavigation() {
-        this.nav.container.classList.toggle('open');
-        this.nav.button.classList.toggle('active');
+        this.nav.container!.classList.toggle('open');
+        (this.nav.button! as HTMLElement).classList.toggle('active');
     }
 
 
-    addMenuItem(name, url, faClass) {
+    addMenuItem(name: any, url: any, faClass: any) {
         let elem = document.createElement('a');
         elem.className = faClass;
         elem.innerText = name;
         elem.href = url;
         elem.target = '_blank';
-        this.nav.container.firstElementChild.appendChild(elem);
+        this.nav.container.firstElementChild!.appendChild(elem);
     }
 }
