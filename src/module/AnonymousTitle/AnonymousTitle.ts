@@ -1,12 +1,11 @@
-import Settings from '../Settings';
+import { ModuleSetting, P, PoweruserModule } from '@/types';
+import Settings from '@/Settings';
 
-export default class AnonymousTitle {
-    constructor() {
-        this.id = 'AnonymousTitle';
-        this.name = 'Anonymous Title';
-        this.description = 'Entfernt den Top Tag aus dem Titel oder wähle einen eigenen Titel.';
-        this.customTitle = Settings.get('AnonymousTitle.settings.custom_title');
-    }
+export default class AnonymousTitle implements PoweruserModule {
+    readonly id = 'AnonymousTitle';
+    readonly name = 'Anonymous Title';
+    readonly description = 'Entfernt den Top Tag aus dem Titel oder wähle einen eigenen Titel.';
+    readonly customTitle = Settings.get('AnonymousTitle.settings.custom_title');
 
     load() {
         this.addListeners();
@@ -14,19 +13,19 @@ export default class AnonymousTitle {
 
     addListeners() {
         p.mainView.setTitle = () => this.changeTitle();
-        window.addEventListener('userSync', (e) => this.changeTitle());
+        window.addEventListener('userSync', () => this.changeTitle());
     }
 
 
     changeTitle() {
-        if (this.customTitle !== true && this.customTitle !== '') {
+        if (typeof this.customTitle === "string" && this.customTitle) {
             document.title = p.user.inboxCount > 0 ? '[' + p.user.inboxCount + '] ' + this.customTitle : this.customTitle;
         } else {
             document.title = `${p.user.inboxCount > 0 ? '[' + p.user.inboxCount + ']' : ''} pr0gramm.com – Die Datingplattform für Kellerkinder`;
         }
     }
 
-    getSettings() {
+    getSettings(): ModuleSetting[] {
         return [
             {
                 id: 'custom_title',

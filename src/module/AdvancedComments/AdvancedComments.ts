@@ -2,8 +2,6 @@ import Settings from '@/Settings';
 import { ModuleSetting, P, PoweruserModule } from '@/types';
 import './advancedComments.less';
 
-declare const p: P;
-
 export default class AdvancedComments implements PoweruserModule {
     readonly id = 'AdvancedComments';
     readonly name = 'Erweiterte Kommentare';

@@ -12,12 +12,12 @@ import DesktopNotifications from './module/DesktopNotifications';
 import FilterMarks from './module/FilterMarks';
 import Rep0st from './module/Rep0st';
 import ImageOCR from './module/ImageOCR';
-import AnonymousTitle from './module/AnonymousTitle';
 import StatisticsLinkInNavbar from './module/StatisticsLinkInNavbar';
 import DefaultFilters from './module/DefaultFilters';
 import StyleCustomization from './module/StyleCustomization/StyleCustomization';
 import { PoweruserModule } from './types';
 import AdvancedComments from './module/AdvancedComments/AdvancedComments';
+import AnonymousTitle from './module/AnonymousTitle/AnonymousTitle';
 
 export const modules: PoweruserModule | any[] = [
     /*new WidescreenMode(),
@@ -36,7 +36,8 @@ export const modules: PoweruserModule | any[] = [
     new StatisticsLinkInNavbar(),
     new DefaultFilters(),*/
     new StyleCustomization(),
-    new AdvancedComments()
+    new AdvancedComments(),
+    new AnonymousTitle()
 ];
 
 const getActivatedModules = (): PoweruserModule[] => {
