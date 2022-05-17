@@ -3,6 +3,9 @@ import { defineConfig } from "vite";
 import monkeyPlugin from "vite-plugin-monkey";
 import * as pkg from "./package.json";
 
+const getFileName = (mode: "production" | string) => mode === 'production' ? 'p0weruser.user.js' : 'p0weruser.dev.user.js';
+const getScriptUrl = (mode: "production" | string) => `https://scarwolf.github.io/p0weruser/${getFileName(mode)}`;
+
 export default defineConfig(({ mode }) => ({
     plugins: [
         monkeyPlugin({
@@ -25,11 +28,17 @@ export default defineConfig(({ mode }) => ({
                     // newer to still receive an update but this is different between script engines. If so, we most likely need to 
                     // append another suffix (Maybe Date or GitHub Run ID).
                     version: pkg.version + (mode === 'production' ? '' : '-dev'),
-                    updateURL: mode === 'production' ? 'https://scarwolf.github.io/p0weruser/p0weruser.user.js' : 'https://scarwolf.github.io/p0weruser/p0weruser.dev.user.js',
-                    downloadURL: mode === 'production' ? 'https://scarwolf.github.io/p0weruser/p0weruser.user.js' : 'https://scarwolf.github.io/p0weruser/p0weruser.dev.user.js',
+                    updateURL: getScriptUrl(mode),
+                    downloadURL: getScriptUrl(mode)
+            },
+            build: {
+                fileName: getFileName(mode),
             }
         })
     ],
+    build: {
+        minify: true
+    },
     resolve: {
         alias: {
             '@': path.resolve(__dirname, 'src')
