@@ -1,6 +1,8 @@
 import { ModuleSetting, PoweruserModule } from '@/types';
 import Settings from '@/core/Settings/Settings';
-import Utils from '../../Utils';
+import Utils, { loadStyle } from '@/Utils';
+// @ts-ignore
+import style from './viewedPostsMarker.less?inline';
 
 export default class ViewedPostsMarker implements PoweruserModule {
     readonly id = 'ViewedPostsMarker';
@@ -38,8 +40,7 @@ export default class ViewedPostsMarker implements PoweruserModule {
 
         // Fix audio-controls
         Utils.addVideoConstants();
-        // @ts-ignore
-        await import('./viewedPostsMarker.less');
+        loadStyle(style);
     }
 
     static markAsViewed(id: number) {

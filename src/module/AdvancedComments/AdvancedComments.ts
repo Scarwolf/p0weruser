@@ -1,5 +1,8 @@
 import Settings from '@/core/Settings/Settings';
 import { ModuleSetting, P, PoweruserModule } from '@/types';
+import { loadStyle } from '@/Utils';
+// @ts-ignore
+import style from "./advancedComments.less?inline";
 
 export default class AdvancedComments implements PoweruserModule {
     readonly id = 'AdvancedComments';
@@ -16,9 +19,7 @@ export default class AdvancedComments implements PoweruserModule {
 
     async load() {
         this.prepareComments();
-        // TODO: Let typescript know about less files.
-        // @ts-ignore
-        await import('./advancedComments.less');
+        loadStyle(style);
     }
 
 

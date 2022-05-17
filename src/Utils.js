@@ -1,3 +1,9 @@
+export const loadStyle = (style) => {
+    const styleElement = document.createElement("style");
+    styleElement.innerText = style;
+    document.head.appendChild(styleElement);
+}
+
 export default class Utils {
     static waitForElement(selector) {
         return new Promise((resolve, reject) => {

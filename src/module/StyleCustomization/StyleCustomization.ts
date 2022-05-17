@@ -1,5 +1,8 @@
 import Settings from "@/core/Settings/Settings";
 import { ModuleSetting, PoweruserModule } from "@/types";
+import Utils, { loadStyle } from '@/Utils';
+// @ts-ignore
+import style from './styleCustomization.css?inline';
 
 export default class StyleCustomization implements PoweruserModule {
     readonly id = 'StyleCustomization';
@@ -12,8 +15,7 @@ export default class StyleCustomization implements PoweruserModule {
         if(this.isTransparentNavbarEnabled === true) {
             document.getElementById("head")?.classList.add("transparent");
         }
-        // @ts-ignore
-        await import('./styleCustomization.css');
+        loadStyle(style);
     }
 
     getSettings(): ModuleSetting[] {
