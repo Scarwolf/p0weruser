@@ -1,42 +1,11 @@
-import Chat from './module/Chat/Chat';
-import Pr0p0ll from './module/Pr0poll/Pr0p0ll';
-import ViewedPostsMarker from './module/ViewedPostsMarker/ViewedPostsMarker';
 import Utils from './Utils';
 import EventHandler from './EventHandler';
-import WidescreenMode from './module/WidescreenMode/WidescreenMode';
-import RepostMarker from './module/RepostMarker/RepostMarker';
-import NotificationCenter from './module/NotificationCenter/NotificationCenter';
-import DesktopNotifications from './module/DesktopNotifications/DesktopNotifications';
-import StatisticsLinkInNavbar from './module/StatisticsInNavbar/StatisticsLinkInNavbar';
-import StyleCustomization from './module/StyleCustomization/StyleCustomization';
 import { PoweruserModule } from './types';
-import AdvancedComments from './module/AdvancedComments/AdvancedComments';
-import AnonymousTitle from './module/AnonymousTitle/AnonymousTitle';
-import BenisInNavbar from './module/BenisInNavbar/BenisInNavbar';
-import DefaultFilters from './module/DefaultFilters/DefaultFilters';
-import FilterMarks from './module/FilterMarks/FilterMarks';
-import ImageOCR from './module/ImageOCR/ImageOCR';
-import Rep0st from './module/Rep0st/Rep0st';
 import Settings from './core/Settings/Settings';
+import { modules } from './module';
 
-export const modules: PoweruserModule[] = [
-    new StyleCustomization(),
-    new AdvancedComments(),
-    new AnonymousTitle(), 
-    new BenisInNavbar(),
-    new Chat(),
-    new DefaultFilters(),
-    new DesktopNotifications(),
-    new FilterMarks(),
-    new ImageOCR(),
-    new Rep0st(),
-    new RepostMarker(),
-    new StatisticsLinkInNavbar(),
-    new ViewedPostsMarker(),
-    new NotificationCenter(),
-    new Pr0p0ll(),
-    new WidescreenMode()
-];
+const allModules = Object.values(modules)
+    .map(m => m());
 
 const getActivatedModules = (): PoweruserModule[] => {
     const setting = window.localStorage.getItem('activated_modules');
@@ -46,7 +15,8 @@ const getActivatedModules = (): PoweruserModule[] => {
         return [];
     }
     const activeModuleIds: string[] = JSON.parse(setting);
-    return modules.filter(m => activeModuleIds.includes(m.id));
+    return allModules
+        .filter(m => activeModuleIds.includes(m.id));
 }
 
 
@@ -72,6 +42,6 @@ const activatedModules = getActivatedModules();
 
 Utils.addPrototypes();
 new EventHandler();
-new Settings(modules, activatedModules);
+new Settings(allModules, activatedModules);
 addStyles();
 loadModules(activatedModules);
