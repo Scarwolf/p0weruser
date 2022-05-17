@@ -17,7 +17,7 @@ export type ModuleSetting = {
     type: ModuleSettingType;
 };
 
-export type Flag = 'sfw' | 'nsfw' | 'nsfl';
+export type FlagName = 'sfw' | 'nsfw' | 'nsfl';
 
 export type P = {
     currentView: any;
@@ -34,6 +34,14 @@ export type P = {
 
 export type User = {
     voteCache: any;
+    cookie: {
+        t: number;
+        lp: boolean;
+        lv: number;
+        n: string;
+        id: string;
+        verified: boolean;
+    };
     flagsName: any;
     admin: boolean;
     id: string;
@@ -43,10 +51,36 @@ export type User = {
     setInboxLink: (inbox: any) => any;
 }
 
+export type Flag = {
+    flag: number;
+    name: FlagName;
+};
+
 export type GlobalPr0Config = {
+    ABSOLUTE_PATH: string;
+    ADS: {
+        ACCOUNT: string;
+        AMAZON_REF: false;
+        REFRESH_INTERVAL: number;
+    };
+    API: {
+        ENDPOINT: string;
+        ALLOWED_UPLOAD_TYPES: string[];
+    };
+    PATH: {
+        FULLSIZE: string;
+        IMAGES: string;
+        THUMBS: string;
+        VIDS: string;
+    };
+    SFW_FAG: {
+        NSFL: Flag;
+        NSFP: Flag;
+        NSFW: Flag;
+        SFW: Flag;
+    }
     READ_ONLY: boolean;
     HOST: string;
-    ABSOLUTE_PATH: string;
     HEADER_HEIGHT: number;
 }
 
