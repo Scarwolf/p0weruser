@@ -28,7 +28,7 @@ export default class Rep0st implements PoweruserModule {
 
         Utils.addVideoConstants();
         // @ts-ignore
-        await import('./Rep0st.less');
+        await import('./rep0st.less');
     }
 
 
