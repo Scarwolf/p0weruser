@@ -320,6 +320,30 @@ export default class WidescreenMode {
 
             return `<div class="item-row">${result}</div>`;
         };
+
+        // Override next - original code - adjustments are commented
+        p.View.Stream.Main.prototype.next = function (ev) {
+            var $next = this.getNextItem(this.$currentItem);
+            if (!$next.length) {
+                return false;
+            }
+            // Dont use a scrollTo value, to prevent the page from scrolling
+            this.showItem($next, null);
+            p.navigateTo($next.attr('href').substr(1), p.NAVIGATE.SILENT);
+            return false;
+        };
+
+        // Override prev - original code - adjustments are commented
+        p.View.Stream.Main.prototype.prev = function (ev) {
+            var $prev = this.getPrevItem(this.$currentItem);
+            if (!$prev.length) {
+                return false;
+            }
+            // Dont use a scrollTo value, to prevent the page from scrolling
+            this.showItem($next, null);
+            p.navigateTo($prev.attr('href').substr(1), p.NAVIGATE.SILENT);
+            return false;
+        };
     }
 
     calculateBenisUntilTop(up, down, date) {
