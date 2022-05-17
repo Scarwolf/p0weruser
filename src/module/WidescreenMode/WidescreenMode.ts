@@ -66,7 +66,7 @@ export default class WidescreenMode implements PoweruserModule {
     }
 
 
-    load() {
+    async load() {
         this.checkScoreDisplay();
         this.addInputListeners();
         this.addHeaderListener();

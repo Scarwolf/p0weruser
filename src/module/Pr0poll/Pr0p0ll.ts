@@ -25,7 +25,7 @@ export default class Pr0p0ll implements PoweruserModule{
     }
 
 
-    load() {
+    async load() {
         this.inboxLink.after($(template)[0]);
 
         if (this.token) {

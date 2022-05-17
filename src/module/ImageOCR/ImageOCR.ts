@@ -4,8 +4,9 @@ import Utils from '@/Utils';
 import './imageOCR.less';
 // @ts-ignore
 import template from '../../../assets/template/ocrPopup.html?raw'; // TODO
+import { PoweruserModule } from '@/types';
 
-export default class ImageOCR {
+export default class ImageOCR implements PoweruserModule {
     readonly id = 'ImageOCR';
     readonly name = 'Texterkennung';
     readonly description = 'Extrahiere Text aus Bildern.'
@@ -17,7 +18,7 @@ export default class ImageOCR {
     close?: HTMLElement;
     
 
-    load() {
+    async load() {
         const popup = document.createElement('div');
         popup.id = 'ocr-popup';
         this.popup = popup;

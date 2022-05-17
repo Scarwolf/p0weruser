@@ -11,7 +11,7 @@ export default class Rep0st implements PoweruserModule {
     visible = false;
     $loader?: JQuery<HTMLElement>;
 
-    load() {
+    async load() {
         let _this = this;
 
         p.View.Stream.Item = p.View.Stream.Item.extend({

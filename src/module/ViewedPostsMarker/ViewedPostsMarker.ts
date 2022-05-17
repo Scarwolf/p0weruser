@@ -11,7 +11,7 @@ export default class ViewedPostsMarker implements PoweruserModule {
 
     viewedPosts: number[] = ViewedPostsMarker.getViewedPosts();
 
-    load() {
+    async load() {
         let _this = this;
 
         // TODO: Fire event only once

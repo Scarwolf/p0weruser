@@ -14,7 +14,7 @@ export default class BenisInNavbar implements PoweruserModule {
     benis = "-";
 
 
-    load() {
+    async load() {
         if(this.target === null) {
             throw new Error("Could not find target");
         }

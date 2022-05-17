@@ -7,7 +7,7 @@ export default class AnonymousTitle implements PoweruserModule {
     readonly description = 'Entfernt den Top Tag aus dem Titel oder wähle einen eigenen Titel.';
     readonly customTitle = Settings.get('AnonymousTitle.settings.custom_title');
 
-    load() {
+    async load() {
         this.addListeners();
     }
 
