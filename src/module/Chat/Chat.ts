@@ -1,6 +1,5 @@
 import { PoweruserModule } from '@/types';
 import SimpleBar from 'simplebar';
-import './chat.less';
 
 export default class Chat implements PoweruserModule {
     readonly id = 'Chat';
@@ -9,6 +8,8 @@ export default class Chat implements PoweruserModule {
 
     async load() {
         this.overrideView();
+        // @ts-ignore
+        await import('./chat.less');
     }
 
     overrideView() {

@@ -4,7 +4,6 @@ import Utils from '../../Utils';
 import template from '../../../assets/template/notificationCenter.html?raw'; // TODO
 //@ts-ignore
 import templateEntry from '../../../assets/template/notificationEntry.html?raw'; // TODO
-import './notificationCenter.less';
 import { PoweruserModule } from '@/types';
 
 export default class NotificationCenter implements PoweruserModule {
@@ -28,6 +27,8 @@ export default class NotificationCenter implements PoweruserModule {
         document.querySelectorAll('.user-info.user-only')[0].appendChild(this.elem);
 
         this.addListener();
+        // @ts-ignore
+        await import('./notificationCenter.less');
     }
 
 

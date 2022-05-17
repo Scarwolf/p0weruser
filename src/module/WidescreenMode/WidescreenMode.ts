@@ -2,7 +2,6 @@ import SimpleBar from 'simplebar';
 import Settings from '@/core/Settings/Settings';
 import Utils from '../../Utils';
 
-import "./widescreenMode.less";
 // @ts-ignore
 import streamItemTemplate from "../../../assets/template/streamItem.html?raw"; // TODO
 // @ts-ignore
@@ -76,6 +75,8 @@ export default class WidescreenMode implements PoweruserModule {
         if(this.logoLinksToNew) {
             this.modifyLogo();
         }
+        // @ts-ignore
+        await import('./widescreenMode.less');
     }
 
     checkScoreDisplay() {

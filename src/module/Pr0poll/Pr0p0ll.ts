@@ -4,7 +4,6 @@ import moment from 'moment';
 import Pr0p0llDiagramm from '@/lib/Pr0p0llDiagramm';
 // @ts-ignore
 import template from '../../../assets/template/pr0p0llOverlay.html?raw'; // TODO
-import './pr0p0ll.less';
 import { ModuleSetting, PoweruserModule } from '@/types';
 
 export default class Pr0p0ll implements PoweruserModule{
@@ -42,6 +41,8 @@ export default class Pr0p0ll implements PoweruserModule{
                 this.parent(container, parent);
             }
         });
+        // @ts-ignore
+        await import('./pr0p0ll.less');
     }
 
 

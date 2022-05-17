@@ -1,5 +1,4 @@
 import Utils from '@/Utils';
-import "./repostMarker.less";
 import { PoweruserModule } from '@/types';
 
 // Inspired by Mopsalarms repost-script
@@ -28,6 +27,8 @@ export default class RepostMarker implements PoweruserModule {
                 }
             });
         });
+        // @ts-ignore
+        await import('./repostMarker.less');
     }
 
     handleAjax(url: string) {

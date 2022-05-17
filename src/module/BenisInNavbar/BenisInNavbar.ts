@@ -1,4 +1,3 @@
-import './benisInNavbar.less';
 import { ModuleSetting, PoweruserModule, UserSyncEvent } from '@/types';
 import Settings from '@/core/Settings/Settings';
 
@@ -25,6 +24,8 @@ export default class BenisInNavbar implements PoweruserModule {
 
         this.addListener();
         this.addBenis();
+        // @ts-ignore
+        await import('./benisInNavbar.less');
     }
 
     getSettings(): ModuleSetting[] {
