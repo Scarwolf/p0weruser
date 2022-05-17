@@ -1,5 +1,5 @@
 import Settings from '@/core/Settings/Settings';
-import { ModuleSetting, PoweruserModule } from '@/types';
+import { ModuleSetting, PoweruserModule, StreamItem } from '@/types';
 import Utils, { loadStyle } from '@/Utils';
 // @ts-ignore
 import style from './filterMarks.less?inline';
@@ -74,29 +74,46 @@ export default class FilterMarks implements PoweruserModule{
     overrideViews() {
         let _this = this;
 
-        // Handle stream-view
-        p.View.Stream.Main.prototype.buildItem = function (item: any) {
-            let content = `<a class="silent thumb filter ${_this.displayLabelStream ? FilterMarks.getFilter(item) : ''}" id="item-${item.id}" href="${this.baseURL + item.id}"><img onload="this.classList.add(\'loaded\')" src="${item.thumb}"/> ${item.promoted > 1000000000 ? '<div class="sticky-badge"></div>' : ''}`;
-
-            if (_this.displayBenisStream) {
-                content += `<span class="benis-info ${item.up - item.down > 0 ? 'up' : 'down'}">${item.up - item.down}</span></a>`;
-            }
-            else {
-                content += '</a>';
-            }
-            return content;
-        };
-
-        // Handle detail-view
-        p.View.Stream.Item = p.View.Stream.Item.extend({
-            show: function (rowIndex: any, itemData: any, defaultHeight: any, jumpToComment: any) {
-                this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
-
-                if (_this.displayLabelDetails) {
-                    FilterMarks.displayFilterLabel(itemData, this.$container);
+        if(this.displayLabelStream || this.displayBenisStream) {
+            // Handle stream-view
+            const original = p.View.Stream.Main.prototype.buildItem; // Prevent the original call
+            p.View.Stream.Main.prototype.buildItem = function (item: StreamItem) {
+                const originalResult = original(item); // build original item
+                
+                // Parse to HTMLElement
+                const dummyElement = document.createElement("span");
+                dummyElement.innerHTML = originalResult;
+                const child = dummyElement.firstChild! as HTMLAnchorElement;
+                // TODO: Link building is not possible within the original function, because this.baseURL is undefined.
+                //       I don't know why and its late, so do it here again.
+                child.href = this.baseURL + item.id;
+                if(_this.displayLabelStream) {
+                    child.classList.add("filter", FilterMarks.getFilter(item));
                 }
-            }
-        });
+                if(_this.displayBenisStream) {
+                    const benisInfoSpan = document.createElement("span");
+                    const benisAmount = item.up - item.down;
+                    benisInfoSpan.classList.add("benis-info", benisAmount ? 'up' : 'down');
+                    benisInfoSpan.innerText = String(benisAmount);
+                    child.append(benisInfoSpan);
+                }
+
+                return dummyElement.innerHTML;
+            };
+        }
+
+        if(this.displayLabelDetails) {
+            // Handle detail-view
+            p.View.Stream.Item = p.View.Stream.Item.extend({
+                show: function (rowIndex: any, itemData: any, defaultHeight: any, jumpToComment: any) {
+                    this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
+
+                    if (_this.displayLabelDetails) {
+                        FilterMarks.displayFilterLabel(itemData, this.$container);
+                    }
+                }
+            });
+        }
 
         // Fix audio-controls
         Utils.addVideoConstants();
