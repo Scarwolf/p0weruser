@@ -23,6 +23,11 @@ jobs:
           npm ci
           npm run build:dev
 
+      - uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         if:  github.event_name == 'push' && github.ref == 'master'
