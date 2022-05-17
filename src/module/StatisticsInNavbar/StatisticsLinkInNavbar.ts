@@ -7,7 +7,7 @@ export default class StatisticsLinkInNavbar implements PoweruserModule{
     target = document.getElementsByClassName('user-info user-only')[0];
 
 
-    load() {
+    async load() {
         this.addStatsLink();
     }
 

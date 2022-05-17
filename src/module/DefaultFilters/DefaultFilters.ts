@@ -63,7 +63,7 @@ export default class DefaultFilters implements PoweruserModule {
     }
 
 
-    load() {
+    async load() {
         if(p.location === 'top' || p.location === 'new') {
             const filter = this.getFilter();
             if(filter) {

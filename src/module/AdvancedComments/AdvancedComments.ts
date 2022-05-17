@@ -15,7 +15,7 @@ export default class AdvancedComments implements PoweruserModule {
     }
 
 
-    load() {
+    async load() {
         this.prepareComments();
     }
 

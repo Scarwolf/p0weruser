@@ -64,7 +64,7 @@ export default class FilterMarks implements PoweruserModule{
     }
 
 
-    load() {
+    async load() {
         this.overrideViews();
     }
 

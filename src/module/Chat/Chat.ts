@@ -7,7 +7,7 @@ export default class Chat implements PoweruserModule {
     readonly name = '[WIP] Chat';
     readonly description = 'Missbrauche die PMs als Chat.';
 
-    load() {
+    async load() {
         this.overrideView();
     }
 

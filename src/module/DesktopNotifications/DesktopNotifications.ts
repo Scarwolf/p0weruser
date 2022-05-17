@@ -10,7 +10,7 @@ export default class DesktopNotifications implements PoweruserModule {
     notifications = 0;
 
 
-    load() {
+    async load() {
         window.addEventListener('userSync', (e) => {
             const event = e as unknown as UserSyncEvent;
             if (event.data.inbox.messages > this.notifications) {

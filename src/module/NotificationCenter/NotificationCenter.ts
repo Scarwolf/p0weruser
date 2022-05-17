@@ -5,8 +5,9 @@ import template from '../../../assets/template/notificationCenter.html?raw'; // 
 //@ts-ignore
 import templateEntry from '../../../assets/template/notificationEntry.html?raw'; // TODO
 import './notificationCenter.less';
+import { PoweruserModule } from '@/types';
 
-export default class NotificationCenter {
+export default class NotificationCenter implements PoweruserModule {
     readonly id = 'NotificationCenter';
     readonly name = 'Nachrichten Schnellzugriff';
     readonly description = 'Öffnet neue Benachrichtigungen in einem kleinen Menü';
@@ -21,7 +22,7 @@ export default class NotificationCenter {
     }
 
 
-    load() {
+    async load() {
         this.elem.innerHTML = template;
         this.elem.id = 'notification-center';
         document.querySelectorAll('.user-info.user-only')[0].appendChild(this.elem);

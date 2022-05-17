@@ -19,7 +19,7 @@ export default class RepostMarker implements PoweruserModule {
     }
 
 
-    load() {
+    async load() {
         // Get reposts, if not searched before
         $(document).ajaxComplete((event, request, settings) => {
             this.handleAjax(settings.url!).then((data: any) => {

@@ -9,7 +9,7 @@ export default class StyleCustomization implements PoweruserModule {
     isTransparentNavbarEnabled = Settings.get(`${this.id}.settings.transparent_navbar`);
 
 
-    load() {
+    async load() {
         if(this.isTransparentNavbarEnabled === true) {
             document.getElementById("head")?.classList.add("transparent");
         }
