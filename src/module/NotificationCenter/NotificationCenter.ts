@@ -1,10 +1,12 @@
 import SimpleBar from 'simplebar';
-import Utils from '../../Utils';
 //@ts-ignore
 import template from '../../../assets/template/notificationCenter.html?raw'; // TODO
 //@ts-ignore
 import templateEntry from '../../../assets/template/notificationEntry.html?raw'; // TODO
 import { PoweruserModule } from '@/types';
+import Utils, { loadStyle } from '@/Utils';
+// @ts-ignore
+import style from './notificationCenter.less?inline';
 
 export default class NotificationCenter implements PoweruserModule {
     readonly id = 'NotificationCenter';
@@ -27,8 +29,7 @@ export default class NotificationCenter implements PoweruserModule {
         document.querySelectorAll('.user-info.user-only')[0].appendChild(this.elem);
 
         this.addListener();
-        // @ts-ignore
-        await import('./notificationCenter.less');
+        loadStyle(style);
     }
 
 

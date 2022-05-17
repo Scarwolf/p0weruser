@@ -1,6 +1,9 @@
 import SimpleBar from 'simplebar';
-import Utils from '@/Utils';
 import { PoweruserModule } from '@/types';
+import Utils, { loadStyle } from '@/Utils';
+// @ts-ignore
+import style from './rep0st.less?inline';
+
 
 export default class Rep0st implements PoweruserModule {
     closeBtn = {};
@@ -27,8 +30,7 @@ export default class Rep0st implements PoweruserModule {
         });
 
         Utils.addVideoConstants();
-        // @ts-ignore
-        await import('./rep0st.less');
+        loadStyle(style);
     }
 
 

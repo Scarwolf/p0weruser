@@ -4,6 +4,9 @@ import Utils from '@/Utils';
 // @ts-ignore
 import template from '../../../assets/template/ocrPopup.html?raw'; // TODO
 import { PoweruserModule } from '@/types';
+// @ts-ignore
+import style from './imageOCR.less?inline';
+import { loadStyle } from '@/Utils';
 
 export default class ImageOCR implements PoweruserModule {
     readonly id = 'ImageOCR';
@@ -27,8 +30,7 @@ export default class ImageOCR implements PoweruserModule {
         this.close = this.$popup.find('.close-popup')[0];
 
         this.addButton();
-        // @ts-ignore
-        await import('./imageOCR.less');
+        loadStyle(style)
     }
 
 

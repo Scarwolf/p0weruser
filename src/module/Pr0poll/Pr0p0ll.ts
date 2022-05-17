@@ -5,6 +5,9 @@ import Pr0p0llDiagramm from '@/lib/Pr0p0llDiagramm';
 // @ts-ignore
 import template from '../../../assets/template/pr0p0llOverlay.html?raw'; // TODO
 import { ModuleSetting, PoweruserModule } from '@/types';
+import Utils, { loadStyle } from '@/Utils';
+// @ts-ignore
+import style from './pr0p0ll.less?inline';
 
 export default class Pr0p0ll implements PoweruserModule{
     readonly id = 'Pr0p0ll';
@@ -41,8 +44,7 @@ export default class Pr0p0ll implements PoweruserModule{
                 this.parent(container, parent);
             }
         });
-        // @ts-ignore
-        await import('./pr0p0ll.less');
+        loadStyle(style);
     }
 
 

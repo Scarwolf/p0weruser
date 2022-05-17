@@ -1,6 +1,8 @@
 import Settings from '@/core/Settings/Settings';
 import { ModuleSetting, PoweruserModule } from '@/types';
-import Utils from '@/Utils';
+import Utils, { loadStyle } from '@/Utils';
+// @ts-ignore
+import style from './filterMarks.less?inline';
 
 export default class FilterMarks implements PoweruserModule{
     readonly id = 'FilterMarks';
@@ -65,8 +67,7 @@ export default class FilterMarks implements PoweruserModule{
 
     async load() {
         this.overrideViews();
-        // @ts-ignore
-        await import('./filterMarks.less');
+        loadStyle(style);
     }
 
 
