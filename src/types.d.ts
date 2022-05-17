@@ -25,7 +25,16 @@ export type P = {
     location: 'top' | 'new';
     user: User;
     mainView: any;
-    View: any;
+    View: {
+        Stream: {
+            Main: StreamMainView;
+            Item: BaseView & any;
+            Comments: BaseView & any;
+        };
+        Base: BaseView;
+        Overlay: BaseView & any;
+        InboxMessages: any;
+    };
     reload(): any;
     api: any;
     shouldShowScore: (thing: any) => any;
@@ -96,6 +105,36 @@ export type UserSyncEvent = {
             follows: number;
         }
     }
+};
+
+export type StreamItem = {
+    audio: boolean;
+    created: number;
+    down: number;
+    fav: number;
+    flags: number;
+    height: number;
+    id: number;
+    image: string;
+    mark: number;
+    promoted: number;
+    source: string;
+    thumb: string;
+    up: number;
+    user: string;
+    userId: number;
+    vote: number;
+    width: number;
+};
+
+export type BaseView = {
+    template: string;
+    prototype: any; // TODO
+    extend(smth: any): any;
+};
+
+export type StreamMainView = BaseView & {
+    buildItem(item: StreamItem): string;
 };
 
 declare global {
