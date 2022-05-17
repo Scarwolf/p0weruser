@@ -1,7 +1,6 @@
 import Tesseract from 'tesseract.js';
 import SimpleBar from 'simplebar';
 import Utils from '@/Utils';
-import './imageOCR.less';
 // @ts-ignore
 import template from '../../../assets/template/ocrPopup.html?raw'; // TODO
 import { PoweruserModule } from '@/types';
@@ -28,6 +27,8 @@ export default class ImageOCR implements PoweruserModule {
         this.close = this.$popup.find('.close-popup')[0];
 
         this.addButton();
+        // @ts-ignore
+        await import('./imageOCR.less');
     }
 
 
