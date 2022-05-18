@@ -20,13 +20,14 @@ export type ModuleSetting = {
 export type FlagName = 'sfw' | 'nsfw' | 'nsfl';
 
 export type P = {
+    _routes: any[];
     currentView: any;
     NAVIGATE: {
         DEFAULT: 0;
         SILENT: 1;
         FORCE: 2;
     };
-    location: 'top' | 'new';
+    location: string;
     user: User;
     mainView: any;
     View: {
@@ -38,11 +39,14 @@ export type P = {
         Base: BaseView;
         Overlay: BaseView & any;
         InboxMessages: any;
+        Settings: any;
+        P0weruserSettings: any;
     };
     reload(): any;
     api: any;
     shouldShowScore: (thing: any) => any;
     navigateTo: (location: any, mode?: any) => any;
+    addRoute: (viewClass: any, path: any) => any;
 }
 
 export type User = {
