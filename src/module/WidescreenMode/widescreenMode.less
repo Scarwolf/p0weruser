@@ -36,20 +36,17 @@ body[class] {
     #main-view {
       #stream {
         text-align: center;
-        display: flex;
-        flex-wrap: wrap;
+        display: block;
         margin: 0 auto;
-          
+
         a.thumb {
-          img {
-            width: 100%;
-          }
-          flex: 1 1 128px;
-          background-color: transparent;
-          margin: 0;
-          width: auto;
-          height: auto;
-          margin: 1px; // Looks more "natural" with margin 
+          display: block;
+          float: left;
+        }
+
+        .item-row {
+          clear: none;
+          text-align: center;
         }
 
         .stream-row {
