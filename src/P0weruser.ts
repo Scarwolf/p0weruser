@@ -44,4 +44,10 @@ Utils.addPrototypes();
 new EventHandler();
 new Settings(allModules, activatedModules);
 addStyles();
-loadModules(activatedModules);
+if(activatedModules.length > 0) {
+    loadModules(activatedModules);
+
+    // Once the modules are loaded we need to trigger re-rendering again as we may have overridden views.
+    // We use force navigation here to trigger re-rendering as we're not changing location.
+    p.navigateTo(p.location, p.NAVIGATE.FORCE);
+}

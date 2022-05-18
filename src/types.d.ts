@@ -21,7 +21,11 @@ export type FlagName = 'sfw' | 'nsfw' | 'nsfl';
 
 export type P = {
     currentView: any;
-    NAVIGATE: any;
+    NAVIGATE: {
+        DEFAULT: 0;
+        SILENT: 1;
+        FORCE: 2;
+    };
     location: 'top' | 'new';
     user: User;
     mainView: any;
