@@ -8,7 +8,7 @@ import style from './widescreenMode.less?inline';
 import streamItemTemplate from "../../../assets/template/streamItem.html?raw"; // TODO
 // @ts-ignore
 import streamItemCommentsTemplate from "../../../assets/template/streamItemComments.html?raw"; // TODO
-import { ModuleSetting, PoweruserModule, StreamItem } from '@/types';
+import { ModuleSetting, PoweruserModule } from '@/types';
 
 export default class WidescreenMode implements PoweruserModule {
     readonly id = 'WidescreenMode';
@@ -326,15 +326,14 @@ export default class WidescreenMode implements PoweruserModule {
         };
 
         // Handle stream-building
-        p.View.Stream.Main.prototype.buildItemRows = function (items: StreamItem[], start: number, end: number, position: number) {
+        p.View.Stream.Main.prototype.buildItemRows = function (items: any) {
             let result = '';
 
             for (const element of items) {
                 result += this.buildItem(element);
             }
 
-            // Don't wrap result of items into a separate container. This allows us to apply flex layout.
-            return result;
+            return `<div class="item-row">${result}</div>`;
         };
     }
 
