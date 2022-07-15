@@ -56,59 +56,61 @@ export default class NotificationCenter implements PoweruserModule {
         this.menuOpen = !this.menuOpen;
         this.icon[0].classList.toggle('active');
         this.elem.classList.toggle('visible');
-        this.messageContainer.innerHTML = '<span class="fa fa-spinner fa-spin"></span>';
-        this.messageContainer.classList.add('loading');
+        if (!!this.messageContainer) {
+            this.messageContainer.innerHTML = '<span class="fa fa-spinner fa-spin"></span>';
+            this.messageContainer.classList.add('loading');
 
-        this.getNotifications(true).then((notifications: any) => {
-            let messages: any[] = notifications.messages;
-            let unreadMessages = messages.filter(message => !message.read).length;
+            this.getNotifications(true).then((notifications: any) => {
+                let messages: any[] = notifications.messages;
+                let unreadMessages = messages.filter(message => !message.read).length;
 
-            this.messageContainer.innerHTML = '';
-            this.messageContainer.classList.remove('loading');
-            p.user.setInboxLink({
-                notifications: 0,
-                mentions: 0,
-                messages: 0,
-                comments: 0,
-                follows: 0
-            });
+                this.messageContainer.innerHTML = '';
+                this.messageContainer.classList.remove('loading');
+                p.user.setInboxLink({
+                    notifications: 0,
+                    mentions: 0,
+                    messages: 0,
+                    comments: 0,
+                    follows: 0
+                });
 
-            if (unreadMessages <= 0) {
-                let elem = document.createElement('li');
-                elem.innerText = 'Keine neuen Benachrichtigungen!';
-                elem.className = 'no-notifications';
-                this.messageContainer.appendChild(elem);
-                return false;
-            }
-
-            for (const element of messages) {
-                this.addEntry(NotificationCenter.getTitle(
-                    element),
-                    element.name,
-                    element.created,
-                    element.thumb,
-                    element.mark,
-                    element.itemId,
-                    element.id,
-                    element.message
-                );
-            }
-            new SimpleBar(this.messageContainer);
-
-            this.getNotifications(false).then((notifications: any) => {
-                const msgs = notifications.messages;
-
-                if (msgs.length <= 0) {
+                if (unreadMessages <= 0) {
+                    let elem = document.createElement('li');
+                    elem.innerText = 'Keine neuen Benachrichtigungen!';
+                    elem.className = 'no-notifications';
+                    this.messageContainer.appendChild(elem);
                     return false;
                 }
 
-                for (const msg of msgs) {
-                    let element = $(this.messageContainer).find(`#notification-${msg.id}`)[0];
-                    if(element !== undefined)
-                        element.classList.add('new');
+                for (const element of messages) {
+                    this.addEntry(NotificationCenter.getTitle(
+                        element),
+                        element.name,
+                        element.created,
+                        element.thumb,
+                        element.mark,
+                        element.itemId,
+                        element.id,
+                        element.message
+                    );
                 }
+                new SimpleBar(this.messageContainer);
+
+                this.getNotifications(false).then((notifications: any) => {
+                    const msgs = notifications.messages;
+
+                    if (msgs.length <= 0) {
+                        return false;
+                    }
+
+                    for (const msg of msgs) {
+                        let element = $(this.messageContainer).find(`#notification-${msg.id}`)[0];
+                        if (element !== undefined)
+                            element.classList.add('new');
+                    }
+                });
             });
-        });
+        }
     }
 
 
@@ -131,7 +133,7 @@ export default class NotificationCenter implements PoweruserModule {
             img = img.replace('##THUMB', image);
         }
 
-        if(user === null) {
+        if (user === null) {
             user = "Systembenachrichtigung";
         }
 
