@@ -16,7 +16,7 @@
     "dependencies": {
         "chart.js": "^2.9.4",
         "core-js": "^2.6.11",
-        "moment": "^2.29.2",
+        "moment": "^2.29.4",
         "simplebar": "^2.6.1",
         "tesseract.js": "^1.0.19",
         "webpack-bundle-analyzer": "^3.7.0"
