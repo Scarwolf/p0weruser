@@ -44,9 +44,9 @@ Utils.addPrototypes();
 new EventHandler();
 new Settings(allModules, activatedModules);
 addStyles();
-if(activatedModules.length > 0) {
+if (activatedModules.length > 0) {
     loadModules(activatedModules);
-    
+
     // Maybe we have added some view routes, therefore moving the 404 view to the end. If there is more particular ordering 
     // necessary it must be done in the module.
     const route404 = p._routes.find(r => String(r.rule) === "/(.*)/");
@@ -55,5 +55,5 @@ if(activatedModules.length > 0) {
 
     // Once the modules are loaded we need to trigger re-rendering again as we may have overridden views.
     // We use force navigation here to trigger re-rendering as we're not changing location.
-    p.navigateTo(p.location, p.NAVIGATE.FORCE);
+    // p.navigateTo(p.location, p.NAVIGATE.FORCE);
 }
