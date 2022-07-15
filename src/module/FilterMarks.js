@@ -70,15 +70,34 @@ export default class FilterMarks {
 
         // Handle stream-view
         p.View.Stream.Main.prototype.buildItem = function (item) {
-            let content = `<a class="silent thumb filter ${_this.displayLabelStream ? FilterMarks.getFilter(item) : ''}" id="item-${item.id}" href="${this.baseURL + item.id}"><img onload="this.classList.add(\'loaded\')" width="128" height="128" src="${item.thumb}"/> ${item.promoted > 1000000000 ? '<div class="sticky-badge"></div>' : ''}`;
-
-            if (_this.displayBenisStream) {
-                content += `<span class="benis-info ${item.up - item.down > 0 ? 'up' : 'down'}">${item.up - item.down}</span></a>`;
-            }
-            else {
-                content += '</a>';
-            }
-            return content;
+            const shouldShowPreview = !p.mobile && !!item.preview;
+            return `
+                <a class="silent thumb ${_this.displayLabelStream ? FilterMarks.getFilter(item) : ''}" ${shouldShowPreview ? `data-has-preview="true"` : ''} id="item-${item.id}" href="${this.baseURL + item.id}">
+                    <img
+                        width="128"
+                        height="128"
+                        onload="this.classList.add('loaded')"
+                        onerror="this.parentElement.classList.add('error')"
+                        src="${item.thumb}"
+                    >
+                    ${_this.displayBenisStream ? `
+                    <span 
+                        class="benis-info ${item.up - item.down > 0 ? 'up' : 'down'}">
+                        ${item.up - item.down}
+                    </span>` : ''}
+                    ${shouldShowPreview ? `
+                    <video
+                        class="inline-preview-video"
+                        preload="none"
+                        loop
+                        muted
+                        width="128"
+                        height="128"
+                        src="${item.preview}"
+                    >` : ''}
+                    ${item.promoted > 1000000000 ? '<div class="sticky-badge"></div>' : ''}
+                </a>
+            `;
         };
 
         // Handle detail-view
