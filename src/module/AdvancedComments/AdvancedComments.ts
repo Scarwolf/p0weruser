@@ -42,7 +42,7 @@ export default class AdvancedComments implements PoweruserModule {
             }
 
             const comments = $('.comments .comment-box .comment');
-            for (const element of comments) {
+            for (const element of comments.toArray()) {
                 const container = $(element);
                 const comment = $(container.parents('.comment-box')[0]).prev('.comment');
                 const userHref = (container.find('.comment-foot > a.user')[0] as HTMLAnchorElement).href;
