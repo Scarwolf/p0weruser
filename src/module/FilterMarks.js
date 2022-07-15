@@ -72,7 +72,7 @@ export default class FilterMarks {
         p.View.Stream.Main.prototype.buildItem = function (item) {
             const shouldShowPreview = !p.mobile && !!item.preview;
             return `
-                <a class="silent thumb ${_this.displayLabelStream ? FilterMarks.getFilter(item) : ''}" ${shouldShowPreview ? `data-has-preview="true"` : ''} id="item-${item.id}" href="${this.baseURL + item.id}">
+                <a class="silent thumb filter ${_this.displayLabelStream ? FilterMarks.getFilter(item) : ''}" ${shouldShowPreview ? `data-has-preview="true"` : ''} id="item-${item.id}" href="${this.baseURL + item.id}">
                     <img
                         width="128"
                         height="128"
