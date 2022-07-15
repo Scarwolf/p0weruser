@@ -298,15 +298,15 @@ export default class WidescreenMode implements PoweruserModule {
                     window.localStorage.setItem('comments_closed', String(_this.commentsClosed));
                 })
             },
-            focusComment(comment: any) {
+            focusComment: function (comment: any) {
                 let target = this.$container.find('#' + comment);
                 if (target.length) {
-                    Utils.waitForElement('.scroll-content').then((el) => {
+                    const scrollbar = Scrollbar.get(this.$container[0]);
                         this.$scrollContainer = $(el[0]);
-                        let jumpPos = target.offset().top - this.$scrollContainer.offset().top - CONFIG.HEADER_HEIGHT - 80;
-                        this.$scrollContainer.scrollTop(jumpPos);
+                    if (scrollbar) {
+                        scrollbar.scrollIntoView(target[0]);
                         target.highlight(180, 180, 180, 1);
-                    });
+                    }
                 }
             },
             showReplyForm(ev: any) {
