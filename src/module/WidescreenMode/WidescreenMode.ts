@@ -74,7 +74,7 @@ export default class WidescreenMode implements PoweruserModule {
         this.overrideViews();
         this.addNavigation();
 
-        if(this.logoLinksToNew) {
+        if (this.logoLinksToNew) {
             this.modifyLogo();
         }
         loadStyle(style);
@@ -157,7 +157,7 @@ export default class WidescreenMode implements PoweruserModule {
                 e.preventDefault();
 
                 const hrefAttr = element.getAttribute("href");
-                if(hrefAttr == null) {
+                if (hrefAttr == null) {
                     throw new Error("Could not parse navigation link from anchor element. There is no href attribute");
                 }
                 const href = hrefAttr.startsWith("/") ? hrefAttr.slice(1) : hrefAttr;
@@ -235,25 +235,25 @@ export default class WidescreenMode implements PoweruserModule {
                             benisbar.dataset.afterText += " (" + _this.calculateBenisUntilTop(itemData.up, itemData.down, itemData.date) + " bis beliebt)";
                         }
                     }
-                    
+
                     benisbar.classList.add('show', String(_this.displayBenisbar));
                 }
 
                 _this.addItemListener(this.$image, itemData);
                 document.body.classList.add('fixed');
 
-                if(_this.biggerStreamNavIcons) {
+                if (_this.biggerStreamNavIcons) {
                     let prev = document.getElementsByClassName('stream-prev-icon')[0];
                     let next = document.getElementsByClassName('stream-next-icon')[0];
 
-                    if(prev !== undefined)
+                    if (prev !== undefined)
                         prev.classList.add('stream-prev-icon-xl');
 
-                    if(next !== undefined)
+                    if (next !== undefined)
                         next.classList.add('stream-next-icon-xl');
                 }
 
-                if(!_this.commentsLeft) {
+                if (!_this.commentsLeft) {
                     document.getElementsByClassName('item-container-content')[0].classList.add('right');
                 }
             },
@@ -333,7 +333,7 @@ export default class WidescreenMode implements PoweruserModule {
                 result += this.buildItem(element);
             }
 
-            return `<div class="item-row">${result}</div>`;
+            return `<div class="stream-row">${result}</div>`;
         };
     }
 

@@ -4,7 +4,7 @@ import Utils, { loadStyle } from '@/Utils';
 // @ts-ignore
 import style from './filterMarks.less?inline';
 
-export default class FilterMarks implements PoweruserModule{
+export default class FilterMarks implements PoweruserModule {
     readonly id = 'FilterMarks';
     readonly name = 'Filtermarkierung';
     readonly description = 'Markiert Medien entsprechend ihres Filters.';
@@ -74,35 +74,41 @@ export default class FilterMarks implements PoweruserModule{
     overrideViews() {
         let _this = this;
 
-        if(this.displayLabelStream || this.displayBenisStream) {
+        if (this.displayLabelStream || this.displayBenisStream) {
             // Handle stream-view
-            const original = p.View.Stream.Main.prototype.buildItem; // Prevent the original call
             p.View.Stream.Main.prototype.buildItem = function (item: StreamItem) {
-                const originalResult = original(item); // build original item
-                
-                // Parse to HTMLElement
-                const dummyElement = document.createElement("span");
-                dummyElement.innerHTML = originalResult;
-                const child = dummyElement.firstChild! as HTMLAnchorElement;
-                // TODO: Link building is not possible within the original function, because this.baseURL is undefined.
-                //       I don't know why and its late, so do it here again.
-                child.href = this.baseURL + item.id;
-                if(_this.displayLabelStream) {
-                    child.classList.add("filter", FilterMarks.getFilter(item));
-                }
-                if(_this.displayBenisStream) {
-                    const benisInfoSpan = document.createElement("span");
-                    const benisAmount = item.up - item.down;
-                    benisInfoSpan.classList.add("benis-info", benisAmount ? 'up' : 'down');
-                    benisInfoSpan.innerText = String(benisAmount);
-                    child.append(benisInfoSpan);
-                }
-
-                return dummyElement.innerHTML;
+                const shouldShowPreview = !p.mobile && !!item.preview;
+                return `
+                    <a class="silent thumb filter ${_this.displayLabelStream ? FilterMarks.getFilter(item) : ''}" ${shouldShowPreview ? `data-has-preview="true"` : ''} id="item-${item.id}" href="${this.baseURL + item.id}">
+                        <img
+                            width="128"
+                            height="128"
+                            onload="this.classList.add('loaded')"
+                            onerror="this.parentElement.classList.add('error')"
+                            src="${item.thumb}"
+                        >
+                        ${_this.displayBenisStream ? `
+                        <span 
+                            class="benis-info ${item.up - item.down > 0 ? 'up' : 'down'}">
+                            ${item.up - item.down}
+                        </span>` : ''}
+                        ${shouldShowPreview ? `
+                        <video
+                            class="inline-preview-video"
+                            preload="none"
+                            loop
+                            muted
+                            width="128"
+                            height="128"
+                            src="${item.preview}"
+                        >` : ''}
+                        ${item.promoted > 1000000000 ? '<div class="sticky-badge"></div>' : ''}
+                    </a>
+                `;
             };
         }
 
-        if(this.displayLabelDetails) {
+        if (this.displayLabelDetails) {
             // Handle detail-view
             p.View.Stream.Item = p.View.Stream.Item.extend({
                 show: function (rowIndex: any, itemData: any, defaultHeight: any, jumpToComment: any) {
