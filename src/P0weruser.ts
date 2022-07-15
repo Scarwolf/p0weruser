@@ -53,7 +53,11 @@ if (activatedModules.length > 0) {
     const route404Index = p._routes.indexOf(route404);
     p._routes.push(p._routes.splice(route404Index, 1)[0]);
 
+
     // Once the modules are loaded we need to trigger re-rendering again as we may have overridden views.
     // We use force navigation here to trigger re-rendering as we're not changing location.
-    // p.navigateTo(p.location, p.NAVIGATE.FORCE);
+    // As the native pr0gramm initializes first a view is already created. However, It is necessary that we let 
+    // pr0gramm think we don't have a view yet as otherwise it will try to hide the current view.
+    p.currentView = null;
+    p.navigateTo(p.location, p.NAVIGATE.FORCE);
 }
