@@ -1,5 +1,5 @@
 import Settings from '@/core/Settings/Settings';
-import SimpleBar from 'simplebar';
+import Scrollbar from 'smooth-scrollbar';
 import moment from 'moment';
 import Pr0p0llDiagramm from '@/lib/Pr0p0llDiagramm';
 // @ts-ignore
@@ -9,7 +9,7 @@ import Utils, { loadStyle } from '@/Utils';
 // @ts-ignore
 import style from './pr0p0ll.less?inline';
 
-export default class Pr0p0ll implements PoweruserModule{
+export default class Pr0p0ll implements PoweruserModule {
     readonly id = 'Pr0p0ll';
     readonly name = 'Pr0p0ll Integration';
     readonly description = 'Erhalte Benachrichtigungen über neue Umfragen!';
@@ -72,7 +72,7 @@ export default class Pr0p0ll implements PoweruserModule{
     }
 
 
-    addListener() {    
+    addListener() {
         const trimmedToken = this.token.trim();
         if (trimmedToken) {
             if (/^([0-9a-f]{64})$/.test(trimmedToken)) {
@@ -150,7 +150,7 @@ export default class Pr0p0ll implements PoweruserModule{
                 });
 
                 const diag = new Pr0p0llDiagramm(result);
-                new SimpleBar(document.getElementById('overlay-box')!);
+                Scrollbar.init(document.getElementById('overlay-box')!, {});
             },
             error => {
                 window.alert(error);

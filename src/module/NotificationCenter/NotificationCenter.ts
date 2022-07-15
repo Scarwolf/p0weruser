@@ -1,4 +1,4 @@
-import SimpleBar from 'simplebar';
+import Scrollbar from 'smooth-scrollbar';
 //@ts-ignore
 import template from '../../../assets/template/notificationCenter.html?raw'; // TODO
 //@ts-ignore
@@ -16,7 +16,7 @@ export default class NotificationCenter implements PoweruserModule {
     menuOpen = false;
     icon = $('#inbox-link');
     elem = document.createElement('div');
-    messageContainer = document.getElementById('new-messages')!;
+    messageContainer: HTMLUListElement | null = null;
 
     static getTitle(message: any) {
         return message.thumb === null ? 'Private Nachricht' : 'Kommentar';
@@ -27,6 +27,7 @@ export default class NotificationCenter implements PoweruserModule {
         this.elem.innerHTML = template;
         this.elem.id = 'notification-center';
         document.querySelectorAll('.user-info.user-only')[0].appendChild(this.elem);
+        this.messageContainer = document.getElementById('new-messages')! as HTMLUListElement;
 
         this.addListener();
         loadStyle(style);
@@ -56,16 +57,17 @@ export default class NotificationCenter implements PoweruserModule {
         this.menuOpen = !this.menuOpen;
         this.icon[0].classList.toggle('active');
         this.elem.classList.toggle('visible');
-        if (!!this.messageContainer) {
-            this.messageContainer.innerHTML = '<span class="fa fa-spinner fa-spin"></span>';
-            this.messageContainer.classList.add('loading');
+        const container = this.messageContainer;
+        if (!!container) {
+            container.innerHTML = '<span class="fa fa-spinner fa-spin"></span>';
+            container.classList.add('loading');
 
             this.getNotifications(true).then((notifications: any) => {
                 let messages: any[] = notifications.messages;
                 let unreadMessages = messages.filter(message => !message.read).length;
 
-                this.messageContainer.innerHTML = '';
-                this.messageContainer.classList.remove('loading');
+                container.innerHTML = '';
+                container.classList.remove('loading');
                 p.user.setInboxLink({
                     notifications: 0,
                     mentions: 0,
@@ -78,7 +80,7 @@ export default class NotificationCenter implements PoweruserModule {
                     let elem = document.createElement('li');
                     elem.innerText = 'Keine neuen Benachrichtigungen!';
                     elem.className = 'no-notifications';
-                    this.messageContainer.appendChild(elem);
+                    container.appendChild(elem);
                     return false;
                 }
 
@@ -94,7 +96,8 @@ export default class NotificationCenter implements PoweruserModule {
                         element.message
                     );
                 }
-                new SimpleBar(this.messageContainer);
+
+                Scrollbar.init(container, {});
 
                 this.getNotifications(false).then((notifications: any) => {
                     const msgs = notifications.messages;
@@ -104,7 +107,7 @@ export default class NotificationCenter implements PoweruserModule {
                     }
 
                     for (const msg of msgs) {
-                        let element = $(this.messageContainer).find(`#notification-${msg.id}`)[0];
+                        let element = $(container).find(`#notification-${msg.id}`)[0];
                         if (element !== undefined)
                             element.classList.add('new');
                     }
@@ -142,6 +145,6 @@ export default class NotificationCenter implements PoweruserModule {
             [title, user, new Date(date * 1000), img, url, mark, Utils.escapeHtml(msg)]
         );
 
-        this.messageContainer.appendChild(elem);
+        this.messageContainer?.appendChild(elem);
     }
 }

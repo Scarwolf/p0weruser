@@ -20,8 +20,8 @@ export default class ViewedPostsMarker implements PoweruserModule {
             /* Since this is a global event handler for every ajax we need to specify on which event 
              * it should be fired. This is the case for every event which accesses items.
              */
-            if(settings.url!.startsWith('/api/items/get')) {
-                if(this.markOwnFavoritesAsViewed || !(this.wouldLoadUserCollection(settings.url!))) {   
+            if (settings.url!.startsWith('/api/items/get')) {
+                if (this.markOwnFavoritesAsViewed || !(this.wouldLoadUserCollection(settings.url!))) {
                     this.viewedPosts.forEach((post: number) => {
                         ViewedPostsMarker.markAsViewed(post);
                     });
@@ -73,7 +73,6 @@ export default class ViewedPostsMarker implements PoweruserModule {
     }
 
     addViewedPost(id: number) {
-        console.log(id);
         if (this.viewedPosts.length >= 10000) {
             this.viewedPosts = this.viewedPosts.slice(-10000);
         }

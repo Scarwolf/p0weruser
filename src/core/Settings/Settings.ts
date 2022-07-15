@@ -55,7 +55,6 @@ export default class Settings {
                     Settings.set(element.id, String(Number(element.value) || 1));
                     break;
                 case 'checkbox':
-                    console.log(element);
                     Settings.set(element.id, String(element.checked));
                     break;
             }
@@ -66,7 +65,7 @@ export default class Settings {
     static addHint() {
         if (!document.getElementById('settings_hint')) {
             const header = document.getElementById('head-content');
-            if(header === null) {
+            if (header === null) {
                 throw new Error("Header could not be found");
             }
             const hint = document.createElement('div');
@@ -190,7 +189,7 @@ export default class Settings {
         for (const element of activated) {
             let module = element;
 
-            if(typeof module === 'object') {
+            if (typeof module === 'object') {
                 if (typeof module.getSettings === 'function') {
                     const settings = module.getSettings();
                     let headline = document.createElement('h3');

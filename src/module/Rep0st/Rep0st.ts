@@ -1,4 +1,4 @@
-import SimpleBar from 'simplebar';
+import Scrollbar from 'smooth-scrollbar';
 import { PoweruserModule } from '@/types';
 import Utils, { loadStyle } from '@/Utils';
 // @ts-ignore
@@ -52,7 +52,7 @@ export default class Rep0st implements PoweruserModule {
     }
 
 
-    checkImage(container: any, imgElement:any) {
+    checkImage(container: any, imgElement: any) {
         let dta = new FormData();
         let result = $('<div></div>');
         let bar = $('<div class="rep0sts"></div>');
@@ -63,7 +63,7 @@ export default class Rep0st implements PoweruserModule {
         bar.append(this.$loader!);
         container.find('.image-main').after(bar);
 
-        new SimpleBar(bar[0]);
+        Scrollbar.init(bar[0], {});
 
         closeBtn[0].addEventListener('click', () => {
             this.visible = false;
@@ -71,7 +71,7 @@ export default class Rep0st implements PoweruserModule {
         });
 
         // Image Data
-        dta.append('image', new Blob([], {type: 'application/octet-stream'}), '');
+        dta.append('image', new Blob([], { type: 'application/octet-stream' }), '');
         dta.append('url', imgElement[0].src);
 
 
@@ -103,9 +103,9 @@ export default class Rep0st implements PoweruserModule {
 
                 let currentPostId = this.getCurrentPostId();
                 for (let i = 1; i < images.length; i++) {
-                    let postId = parseInt(images[i].href.replace('pr0gramm', '').replace(/\D/g,''));
+                    let postId = parseInt(images[i].href.replace('pr0gramm', '').replace(/\D/g, ''));
 
-                    if(currentPostId !== postId) {
+                    if (currentPostId !== postId) {
                         let childrenList = images[i].children[0];
 
                         let postUrl = images[i].href;
@@ -128,12 +128,12 @@ export default class Rep0st implements PoweruserModule {
     getCurrentPostId() {
         return parseInt(window.location.href
             .replace('pr0gramm', '')
-            .replace(/\D/g,''));
+            .replace(/\D/g, ''));
     }
 
 
     displayImages(bar: any, urls: any) {
-        bar = bar.find('.simplebar-content');
+        bar = bar.find('.scroll-content');
 
         for (const element of urls) {
             let probabilityContainer = `<div class="probability">${element.probability}</div>`;

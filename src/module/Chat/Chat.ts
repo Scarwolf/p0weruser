@@ -1,5 +1,5 @@
 import { PoweruserModule } from '@/types';
-import SimpleBar from 'simplebar';
+import Scrollbar from 'smooth-scrollbar';
 // @ts-ignore
 import style from './chat.less?inline';
 import { loadStyle } from '@/Utils';
@@ -23,8 +23,8 @@ export default class Chat implements PoweruserModule {
                 pane.addClass('private-message-pane');
                 pane.css('height', `calc(100vh - ${top}px)`);
 
-                let cPane = pane.find('.conversations-pane');
-                let cScroll = new SimpleBar(cPane[0]);
+                let cPane = pane.find('.conversations-pane').toArray();
+                Scrollbar.init(cPane[0], {});
 
                 this.parent();
             }
@@ -32,13 +32,18 @@ export default class Chat implements PoweruserModule {
 
         p.View.InboxMessages.Messages = p.View.InboxMessages.Messages.extend({
             show: function () {
+                console.log("Show");
                 this.data.messages.reverse();
                 this.parent();
 
-                let iPane = this.$container.parents('.inbox-messages');
-                let iScroll = new SimpleBar(iPane[0]);
+                let iPane = this.$container.parents('.inbox-messages').toArray();
 
-                $(iScroll.getScrollElement()).scrollTop(iScroll.getScrollElement().scrollHeight);
+                const existingScrollbar = Scrollbar.get(iPane[0]);
+                if (!!existingScrollbar) {
+                    existingScrollbar.destroy();
+                }
+                const scrollbar = Scrollbar.init(iPane[0], {});
+                scrollbar.scrollTo(undefined, Number.MAX_VALUE);
             }
         });
     }

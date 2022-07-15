@@ -437,7 +437,6 @@ body[class] {
       background: #161618;
       flex-grow: 0;
       flex-shrink: 0;
-      padding-top: 30px;
       border-right: 3px solid #2a2e31;
       transition: width 0.2s ease-out;
 
@@ -458,7 +457,6 @@ body[class] {
 
         .count,
         .comments-head,
-        .simplebar-track,
         .comments-switch {
           display: none;
         }
@@ -542,8 +540,6 @@ body[class] {
         padding: 10px 10px 10px 35px;
         transition: width .2s ease-out;
         z-index: 400;
-        position: fixed;
-        top: 52px;
         width: 30vw;
 
         >div:first-child {
@@ -567,24 +563,6 @@ body[class] {
         &.reply {
           height: 75px;
         }
-      }
-
-      .simplebar-scrollbar {
-        background: #2a2e31;
-        border-radius: 0;
-        right: 0;
-
-        &:before {
-          background: #2a2e31;
-        }
-
-        &.visible {
-          opacity: 1;
-        }
-      }
-
-      .simplebar-content {
-        outline: none;
       }
     }
   }

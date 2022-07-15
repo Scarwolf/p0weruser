@@ -1,5 +1,5 @@
 import Tesseract from 'tesseract.js';
-import SimpleBar from 'simplebar';
+import Scrollbar from 'smooth-scrollbar';
 import Utils from '@/Utils';
 // @ts-ignore
 import template from '../../../assets/template/ocrPopup.html?raw'; // TODO
@@ -18,7 +18,7 @@ export default class ImageOCR implements PoweruserModule {
     $popup?: JQuery<HTMLDivElement>;
     textbox?: HTMLElement;
     close?: HTMLElement;
-    
+
 
     async load() {
         const popup = document.createElement('div');
@@ -83,7 +83,7 @@ export default class ImageOCR implements PoweruserModule {
                 Tesseract.recognize(new Blob([new Uint8Array(res.response)]), 'deu')
                     .then(result => {
                         this.togglePopup(result.data.text);
-                        new SimpleBar(this.popup!);
+                        Scrollbar.init(this.popup!, {});
                     }).catch(err => {
                         this.togglePopup();
                     });

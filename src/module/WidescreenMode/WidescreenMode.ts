@@ -1,4 +1,4 @@
-import SimpleBar from 'simplebar';
+import Scrollbar from 'smooth-scrollbar';
 import Settings from '@/core/Settings/Settings';
 import Utils, { loadStyle } from '@/Utils';
 // @ts-ignore
@@ -161,7 +161,6 @@ export default class WidescreenMode implements PoweruserModule {
                     throw new Error("Could not parse navigation link from anchor element. There is no href attribute");
                 }
                 const href = hrefAttr.startsWith("/") ? hrefAttr.slice(1) : hrefAttr;
-                console.log(href);
 
                 if (href === p.location) {
                     p.reload();
@@ -276,7 +275,12 @@ export default class WidescreenMode implements PoweruserModule {
                 _this.commentsContainer[0].classList.toggle('wide', _this.commentsWide);
                 _this.commentsContainer[0].classList.toggle('closed', _this.commentsClosed);
                 _this.commentsContainer[0].classList.add('loaded');
-                new SimpleBar(this.$container[0]);
+
+                const existingScrollbar = Scrollbar.get(this.$container[0]);
+                if (!!existingScrollbar) {
+                    existingScrollbar.destroy();
+                }
+                Scrollbar.init(this.$container[0], {});
 
                 let commentSwitch = this.$container.find('.comments-switch')[0];
                 let commentsClose = this.$container.find('.comments-toggle')[0];
@@ -297,7 +301,7 @@ export default class WidescreenMode implements PoweruserModule {
             focusComment(comment: any) {
                 let target = this.$container.find('#' + comment);
                 if (target.length) {
-                    Utils.waitForElement('.simplebar-scroll-content').then((el) => {
+                    Utils.waitForElement('.scroll-content').then((el) => {
                         this.$scrollContainer = $(el[0]);
                         let jumpPos = target.offset().top - this.$scrollContainer.offset().top - CONFIG.HEADER_HEIGHT - 80;
                         this.$scrollContainer.scrollTop(jumpPos);
@@ -402,7 +406,7 @@ export default class WidescreenMode implements PoweruserModule {
                             top: e.code === 'ArrowDown' ? '-=20' : '+=20'
                         }, 0);
                     } else {
-                        let elem = this.commentsContainer.find('.simplebar-content');
+                        let elem = this.commentsContainer.find('.scroll-content');
                         if (!elem.is(':focus')) {
                             elem.attr('tabindex', -1).focus();
                         }
