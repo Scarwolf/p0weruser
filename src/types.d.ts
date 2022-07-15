@@ -47,6 +47,7 @@ export type P = {
     shouldShowScore: (thing: any) => any;
     navigateTo: (location: any, mode?: any) => any;
     addRoute: (viewClass: any, path: any) => any;
+    mobile: boolean;
 }
 
 export type User = {
@@ -133,6 +134,7 @@ export type StreamItem = {
     userId: number;
     vote: number;
     width: number;
+    preview: string;
 };
 
 export type BaseView = {
