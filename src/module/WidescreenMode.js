@@ -70,7 +70,7 @@ export default class WidescreenMode {
         this.overrideViews();
         this.addNavigation();
 
-        if(this.logoLinksToNew) {
+        if (this.logoLinksToNew) {
             this.modifyLogo();
         }
     }
@@ -220,25 +220,25 @@ export default class WidescreenMode {
                             benisbar.dataset.afterText += " (" + _this.calculateBenisUntilTop(itemData.up, itemData.down, itemData.date) + " bis beliebt)";
                         }
                     }
-                    
+
                     benisbar.classList.add('show', _this.displayBenisbar);
                 }
 
                 _this.addItemListener(this.$image, itemData);
                 document.body.classList.add('fixed');
 
-                if(_this.biggerStreamNavIcons) {
+                if (_this.biggerStreamNavIcons) {
                     let prev = document.getElementsByClassName('stream-prev-icon')[0];
                     let next = document.getElementsByClassName('stream-next-icon')[0];
 
-                    if(prev !== undefined)
+                    if (prev !== undefined)
                         prev.classList.add('stream-prev-icon-xl');
 
-                    if(next !== undefined)
+                    if (next !== undefined)
                         next.classList.add('stream-next-icon-xl');
                 }
 
-                if(!_this.commentsLeft) {
+                if (!_this.commentsLeft) {
                     document.getElementsByClassName('item-container-content')[0].classList.add('right');
                 }
             },
@@ -318,7 +318,7 @@ export default class WidescreenMode {
                 result += this.buildItem(items[i]);
             }
 
-            return `<div class="item-row">${result}</div>`;
+            return `<div class="stream-row">${result}</div>`;
         };
     }
 
