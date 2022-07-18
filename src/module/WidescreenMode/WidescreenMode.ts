@@ -17,6 +17,7 @@ export default class WidescreenMode implements PoweruserModule {
     commentsContainer: any = {};
     resized: boolean = false;
     listenerAdded = false;
+    scrollbar: Scrollbar | null = null;
     readonly description = 'Stellt das pr0 im Breitbildmodus dar.';
     readonly displayBenis = Settings.get('WidescreenMode.settings.display_benis');
     readonly closeOnBackgroundClick = Settings.get('WidescreenMode.settings.close_on_background');
@@ -269,31 +270,37 @@ export default class WidescreenMode implements PoweruserModule {
         p.View.Stream.Comments = p.View.Stream.Comments.extend({
             template: streamItemCommentsTemplate,
             render: function () {
-                this.parent();
-                _this.comments = [this.$commentForm.find('textarea')[0]];
-                _this.commentsContainer = this.$container;
-                _this.commentsContainer[0].classList.toggle('wide', _this.commentsWide);
-                _this.commentsContainer[0].classList.toggle('closed', _this.commentsClosed);
-                _this.commentsContainer[0].classList.add('loaded');
-
-                const existingScrollbar = Scrollbar.get(this.$container[0]);
+                // We need to destroy the scrollbar before rendering the comments, otherwise 
+                // we have troubles with the scrollbar not being initialized properly.
+                const existingScrollbar = _this.scrollbar
                 if (!!existingScrollbar) {
                     existingScrollbar.destroy();
+                    _this.scrollbar = null;
                 }
-                Scrollbar.init(this.$container[0], {});
+
+                this.parent();
+
+                _this.commentsContainer = this.$container[0];
+                _this.comments = [this.$commentForm.find('textarea')[0]];
+                _this.commentsContainer.classList.toggle('wide', _this.commentsWide);
+                _this.commentsContainer.classList.toggle('closed', _this.commentsClosed);
+                _this.commentsContainer.classList.add('loaded');
+                if (!_this.scrollbar) {
+                    _this.scrollbar = Scrollbar.init(_this.commentsContainer, {});
+                }
 
                 let commentSwitch = this.$container.find('.comments-switch')[0];
                 let commentsClose = this.$container.find('.comments-toggle')[0];
                 commentSwitch.addEventListener('click', () => {
-                    this.$container[0].classList.toggle('wide');
-                    _this.commentsWide = this.$container[0].classList.contains('wide');
+                    _this.commentsContainer.classList.toggle('wide');
+                    _this.commentsWide = _this.commentsContainer.classList.contains('wide');
 
                     window.localStorage.setItem('comments_wide', String(_this.commentsWide));
                 });
 
                 commentsClose.addEventListener('click', () => {
-                    this.$container[0].classList.toggle('closed');
-                    _this.commentsClosed = this.$container[0].classList.contains('closed');
+                    _this.commentsContainer.classList.toggle('closed');
+                    _this.commentsClosed = _this.commentsContainer.classList.contains('closed');
 
                     window.localStorage.setItem('comments_closed', String(_this.commentsClosed));
                 })
@@ -301,19 +308,26 @@ export default class WidescreenMode implements PoweruserModule {
             focusComment: function (comment: any) {
                 let target = this.$container.find('#' + comment);
                 if (target.length) {
-                    const scrollbar = Scrollbar.get(this.$container[0]);
-                        this.$scrollContainer = $(el[0]);
-                    if (scrollbar) {
-                        scrollbar.scrollIntoView(target[0]);
-                        target.highlight(180, 180, 180, 1);
-                    }
+                    target.highlight(180, 180, 180, 1);
                 }
             },
             showReplyForm(ev: any) {
                 this.parent(ev);
                 let id = ev.currentTarget.href.split(':comment')[1];
                 _this.comments.push(document.querySelectorAll(`#comment${id} textarea`)[0]);
-            }
+            },
+            // This code mocks a comment process on Post https://pr0gramm.com/top/5241291.
+            // Use it for testing purposes only.
+            // submitComment: function (ev) {
+            //     if (!p.mainView.requireLogin()) {
+            //         return false;
+            //     }
+            //     var $form = $(ev.currentTarget);
+            //     var data = $form.serialize();
+            //     this.render();
+            //     this.loaded(JSON.parse(`{"commentId":58736663,"comments":[{"id":58736092,"parent":0,"content":"Bevor einer dumm fragt - Ja ich habe meinem Kater einen Sombrero aus seinem Bauchhaar gebastelt.","created":1658152686,"up":30,"down":3,"confidence":0.76427100000000003,"name":"H0lyC0w","mark":0},{"id":58736154,"parent":58736092,"content":"Des is mobbing aller!","created":1658152847,"up":19,"down":1,"confidence":0.76386399999999999,"name":"Babyfackmcgisek","mark":9},{"id":58736202,"parent":0,"content":"Sierra ist wirklich abartig, aber leider ist dieser M\u00fcll der einzige Tequila, den man in deutschen Getr\u00e4nkem\u00e4rkten bekommt.","created":1658152970,"up":3,"down":0,"confidence":0.43849399999999999,"name":"Raguna","mark":10},{"id":58736223,"parent":58736092,"content":"Ayayay, du L\u00fcgenmaul. Das sind sicherlich deine Haare!","created":1658153037,"up":2,"down":1,"confidence":0.20765500000000001,"name":"pqpuGa","mark":10},{"id":58736308,"parent":58736154,"content":"Ausserdem hat er gar keinen Kater!","created":1658153282,"up":4,"down":1,"confidence":0.37552799999999997,"name":"GyrosPeter","mark":10},{"id":58736368,"parent":58736202,"content":"Dann geh in anst\u00e4ndigen Laden einkaufen du Hurensohn.","created":1658153451,"up":4,"down":1,"confidence":0.37552799999999997,"name":"Magnum","mark":9},{"id":58736572,"parent":58736092,"content":"Marktl\u00fccke, einf\u00e4rben und bei Aidsy anbieten","created":1658153921,"up":1,"down":0,"confidence":0.206543,"name":"Kloakenficker43","mark":0},{"id":58736663,"parent":58736202,"content":"Es gibt anderen Tequila?","created":1658154147,"up":1,"down":0,"confidence":0.206543,"name":"HansLambda","mark":10}],"ts":1658154147,"cache":null,"rt":15,"qc":11}`));
+            //     return false;
+            // }
         });
 
         p.View.Stream.Comments.SortConfidenceTime = (itemUser: any) => function (a: any, b: any) {
