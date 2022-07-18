@@ -389,6 +389,7 @@ export default class WidescreenMode implements PoweruserModule {
 
         this.container.addEventListener('click', (e: any) => {
             if (e.target === this.container && this.closeOnBackgroundClick) {
+                p.currentView.currentItemId = null;
                 p.currentView.hideItem();
             }
         });
