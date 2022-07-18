@@ -20,11 +20,11 @@ const getActivatedModules = (): PoweruserModule[] => {
 }
 
 
-const loadModule = (module: PoweruserModule) => {
-    module.load();
+const loadModule = async (module: PoweruserModule) => {
+    await module.load();
     console.debug(`Loaded module: ${module.id}`);
 }
-const loadModules = (modules: PoweruserModule[]) => modules.forEach(m => loadModule(m));
+const loadModules = async (modulesToLoad: PoweruserModule[]) => Promise.all(modulesToLoad.map(m => loadModule(m)));
 const addStyles = () => {
     // FontAwesome (Icons)
     let fa = document.createElement('link');
