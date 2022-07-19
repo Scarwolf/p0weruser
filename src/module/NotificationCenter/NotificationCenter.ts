@@ -143,7 +143,7 @@ export default class NotificationCenter implements PoweruserModule {
 
         elem.innerHTML = templateEntry.replaceArray(
             ['##TITLE##', '##USER##', '##TIME##', '##THUMB##', '##URL##', '##MARK##', '##TEXT##'],
-            [title, user, new Date(date * 1000), img, url, mark, Utils.escapeHtml(msg)]
+            [title, user, new Intl.DateTimeFormat("de-DE", { dateStyle: "medium", timeStyle: "short" }).format(new Date(date * 1000)), img, url, mark, Utils.escapeHtml(msg)]
         );
 
         this.messageContainer?.appendChild(elem);
