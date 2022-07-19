@@ -270,6 +270,7 @@ export default class WidescreenMode implements PoweruserModule {
         // Extend comments-rendering and template
         p.View.Stream.Comments = p.View.Stream.Comments.extend({
             template: streamItemCommentsTemplate,
+            _commentToFocus: null,
             render: function () {
                 // We need to destroy the scrollbar before rendering the comments, otherwise 
                 // we have troubles with the scrollbar not being initialized properly.
@@ -278,6 +279,12 @@ export default class WidescreenMode implements PoweruserModule {
                     existingScrollbar.destroy();
                     _this.scrollbar = null;
                 }
+
+                // The comment that should be focused is being cleared in the parent function.
+                // Therefore, we need to save the comment that should be focused before.
+                // The parent function is not able to scroll the comment into view, because
+                // the scrollbar is initialized later on.
+                this._commentToFocus = this.data.params.comment;
 
                 this.parent();
 
@@ -290,6 +297,11 @@ export default class WidescreenMode implements PoweruserModule {
                     _this.scrollbar = Scrollbar.init(_this.commentsContainer, scrollbarOptions);
                 }
 
+                // Now that the scrollbar is initialized, we can scroll the comment into view.
+                if (this._commentToFocus) {
+                    this.focusComment(this._commentToFocus);
+                    this._commentToFocus = null;
+                }
                 let commentSwitch = this.$container.find('.comments-switch')[0];
                 let commentsClose = this.$container.find('.comments-toggle')[0];
                 commentSwitch.addEventListener('click', () => {
@@ -304,11 +316,12 @@ export default class WidescreenMode implements PoweruserModule {
                     _this.commentsClosed = _this.commentsContainer.classList.contains('closed');
 
                     window.localStorage.setItem('comments_closed', String(_this.commentsClosed));
-                })
+                });
             },
             focusComment: function (comment: any) {
-                let target = this.$container.find('#' + comment);
+                let target = this.$container.find(`#${comment}`);
                 if (target.length) {
+                    _this.scrollbar?.scrollIntoView(target[0]);
                     target.highlight(180, 180, 180, 1);
                 }
             },
