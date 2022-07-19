@@ -19,18 +19,18 @@ export default class Pr0p0ll implements PoweruserModule {
     readonly apiUrl = 'https://pr0p0ll.com/?p=viewjson&id=';
 
     inboxLink: HTMLElement;
-    target: HTMLElement;
+    target: HTMLElement | null = null;
     template = `<a href="https://pr0p0ll.com/?p=user" target="_blank" class="empty pr0p0ll-count fa fa-edit head-link"><span>0</span></a>`;
 
     constructor() {
         moment.locale('de');
         this.inboxLink = document.getElementById('inbox-link')!;
-        this.inboxLink.after($(this.template)[0]);
-        this.target = this.inboxLink.nextSibling!.firstChild! as HTMLElement;
     }
 
 
     async load() {
+        this.inboxLink.after($(this.template)[0]);
+        this.target = this.inboxLink.nextSibling!.firstChild! as HTMLElement;
         if (this.token) {
             this.addListener();
         }
@@ -190,8 +190,8 @@ export default class Pr0p0ll implements PoweruserModule {
             );
         }
 
-        (this.target.parentNode! as HTMLElement).classList.toggle('empty', score === 0 || !score);
-        this.target.innerText = score;
+        (this.target!.parentNode! as HTMLElement).classList.toggle('empty', score === 0 || !score);
+        this.target!.innerText = score;
         Settings.set('Pr0p0ll.settings.last_count', score);
     }
 }
