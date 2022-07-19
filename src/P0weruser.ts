@@ -61,6 +61,9 @@ if (activatedModules.length > 0) {
     if (activatedModules.some(m => m.needsReRendering)) {
         setTimeout(() => {
             p.currentView = null;
+
+            // TODO: The navigation will not work for comment links. It works but the comment is not shown as the 
+            // location is being stripped down on the post id.
             p.navigateTo(p.location, p.NAVIGATE.FORCE);
         }, 0);
     }
