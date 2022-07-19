@@ -18,6 +18,7 @@ export default class NotificationCenter implements PoweruserModule {
     icon = $('#inbox-link');
     elem = document.createElement('div');
     messageContainer: HTMLUListElement | null = null;
+    scrollbar: Scrollbar | null = null;
 
     static getTitle(message: any) {
         return message.thumb === null ? 'Private Nachricht' : 'Kommentar';
@@ -98,7 +99,10 @@ export default class NotificationCenter implements PoweruserModule {
                     );
                 }
 
-                Scrollbar.init(container, scrollbarOptions);
+                if (!!this.scrollbar) {
+                    this.scrollbar.destroy();
+                }
+                this.scrollbar = Scrollbar.init(container, scrollbarOptions);
 
                 this.getNotifications(false).then((notifications: any) => {
                     const msgs = notifications.messages;
