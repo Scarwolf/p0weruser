@@ -146,6 +146,15 @@ export default class NotificationCenter implements PoweruserModule {
             [title, user, new Intl.DateTimeFormat("de-DE", { dateStyle: "medium", timeStyle: "short" }).format(new Date(date * 1000)), img, url, mark, Utils.escapeHtml(msg)]
         );
 
+        $(elem).on("click", e => {
+            e.preventDefault();
+            const linkElem = $(e.target).closest("a").first();
+            const href = linkElem.attr("href");
+            if (href) {
+                p.navigateTo(href.substring(1));
+            }
+        });
+
         this.messageContainer?.appendChild(elem);
     }
 }
