@@ -3,7 +3,7 @@ import Scrollbar from 'smooth-scrollbar';
 import moment from 'moment';
 import Pr0p0llDiagramm from '@/lib/Pr0p0llDiagramm';
 // @ts-ignore
-import template from '../../../assets/template/pr0p0llOverlay.html?raw'; // TODO
+import overlayTemplate from '../../../assets/template/pr0p0llOverlay.html?raw'; // TODO
 import { ModuleSetting, PoweruserModule } from '@/types';
 import Utils, { loadStyle } from '@/Utils';
 // @ts-ignore
@@ -18,24 +18,25 @@ export default class Pr0p0ll implements PoweruserModule {
     readonly showDiagramms = Settings.get('Pr0p0ll.settings.show_diagramms');
     readonly apiUrl = 'https://pr0p0ll.com/?p=viewjson&id=';
 
-    inboxLink = document.getElementById('inbox-link')!;
-    target = this.inboxLink.nextSibling!.firstChild! as HTMLElement;
+    inboxLink: HTMLElement;
+    target: HTMLElement;
     template = `<a href="https://pr0p0ll.com/?p=user" target="_blank" class="empty pr0p0ll-count fa fa-edit head-link"><span>0</span></a>`;
 
     constructor() {
         moment.locale('de');
+        this.inboxLink = document.getElementById('inbox-link')!;
+        this.inboxLink.after($(this.template)[0]);
+        this.target = this.inboxLink.nextSibling!.firstChild! as HTMLElement;
     }
 
 
     async load() {
-        this.inboxLink.after($(template)[0]);
-
         if (this.token) {
             this.addListener();
         }
 
         p.View.Overlay.Pr0p0llDiagramm = p.View.Base.extend({
-            template: template,
+            template: overlayTemplate,
             init: function (container: any, parent: any, params: any) {
                 this.data.p0ll = params.data;
                 this.data.dateTo = moment(params.data.info.endedOn, 'X').format('LL');
