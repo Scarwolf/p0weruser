@@ -33,7 +33,6 @@ export default class Chat implements PoweruserModule {
 
         p.View.InboxMessages.Messages = p.View.InboxMessages.Messages.extend({
             show: function () {
-                console.log("Show");
                 this.data.messages.reverse();
                 this.parent();
 
