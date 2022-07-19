@@ -25,6 +25,7 @@ The original repo can be found here: [FlorianMaak/p0weruser](https://github.com/
 * Integration of [pr0p0ll.com](https://pr0p0ll.com)
 * Mark viewed posts
 * Anonymous Title
+* Default Filters
 
 ## Installation
 Just install Tampermonkey and install the script by a simple
