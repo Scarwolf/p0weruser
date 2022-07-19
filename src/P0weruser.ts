@@ -58,8 +58,10 @@ if (activatedModules.length > 0) {
     // We use force navigation here to trigger re-rendering as we're not changing location.
     // As the native pr0gramm initializes first a view is already created. However, It is necessary that we let 
     // pr0gramm think we don't have a view yet as otherwise it will try to hide the current view.
-    setTimeout(() => {
-        p.currentView = null;
-        p.navigateTo(p.location, p.NAVIGATE.FORCE);
-    }, 0);
+    if (activatedModules.some(m => m.needsReRendering)) {
+        setTimeout(() => {
+            p.currentView = null;
+            p.navigateTo(p.location, p.NAVIGATE.FORCE);
+        }, 0);
+    }
 }

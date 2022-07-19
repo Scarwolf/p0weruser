@@ -4,6 +4,7 @@ export type PoweruserModule = {
     readonly id: PoweruserModuleId;
     readonly name: string;
     readonly description: string;
+    readonly needsReRendering?: boolean;
     load(): Promise<void>;
     getSettings?: () => ModuleSetting[]
 };
