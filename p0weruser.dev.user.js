@@ -29,7 +29,7 @@
 // @run-at       document-end
 // ==/UserScript==
 
-// use vite-plugin-monkey@0.2.14 at 2022-07-19T11:07:30.858Z
+// use vite-plugin-monkey@0.2.14 at 2022-07-19T15:01:31.538Z
 
 ;(({ cssTextList = [] }) => {
   cssTextList.forEach((s) => {
