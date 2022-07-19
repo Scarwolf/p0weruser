@@ -3,6 +3,12 @@ import './settings.less';
 // @ts-ignore
 import template from '../../../assets/template/settingsTab.html?raw'; // TODO
 import Utils from '@/Utils';
+import { ScrollbarOptions } from 'smooth-scrollbar/interfaces';
+
+export const scrollbarOptions: Partial<ScrollbarOptions> = {
+    damping: 0.5,
+    thumbMinSize: 30
+};
 
 export default class Settings {
     readonly modules: PoweruserModule[];

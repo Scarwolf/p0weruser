@@ -1,4 +1,4 @@
-import Settings from '@/core/Settings/Settings';
+import Settings, { scrollbarOptions } from '@/core/Settings/Settings';
 import Scrollbar from 'smooth-scrollbar';
 import moment from 'moment';
 import Pr0p0llDiagramm from '@/lib/Pr0p0llDiagramm';
@@ -150,7 +150,7 @@ export default class Pr0p0ll implements PoweruserModule {
                 });
 
                 const diag = new Pr0p0llDiagramm(result);
-                Scrollbar.init(document.getElementById('overlay-box')!, {});
+                Scrollbar.init(document.getElementById('overlay-box')!, scrollbarOptions);
             },
             error => {
                 window.alert(error);

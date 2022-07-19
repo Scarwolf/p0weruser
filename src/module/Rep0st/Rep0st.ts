@@ -3,6 +3,7 @@ import { PoweruserModule } from '@/types';
 import Utils, { loadStyle } from '@/Utils';
 // @ts-ignore
 import style from './rep0st.less?inline';
+import { scrollbarOptions } from '@/core/Settings/Settings';
 
 
 export default class Rep0st implements PoweruserModule {
@@ -63,7 +64,7 @@ export default class Rep0st implements PoweruserModule {
         bar.append(this.$loader!);
         container.find('.image-main').after(bar);
 
-        Scrollbar.init(bar[0], {});
+        Scrollbar.init(bar[0], scrollbarOptions);
 
         closeBtn[0].addEventListener('click', () => {
             this.visible = false;

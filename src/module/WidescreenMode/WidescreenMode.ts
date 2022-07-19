@@ -1,5 +1,5 @@
 import Scrollbar from 'smooth-scrollbar';
-import Settings from '@/core/Settings/Settings';
+import Settings, { scrollbarOptions } from '@/core/Settings/Settings';
 import Utils, { loadStyle } from '@/Utils';
 // @ts-ignore
 import style from './widescreenMode.less?inline';
@@ -286,7 +286,7 @@ export default class WidescreenMode implements PoweruserModule {
                 _this.commentsContainer.classList.toggle('closed', _this.commentsClosed);
                 _this.commentsContainer.classList.add('loaded');
                 if (!_this.scrollbar) {
-                    _this.scrollbar = Scrollbar.init(_this.commentsContainer, {});
+                    _this.scrollbar = Scrollbar.init(_this.commentsContainer, scrollbarOptions);
                 }
 
                 let commentSwitch = this.$container.find('.comments-switch')[0];

@@ -7,6 +7,7 @@ import { PoweruserModule } from '@/types';
 import Utils, { loadStyle } from '@/Utils';
 // @ts-ignore
 import style from './notificationCenter.less?inline';
+import { scrollbarOptions } from '@/core/Settings/Settings';
 
 export default class NotificationCenter implements PoweruserModule {
     readonly id = 'NotificationCenter';
@@ -97,7 +98,7 @@ export default class NotificationCenter implements PoweruserModule {
                     );
                 }
 
-                Scrollbar.init(container, {});
+                Scrollbar.init(container, scrollbarOptions);
 
                 this.getNotifications(false).then((notifications: any) => {
                     const msgs = notifications.messages;
