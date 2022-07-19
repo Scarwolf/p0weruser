@@ -3,16 +3,18 @@ import Scrollbar from 'smooth-scrollbar';
 import template from '../../../assets/template/notificationCenter.html?raw'; // TODO
 //@ts-ignore
 import templateEntry from '../../../assets/template/notificationEntry.html?raw'; // TODO
-import { PoweruserModule } from '@/types';
+import { ModuleSetting, PoweruserModule } from '@/types';
 import Utils, { loadStyle } from '@/Utils';
 // @ts-ignore
 import style from './notificationCenter.less?inline';
-import { scrollbarOptions } from '@/core/Settings/Settings';
+import Settings, { scrollbarOptions } from '@/core/Settings/Settings';
 
 export default class NotificationCenter implements PoweruserModule {
     readonly id = 'NotificationCenter';
     readonly name = 'Nachrichten Schnellzugriff';
     readonly description = 'Öffnet neue Benachrichtigungen in einem kleinen Menü';
+
+    showUnreadMessages = Settings.get('NotificationCenter.settings.show_unread_messages');
 
     menuOpen = false;
     icon = $('#inbox-link');
@@ -33,6 +35,17 @@ export default class NotificationCenter implements PoweruserModule {
 
         this.addListener();
         loadStyle(style);
+    }
+
+    getSettings(): ModuleSetting[] {
+        return [
+            {
+                id: 'show_unread_messages',
+                title: 'Ungelesene Nachrichten Anzeigen',
+                description: 'Zeigt auch ungelesene Nachrichten an, es werden allerdings nur gelesene hervorgehoben',
+                type: "checkbox"
+            }
+        ];
     }
 
 
@@ -83,7 +96,9 @@ export default class NotificationCenter implements PoweruserModule {
                     elem.innerText = 'Keine neuen Benachrichtigungen!';
                     elem.className = 'no-notifications';
                     container.appendChild(elem);
-                    return false;
+                    if (!this.showUnreadMessages) {
+                        return false;
+                    }
                 }
 
                 for (const element of messages) {
@@ -95,7 +110,8 @@ export default class NotificationCenter implements PoweruserModule {
                         element.mark,
                         element.itemId,
                         element.id,
-                        element.message
+                        element.message,
+                        element.read
                     );
                 }
 
@@ -103,20 +119,6 @@ export default class NotificationCenter implements PoweruserModule {
                     this.scrollbar.destroy();
                 }
                 this.scrollbar = Scrollbar.init(container, scrollbarOptions);
-
-                this.getNotifications(false).then((notifications: any) => {
-                    const msgs = notifications.messages;
-
-                    if (msgs.length <= 0) {
-                        return false;
-                    }
-
-                    for (const msg of msgs) {
-                        let element = $(container).find(`#notification-${msg.id}`)[0];
-                        if (element !== undefined)
-                            element.classList.add('new');
-                    }
-                });
             });
         }
     }
@@ -129,7 +131,7 @@ export default class NotificationCenter implements PoweruserModule {
     }
 
 
-    addEntry(title: any, user: any, date: any, image: any, mark: any, id: any, cId: any, msg: any) {
+    addEntry(title: any, user: any, date: any, image: any, mark: any, id: any, cId: any, msg: any, read: boolean) {
         let elem = document.createElement('li');
         elem.id = `notification-${cId}`;
         let img = '<img src="//thumb.pr0gramm.com/##THUMB##" class="comment-thumb">';
@@ -159,6 +161,9 @@ export default class NotificationCenter implements PoweruserModule {
             }
         });
 
+        if (!read) {
+            elem.classList.add("new");
+        }
         this.messageContainer?.appendChild(elem);
     }
 }
