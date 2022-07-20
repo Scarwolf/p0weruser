@@ -294,7 +294,10 @@ export default class WidescreenMode implements PoweruserModule {
                 _this.commentsContainer.classList.toggle('closed', _this.commentsClosed);
                 _this.commentsContainer.classList.add('loaded');
                 if (!_this.scrollbar) {
-                    _this.scrollbar = Scrollbar.init(_this.commentsContainer, scrollbarOptions);
+                    _this.scrollbar = Scrollbar.init(_this.commentsContainer, {
+                        ...scrollbarOptions,
+                        continuousScrolling: true
+                    });
                 }
 
                 // Now that the scrollbar is initialized, we can scroll the comment into view.
@@ -321,7 +324,9 @@ export default class WidescreenMode implements PoweruserModule {
             focusComment: function (comment: any) {
                 let target = this.$container.find(`#${comment}`);
                 if (target.length) {
-                    _this.scrollbar?.scrollIntoView(target[0]);
+                    _this.scrollbar?.scrollIntoView(target[0], {
+                        offsetTop: 50
+                    });
                     target.highlight(180, 180, 180, 1);
                 }
             },
