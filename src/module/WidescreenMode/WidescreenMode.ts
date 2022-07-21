@@ -294,10 +294,7 @@ export default class WidescreenMode implements PoweruserModule {
                 _this.commentsContainer.classList.toggle('closed', _this.commentsClosed);
                 _this.commentsContainer.classList.add('loaded');
                 if (!_this.scrollbar) {
-                    _this.scrollbar = Scrollbar.init(_this.commentsContainer, {
-                        ...scrollbarOptions,
-                        continuousScrolling: true
-                    });
+                    _this.scrollbar = Scrollbar.init(_this.commentsContainer, scrollbarOptions);
                 }
 
                 // Now that the scrollbar is initialized, we can scroll the comment into view.

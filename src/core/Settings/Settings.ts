@@ -7,7 +7,8 @@ import { ScrollbarOptions } from 'smooth-scrollbar/interfaces';
 
 export const scrollbarOptions: Partial<ScrollbarOptions> = {
     damping: 0.5,
-    thumbMinSize: 30
+    thumbMinSize: 30,
+    continuousScrolling: false
 };
 
 export default class Settings {
