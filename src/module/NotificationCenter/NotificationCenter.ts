@@ -105,7 +105,8 @@ export default class NotificationCenter implements PoweruserModule {
                     }
                 }
 
-                for (const element of messages) {
+                // Hiode deleted messages
+                messages.filter(m => m.message !== null).forEach(element => {
                     this.addEntry(NotificationCenter.getTitle(
                         element),
                         element.name,
@@ -117,7 +118,7 @@ export default class NotificationCenter implements PoweruserModule {
                         element.message,
                         element.read
                     );
-                }
+                });
                 this.scrollbar = Scrollbar.init(container, scrollbarOptions);
             });
         }
