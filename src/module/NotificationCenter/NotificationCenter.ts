@@ -73,6 +73,10 @@ export default class NotificationCenter implements PoweruserModule {
         this.icon[0].classList.toggle('active');
         this.elem.classList.toggle('visible');
         const container = this.messageContainer;
+        if (!!this.scrollbar) {
+            this.scrollbar.destroy();
+        }
+
         if (!!container) {
             container.innerHTML = '<span class="fa fa-spinner fa-spin"></span>';
             container.classList.add('loading');
@@ -113,10 +117,6 @@ export default class NotificationCenter implements PoweruserModule {
                         element.message,
                         element.read
                     );
-                }
-
-                if (!!this.scrollbar) {
-                    this.scrollbar.destroy();
                 }
                 this.scrollbar = Scrollbar.init(container, scrollbarOptions);
             });
