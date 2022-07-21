@@ -31,6 +31,7 @@ export type P = {
     location: string;
     user: User;
     mainView: any;
+    Stream: Stream;
     View: {
         Stream: {
             Main: StreamMainView;
@@ -48,7 +49,13 @@ export type P = {
     shouldShowScore: (thing: any) => any;
     navigateTo: (location: any, mode?: any) => any;
     addRoute: (viewClass: any, path: any) => any;
+    merge: (a: any, b: any) => any;
     mobile: boolean;
+};
+
+export type Stream = {
+    _load: (options: any, callback: any) => any;
+    prototype: any;
 }
 
 export type User = {
@@ -115,6 +122,10 @@ export type UserSyncEvent = {
             follows: number;
         }
     }
+};
+
+export type ItemResult = {
+    items: StreamItem[];
 };
 
 export type StreamItem = {
