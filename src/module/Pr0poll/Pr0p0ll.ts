@@ -88,7 +88,7 @@ export default class Pr0p0ll implements PoweruserModule {
 
                 if (this.showDiagramms) {
                     window.addEventListener('commentsLoaded', (e: any) => {
-                        let links = e.data.find('a[href*="pr0p0ll"][href*="id="]');
+                        let links = e.data.find('a[href*="pr0p0ll"][href*="id="]').toArray();
                         this.addLinks(links);
                     });
                 }
