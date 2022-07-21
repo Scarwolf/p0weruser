@@ -157,7 +157,8 @@ export default class NotificationCenter implements PoweruserModule {
             const linkElem = $(e.target).closest("a").first();
             const href = linkElem.attr("href");
             if (href) {
-                p.navigateTo(href.substring(1));
+                p.currentView = null;
+                p.navigateTo(href.substring(1), p.NAVIGATE.FORCE);
             }
         });
 
