@@ -1,18 +1,14 @@
-## Allgemeine Informationen
-**Browser:** Chrome|Firefox
+## Bug Summary / Fehlerbeschreibung
 
-**Version:** Version des UserScripts
 
-**Modul:** Wenn du weißt, welches Modul das Problem auslöst, so nenne dieses hier.
+## Steps to Reproduce the Problem / Reproduzierbarkeit
 
-## Fehlerbeschreibung
-> Bitte beschreibe den Fehler so genau wie möglich.
+  1.
+  1.
+  1.
 
-## Aktuelles Verhalten
-> Wie äußert sich der Fehler? Bzw. was ist das aktuelle Verhalten, was nicht gewünscht ist?
+## Specifications / Daten
 
-## Erwartetes Verhalten
-> Wie sollte sich das Script eig. verhalten? Was läuft in deinen Augen schief?
-
-## Reproduzierbarkeit
-> Wie kann der Fehler repsoruziert werden? (Bzw. Wie kann er hervorgerufen werden?)
+  - Version:
+  - Browser:
+  - Active p0weruser Modules:

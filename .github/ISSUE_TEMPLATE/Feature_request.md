@@ -11,5 +11,4 @@ about: Suggest an idea for this project
 
 **Modul:** Pr0p0ll
 
-**Description**
-> Describe your feature
+## Beschreibung
