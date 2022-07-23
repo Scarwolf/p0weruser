@@ -12,7 +12,7 @@ export default class StyleCustomization implements PoweruserModule {
 
 
     async load() {
-        if(this.isTransparentNavbarEnabled === true) {
+        if (this.isTransparentNavbarEnabled === true) {
             document.getElementById("head")?.classList.add("transparent");
         }
         loadStyle(style);
@@ -23,7 +23,7 @@ export default class StyleCustomization implements PoweruserModule {
             {
                 id: 'transparent_navbar',
                 title: 'Transparente Navigationsleiste',
-                description: 'Die Navigationsleiste wird transparent angezeigt. Inspieriert von <a href="https://github.com/holzmaster/augenzuckerl">Augenzuckerl</a> von <a href="https://pr0gramm.com/user/holzmaster">@holzmaster</a>',
+                description: 'Die Navigationsleiste wird transparent angezeigt. Inspieriert von <a href="https://github.com/holzmaster/augenzuckerl">Augenzuckerl</a> von <a href="https://pr0gramm.com/user/holzmaster">@holzmaster</a>. Außerdem wird das Navigationsmenü auch im Widescreen Mode zentriert dargestellt.',
                 type: "checkbox"
             }
         ];
