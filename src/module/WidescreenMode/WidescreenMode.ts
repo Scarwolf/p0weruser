@@ -38,7 +38,7 @@ export default class WidescreenMode implements PoweruserModule {
         container: document.getElementById('footer-links')
     };
     logoLink?: HTMLAnchorElement;
-    moveLink = document.getElementsByClassName('move-link')[0]!;
+    moveLink?: HTMLAnchorElement;
     img?: any;
     isMoveable: boolean = false;
 
@@ -77,6 +77,7 @@ export default class WidescreenMode implements PoweruserModule {
         if (this.logoLinksToNew) {
             this.modifyLogo();
         }
+        console.log(this.moveLink);
         loadStyle(style);
     }
 
@@ -367,6 +368,7 @@ export default class WidescreenMode implements PoweruserModule {
         this.container = this.img[0].parentNode;
         this.resized = (itemData.height > this.container.offsetHeight || itemData.width > this.container.offsetWidth);
         this.container.classList.toggle('resized', this.resized);
+        this.moveLink = document.getElementsByClassName('move-link')[0]! as HTMLAnchorElement;
         // Enable draggable
         if (this.resized) {
             this.container.classList.add('oversize');
