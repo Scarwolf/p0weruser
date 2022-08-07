@@ -80,13 +80,11 @@ export default class FilterMarks implements PoweruserModule {
                 const shouldShowPreview = !p.mobile && !!item.preview;
                 return `
                     <a class="silent thumb filter ${_this.displayLabelStream ? FilterMarks.getFilter(item) : ''}" ${shouldShowPreview ? `data-has-preview="true"` : ''} id="item-${item.id}" href="${this.baseURL + item.id}">
-                        <img
-                            width="128"
-                            height="128"
-                            onload="this.classList.add('loaded')"
-                            onerror="this.parentElement.classList.add('error')"
-                            src="${item.thumb}"
-                        >
+                        <p-thumbnail
+                            itemId="${item.id}"
+                            thumbSrc="${item.thumb}"
+                            ${item.preview ? `previewSrc="${item.preview}"` : ""}
+                        ></p-thumbnail>
                         ${_this.displayBenisStream ? `
                         <span 
                             class="benis-info ${item.up - item.down > 0 ? 'up' : 'down'}">
