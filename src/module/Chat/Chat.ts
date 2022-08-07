@@ -1,9 +1,7 @@
 import { PoweruserModule } from '@/types';
-import Scrollbar from 'smooth-scrollbar';
 // @ts-ignore
 import style from './chat.less?inline';
 import { loadStyle } from '@/Utils';
-import { scrollbarOptions } from '@/core/Settings/Settings';
 
 export default class Chat implements PoweruserModule {
     readonly id = 'Chat';
@@ -25,7 +23,6 @@ export default class Chat implements PoweruserModule {
                 pane.css('height', `calc(100vh - ${top}px)`);
 
                 let cPane = pane.find('.conversations-pane').toArray();
-                Scrollbar.init(cPane[0], scrollbarOptions);
 
                 this.parent();
             }
@@ -36,14 +33,8 @@ export default class Chat implements PoweruserModule {
                 this.data.messages.reverse();
                 this.parent();
 
-                let iPane = this.$container.parents('.inbox-messages').toArray();
-
-                const existingScrollbar = Scrollbar.get(iPane[0]);
-                if (!!existingScrollbar) {
-                    existingScrollbar.destroy();
-                }
-                const scrollbar = Scrollbar.init(iPane[0], scrollbarOptions);
-                scrollbar.scrollTo(undefined, Number.MAX_VALUE);
+                let iPane = this.$container.parents('.inbox-messages');
+                iPane.get(0).scrollTo(0, iPane.get(0).scrollHeight);
             }
         });
     }

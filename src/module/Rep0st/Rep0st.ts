@@ -1,9 +1,7 @@
-import Scrollbar from 'smooth-scrollbar';
 import { PoweruserModule } from '@/types';
 import Utils, { loadStyle } from '@/Utils';
 // @ts-ignore
 import style from './rep0st.less?inline';
-import { scrollbarOptions } from '@/core/Settings/Settings';
 
 
 export default class Rep0st implements PoweruserModule {
@@ -63,8 +61,6 @@ export default class Rep0st implements PoweruserModule {
         bar.append(template);
         bar.append(this.$loader!);
         container.find('.image-main').after(bar);
-
-        Scrollbar.init(bar[0], scrollbarOptions);
 
         closeBtn[0].addEventListener('click', () => {
             this.visible = false;
@@ -134,13 +130,12 @@ export default class Rep0st implements PoweruserModule {
 
 
     displayImages(bar: any, urls: any) {
-        bar = bar.find('.scroll-content');
-
         for (const element of urls) {
             let probabilityContainer = `<div class="probability">${element.probability}</div>`;
 
             let container = bar.append($(`<a href=${element.url} target="_blank"><img src=${element.img} class="rep0st-thumb" />${probabilityContainer}<span title="Als Repost markieren" class="fa fa-comment"></span></a>`));
 
+            console.log(container);
             let comment = container.find(`a[href='${element.url}'] > .fa.fa-comment`)[0];
 
             comment.addEventListener('click', (e: MouseEvent) => {

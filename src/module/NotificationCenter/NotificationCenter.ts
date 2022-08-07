@@ -1,4 +1,3 @@
-import Scrollbar from 'smooth-scrollbar';
 //@ts-ignore
 import template from '../../../assets/template/notificationCenter.html?raw'; // TODO
 //@ts-ignore
@@ -7,7 +6,7 @@ import { ModuleSetting, PoweruserModule } from '@/types';
 import Utils, { loadStyle } from '@/Utils';
 // @ts-ignore
 import style from './notificationCenter.less?inline';
-import Settings, { scrollbarOptions } from '@/core/Settings/Settings';
+import Settings from '@/core/Settings/Settings';
 
 export default class NotificationCenter implements PoweruserModule {
     readonly id = 'NotificationCenter';
@@ -20,7 +19,6 @@ export default class NotificationCenter implements PoweruserModule {
     icon = $('#inbox-link');
     elem = document.createElement('div');
     messageContainer: HTMLUListElement | null = null;
-    scrollbar: Scrollbar | null = null;
 
     static getTitle(message: any) {
         return message.thumb === null ? 'Private Nachricht' : 'Kommentar';
@@ -73,10 +71,6 @@ export default class NotificationCenter implements PoweruserModule {
         this.icon[0].classList.toggle('active');
         this.elem.classList.toggle('visible');
         const container = this.messageContainer;
-        if (!!this.scrollbar) {
-            this.scrollbar.destroy();
-        }
-
         if (!!container) {
             container.innerHTML = '<span class="fa fa-spinner fa-spin"></span>';
             container.classList.add('loading');
@@ -119,7 +113,6 @@ export default class NotificationCenter implements PoweruserModule {
                         element.read
                     );
                 });
-                this.scrollbar = Scrollbar.init(container, scrollbarOptions);
             });
         }
     }

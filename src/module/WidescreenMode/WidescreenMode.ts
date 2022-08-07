@@ -1,5 +1,4 @@
-import Scrollbar from 'smooth-scrollbar';
-import Settings, { scrollbarOptions } from '@/core/Settings/Settings';
+import Settings from '@/core/Settings/Settings';
 import Utils, { loadStyle } from '@/Utils';
 // @ts-ignore
 import style from './widescreenMode.less?inline';
@@ -18,7 +17,6 @@ export default class WidescreenMode implements PoweruserModule {
     commentsContainer: any = {};
     resized: boolean = false;
     listenerAdded = false;
-    scrollbar: Scrollbar | null = null;
     readonly description = 'Stellt das pr0 im Breitbildmodus dar.';
     readonly displayBenis = Settings.get('WidescreenMode.settings.display_benis');
     readonly closeOnBackgroundClick = Settings.get('WidescreenMode.settings.close_on_background');
@@ -272,14 +270,6 @@ export default class WidescreenMode implements PoweruserModule {
             template: streamItemCommentsTemplate,
             _commentToFocus: null,
             render: function () {
-                // We need to destroy the scrollbar before rendering the comments, otherwise 
-                // we have troubles with the scrollbar not being initialized properly.
-                const existingScrollbar = _this.scrollbar
-                if (!!existingScrollbar) {
-                    existingScrollbar.destroy();
-                    _this.scrollbar = null;
-                }
-
                 // The comment that should be focused is being cleared in the parent function.
                 // Therefore, we need to save the comment that should be focused before.
                 // The parent function is not able to scroll the comment into view, because
@@ -293,9 +283,6 @@ export default class WidescreenMode implements PoweruserModule {
                 _this.commentsContainer.classList.toggle('wide', _this.commentsWide);
                 _this.commentsContainer.classList.toggle('closed', _this.commentsClosed);
                 _this.commentsContainer.classList.add('loaded');
-                if (!_this.scrollbar) {
-                    _this.scrollbar = Scrollbar.init(_this.commentsContainer, scrollbarOptions);
-                }
 
                 // Now that the scrollbar is initialized, we can scroll the comment into view.
                 if (this._commentToFocus) {
@@ -321,8 +308,8 @@ export default class WidescreenMode implements PoweruserModule {
             focusComment: function (comment: any) {
                 let target = this.$container.find(`#${comment}`);
                 if (target.length) {
-                    _this.scrollbar?.scrollIntoView(target[0], {
-                        offsetTop: 50
+                    target.get(0).scrollIntoView({
+                        behaviour: 'smooth',
                     });
                     target.highlight(180, 180, 180, 1);
                 }
