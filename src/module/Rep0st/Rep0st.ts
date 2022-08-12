@@ -135,7 +135,6 @@ export default class Rep0st implements PoweruserModule {
 
             let container = bar.append($(`<a href=${element.url} target="_blank"><img src=${element.img} class="rep0st-thumb" />${probabilityContainer}<span title="Als Repost markieren" class="fa fa-comment"></span></a>`));
 
-            console.log(container);
             let comment = container.find(`a[href='${element.url}'] > .fa.fa-comment`)[0];
 
             comment.addEventListener('click', (e: MouseEvent) => {

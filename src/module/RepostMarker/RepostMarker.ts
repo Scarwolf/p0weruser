@@ -25,7 +25,6 @@ export default class RepostMarker implements PoweruserModule {
         const _this = this;
         p.Stream.prototype._load = function (options: any, callback: any) {
             const result = originalStreamLoadFn.call(this, options, callback);
-            console.log("Load Reposts");
             _this.loadReposts(options);
             return result;
         };

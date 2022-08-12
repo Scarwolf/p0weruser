@@ -77,7 +77,6 @@ export default class WidescreenMode implements PoweruserModule {
         if (this.logoLinksToNew) {
             this.modifyLogo();
         }
-        console.log(this.moveLink);
         loadStyle(style);
     }
 
