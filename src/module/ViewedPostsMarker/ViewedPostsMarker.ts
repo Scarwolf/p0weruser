@@ -44,10 +44,10 @@ export default class ViewedPostsMarker implements PoweruserModule {
     }
 
     static markAsViewed(id: number) {
-        let elem = document.getElementById('item-' + id);
+        let elem = document.querySelector(`#item-${id} > p-thumbnail`);
 
         if (elem) {
-            elem.classList.add('viewed');
+            elem.setAttribute("seen", "");
         }
     }
 
