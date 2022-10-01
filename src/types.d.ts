@@ -21,36 +21,37 @@ export type ModuleSetting = {
 export type FlagName = 'sfw' | 'nsfw' | 'nsfl';
 
 export type P = {
-    _routes: any[];
-    currentView: any;
-    NAVIGATE: {
-        DEFAULT: 0;
-        SILENT: 1;
-        FORCE: 2;
+  _routes: any[];
+  currentView: any;
+  NAVIGATE: {
+    DEFAULT: 0;
+    SILENT: 1;
+    FORCE: 2;
+  };
+  location: string;
+  user: User;
+  mainView: any;
+  Stream: Stream;
+  View: {
+    Stream: {
+      Main: StreamMainView;
+      Item: BaseView & any;
+      Comments: BaseView & any;
     };
-    location: string;
-    user: User;
-    mainView: any;
-    Stream: Stream;
-    View: {
-        Stream: {
-            Main: StreamMainView;
-            Item: BaseView & any;
-            Comments: BaseView & any;
-        };
-        Base: BaseView;
-        Overlay: BaseView & any;
-        InboxMessages: any;
-        Settings: any;
-        P0weruserSettings: any;
-    };
-    reload(): any;
-    api: any;
-    shouldShowScore: (thing: any) => any;
-    navigateTo: (location: any, mode?: any) => any;
-    addRoute: (viewClass: any, path: any) => any;
-    merge: (a: any, b: any) => any;
-    mobile: boolean;
+    Base: BaseView;
+    Overlay: BaseView & any;
+    InboxMessages: any;
+    Settings: any;
+    P0weruserSettings: any;
+  };
+  reload(): any;
+  api: any;
+  shouldShowScore: (thing: any) => any;
+  navigateTo: (location: any, mode?: any) => any;
+  addRoute: (viewClass: any, path: any) => any;
+  merge: (a: any, b: any) => any;
+  getURL(): string;
+  mobile: boolean;
 };
 
 export type Stream = {
