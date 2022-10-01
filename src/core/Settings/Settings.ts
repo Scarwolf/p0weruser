@@ -226,13 +226,13 @@ export default class Settings {
     }
 
 
-    static get(name: string) {
+    static get(name: string, defaultValue: any = true) {
         const item = window.localStorage.getItem(name);
 
         if (item === null) {
-            Settings.set(name, String(true));
+            Settings.set(name, String(defaultValue));
 
-            return true;
+            return defaultValue;
         }
 
         if (item === 'true' || item === 'false') {

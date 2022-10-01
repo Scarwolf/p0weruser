@@ -9,7 +9,7 @@ export default class StyleCustomization implements PoweruserModule {
     readonly name = 'Stilisierung';
     readonly description = 'Einzelne Styleanpassungen';
     isTransparentNavbarEnabled = Settings.get(`${this.id}.settings.transparent_navbar`);
-    hideBenis = Settings.get(`${this.id}.settings.hide_benis`);
+    hideBenis = Settings.get(`${this.id}.settings.hide_benis`, false);
 
 
     async load() {
