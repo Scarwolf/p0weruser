@@ -1,7 +1,6 @@
 import { PoweruserModule } from '@/types';
 import './settings.less';
-// @ts-ignore
-import template from '../../../assets/template/settingsTab.html?raw'; // TODO
+import template from "../../../assets/template/settingsTab.html?raw";
 import Utils from '@/Utils';
 
 export default class Settings {

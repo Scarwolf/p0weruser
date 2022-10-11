@@ -1,6 +1,5 @@
 import { ModuleSetting, PoweruserModule, UserSyncEvent } from '@/types';
-import Settings from '@/core/Settings/Settings';
-// @ts-ignore
+import Settings from "@/core/Settings/Settings";
 import style from './benisInNavbar.less?inline';
 import { loadStyle } from '@/Utils';
 

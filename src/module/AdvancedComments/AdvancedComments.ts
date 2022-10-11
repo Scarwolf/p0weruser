@@ -1,7 +1,6 @@
 import Settings from '@/core/Settings/Settings';
 import { ModuleSetting, P, PoweruserModule } from '@/types';
-import { loadStyle } from '@/Utils';
-// @ts-ignore
+import { loadStyle } from "@/Utils";
 import style from "./advancedComments.less?inline";
 
 export default class AdvancedComments implements PoweruserModule {

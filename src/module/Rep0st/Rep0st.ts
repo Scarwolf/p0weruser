@@ -1,6 +1,5 @@
 import { PoweruserModule } from '@/types';
-import Utils, { loadStyle } from '@/Utils';
-// @ts-ignore
+import Utils, { loadStyle } from "@/Utils";
 import style from './rep0st.less?inline';
 
 

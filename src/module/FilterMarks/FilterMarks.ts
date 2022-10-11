@@ -1,7 +1,6 @@
 import Settings from '@/core/Settings/Settings';
 import { ModuleSetting, PoweruserModule, StreamItem } from '@/types';
-import Utils, { loadStyle } from '@/Utils';
-// @ts-ignore
+import Utils, { loadStyle } from "@/Utils";
 import style from './filterMarks.less?inline';
 
 export default class FilterMarks implements PoweruserModule {

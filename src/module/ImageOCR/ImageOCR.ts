@@ -1,9 +1,7 @@
 import Tesseract from 'tesseract.js';
-import Utils from '@/Utils';
-// @ts-ignore
-import template from '../../../assets/template/ocrPopup.html?raw'; // TODO
-import { PoweruserModule } from '@/types';
-// @ts-ignore
+import Utils from "@/Utils";
+import template from "../../../assets/template/ocrPopup.html?raw";
+import { PoweruserModule } from "@/types";
 import style from './imageOCR.less?inline';
 import { loadStyle } from '@/Utils';
 
@@ -70,22 +68,22 @@ export default class ImageOCR implements PoweruserModule {
         this.popup!.classList.add('visible');
 
         GM.xmlHttpRequest({
-            url: image.src,
-            method: 'GET',
-            //@ts-ignore
-            responseType: 'arraybuffer',
-            headers: {
-                'cache-control': 'no-cache',
-                'Upgrade-Insecure-Requests': '1'
-            },
-            onload: (res) => {
-                Tesseract.recognize(new Blob([new Uint8Array(res.response)]), 'deu')
-                    .then(result => {
-                        this.togglePopup(result.data.text);
-                    }).catch(err => {
-                        this.togglePopup();
-                    });
-            }
+          url: image.src,
+          method: "GET",
+          responseType: "arraybuffer",
+          headers: {
+            "cache-control": "no-cache",
+            "Upgrade-Insecure-Requests": "1",
+          },
+          onload: (res) => {
+            Tesseract.recognize(new Blob([new Uint8Array(res.response)]), "deu")
+              .then((result) => {
+                this.togglePopup(result.data.text);
+              })
+              .catch((err) => {
+                this.togglePopup();
+              });
+          },
         });
     }
 

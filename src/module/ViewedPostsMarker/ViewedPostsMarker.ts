@@ -1,7 +1,6 @@
 import { ModuleSetting, PoweruserModule } from '@/types';
 import Settings from '@/core/Settings/Settings';
-import Utils, { loadStyle } from '@/Utils';
-// @ts-ignore
+import Utils, { loadStyle } from "@/Utils";
 import style from './viewedPostsMarker.less?inline';
 
 export default class ViewedPostsMarker implements PoweruserModule {

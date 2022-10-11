@@ -1,11 +1,9 @@
 import Settings from '@/core/Settings/Settings';
 import moment from 'moment';
 import Pr0p0llDiagramm from '@/lib/Pr0p0llDiagramm';
-// @ts-ignore
-import overlayTemplate from '../../../assets/template/pr0p0llOverlay.html?raw'; // TODO
+import overlayTemplate from "../../../assets/template/pr0p0llOverlay.html?raw";
 import { ModuleSetting, PoweruserModule } from '@/types';
-import Utils, { loadStyle } from '@/Utils';
-// @ts-ignore
+import Utils, { loadStyle } from "@/Utils";
 import style from './pr0p0ll.less?inline';
 
 export default class Pr0p0ll implements PoweruserModule {

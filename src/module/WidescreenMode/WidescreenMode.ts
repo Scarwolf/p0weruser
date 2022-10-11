@@ -1,12 +1,8 @@
 import Settings from '@/core/Settings/Settings';
-import Utils, { loadStyle } from '@/Utils';
-// @ts-ignore
+import Utils, { loadStyle } from "@/Utils";
 import style from './widescreenMode.less?inline';
-
-// @ts-ignore
-import streamItemTemplate from "../../../assets/template/streamItem.html?raw"; // TODO
-// @ts-ignore
-import streamItemCommentsTemplate from "../../../assets/template/streamItemComments.html?raw"; // TODO
+import streamItemTemplate from "../../../assets/template/streamItem.html?raw";
+import streamItemCommentsTemplate from "../../../assets/template/streamItemComments.html?raw";
 import { ModuleSetting, PoweruserModule } from '@/types';
 
 export default class WidescreenMode implements PoweruserModule {
