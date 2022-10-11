@@ -66,30 +66,25 @@
             <a href="{item.fullsize}" target="_blank" class="item-fullsize-link">+</a>
             <?js } ?>
             <a class="fa fa-arrows move-link"></a>
-            <?js } ?> <?js if( p.user.showAds ) { ?>
-            <div class="stream-prev" title="Neuer [⭠, a]"><span class="stream-prev-icon"></span></div>
-            <div class="stream-next" title="Älter [⭢, d]"><span class="stream-next-icon"></span></div>
-            <?js } else { ?>
+            <?js } ?>
             <div class="stream-prev arrow pict" title="Neuer [⭠, a]">&lt;</div>
             <div class="stream-next arrow pict" title="Älter [⭢, d]">&gt;</div>
-            <?js } ?> </div>
+            </div>
         <div class="item-info">
             <div>
                 <div class="item-vote{p.voteClass(item.vote)}">
-                    <div>
-                        <div>
-                            <span class="pict vote-up">+</span>
-                            <span class="pict vote-down">-</span>
-                        </div>
-                        <?js if( p.shouldShowScore(item) ) {?>
-                        <span class="score<?js if(!p.olderThanMinAge(item)){?> score-young<?js}?>"
-                              title="{item.up} up, {item.down} down"><?js print(item.up - item.down)?></span> <?js } else { ?>
-                        <span class="score-hidden" title="Score noch unsichtbar">●●●</span> <?js } ?>
-                        <span class="pict vote-fav<?js if (item.fav){ ?> faved<?js } ?>" title="Favorisieren [f]">*</span> <span
-                            class="collect" title="In Sammlung einsortieren">▼</span>
-
-                        <div class="benisbar" data-after-text="{item.up} up / {item.down} down"></div>
-                    </div>
+                  <span class="pict vote-up">+</span>
+                  <span class="pict vote-down">-</span>
+                  <?js if( p.shouldShowScore(item) ) {?> <span
+                    class="score<?js if(!p.olderThanMinAge(item)){?> score-young<?js}?>" title="{"
+                    Blussi".inflects(item.up)}, {item.down} Minus">
+                    <?js print((item.up - item.down).toSiUnit()) ?>
+                    </span>
+                    <?js } else { ?> <span class="score-hidden" title="Benis noch unsichtbar">●●●</span>
+                    <?js } ?>
+                  <span class="pict vote-fav<?js if (item.fav){ ?> faved<?js } ?>" title="Favorisieren [f]">*</span> 
+                  <span class="collect" title="In Sammlung einsortieren">▼</span>
+                  <div class="benisbar" data-after-text="{item.up} up / {item.down} down"></div>
                 </div>
                 <div>
                     <div class="item-details">
