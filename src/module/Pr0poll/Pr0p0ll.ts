@@ -5,6 +5,7 @@ import overlayTemplate from "../../../assets/template/pr0p0llOverlay.html?raw";
 import { ModuleSetting, PoweruserModule } from '@/types';
 import Utils, { loadStyle } from "@/Utils";
 import style from './pr0p0ll.less?inline';
+import { GM_notification, GM_xmlhttpRequest } from "$";
 
 export default class Pr0p0ll implements PoweruserModule {
     readonly id = 'Pr0p0ll';
@@ -122,21 +123,21 @@ export default class Pr0p0ll implements PoweruserModule {
     showDiagramm(id: number) {
         let getDiagramm = () => {
             return new Promise((resolve, reject) => {
-                GM.xmlHttpRequest({
-                    url: this.apiUrl + id,
-                    method: 'GET',
-                    headers: {
-                        'User-Agent': 'p0weruser'
-                    },
-                    onload: (res) => {
-                        const response = JSON.parse(res.responseText);
+                GM_xmlhttpRequest({
+                  url: this.apiUrl + id,
+                  method: "GET",
+                  headers: {
+                    "User-Agent": "p0weruser",
+                  },
+                  onload: (res) => {
+                    const response = JSON.parse(res.responseText);
 
-                        if (response.error) {
-                            reject(response.error);
-                        }
-
-                        resolve(response);
+                    if (response.error) {
+                      reject(response.error);
                     }
+
+                    resolve(response);
+                  },
                 });
             });
         };
@@ -158,15 +159,15 @@ export default class Pr0p0ll implements PoweruserModule {
 
     fetchCounter() {
         return new Promise((resolve, reject) => {
-            GM.xmlHttpRequest({
-                url: `https://pr0p0ll.com/?p=notify&token=${this.token}`,
-                method: 'GET',
-                headers: {
-                    'User-Agent': 'p0weruser'
-                },
-                onload: (res) => {
-                    resolve(JSON.parse(res.responseText));
-                }
+            GM_xmlhttpRequest({
+              url: `https://pr0p0ll.com/?p=notify&token=${this.token}`,
+              method: "GET",
+              headers: {
+                "User-Agent": "p0weruser",
+              },
+              onload: (res) => {
+                resolve(JSON.parse(res.responseText));
+              },
             });
         })
     }
@@ -175,14 +176,17 @@ export default class Pr0p0ll implements PoweruserModule {
     updateCounter(score: number | any) {
         score = parseInt(score) || 0;
         if (this.showNotification && Settings.get('Pr0p0ll.settings.last_count') < score) {
-            GM.notification(
-                'Du hast ' + (score === 1 ? 'eine neue Umfrage!' : score + ' neue Umfragen!'),
-                'pr0p0ll',
-                'https://pr0p0ll.com/src/favicon.png',
-                function () {
-                    window.focus();
-                    window.location.href = 'https://pr0p0ll.com/?p=user';
-                }
+            GM_notification(
+              "Du hast " +
+                (score === 1
+                  ? "eine neue Umfrage!"
+                  : score + " neue Umfragen!"),
+              "pr0p0ll",
+              "https://pr0p0ll.com/src/favicon.png",
+              function () {
+                window.focus();
+                window.location.href = "https://pr0p0ll.com/?p=user";
+              }
             );
         }
 
