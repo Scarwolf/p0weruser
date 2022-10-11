@@ -36,11 +36,12 @@ export default defineConfig(({ mode }) => ({
       build: {
         fileName: getFileName(mode),
         externalGlobals: {
-          "chart.js": cdn.cdnjs("Chart"),
-          "tesseract.js": cdn.cdnjs("Tesseract"),
+          // Keep attentention on the casing in this list
+          "chart.js": cdn.jsdelivr("Chart", "dist/Chart.min.js"),
+          "tesseract.js": cdn.jsdelivr("Tesseract", "dist/tesseract.min.js"),
         },
         externalResource: {
-          "font-awesome": cdn.cdnjs("font-awesome"),
+          "font-awesome": cdn.jsdelivr("font-awesome", "css/all.min.css"),
         },
       },
     }),
