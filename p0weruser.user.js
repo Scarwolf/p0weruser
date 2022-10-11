@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         p0weruser - Rel0aded
 // @namespace    https://github.com/Scarwolf/p0weruser/
-// @version      2.4.0
+// @version      2.4.1
 // @author       PoTTii - Created by Florian Maak
 // @description  A modularized userScript for pr0gramm.com - Developed by FlorianMaak, Modified by Scarwolf
 // @license      GPL-3.0; http://www.gnu.org/licenses/gpl-3.0.txt
@@ -13,9 +13,8 @@
 // @downloadURL  https://scarwolf.github.io/p0weruser/p0weruser.user.js
 // @updateURL    https://scarwolf.github.io/p0weruser/p0weruser.user.js
 // @include      /^https?://pr0gramm.com/.*$/
-// @require      https://cdnjs.cloudflare.com/ajax/libs/chart.js/2.9.4/
-// @require      https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/2.1.5/
-// @resource     customCSS  https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css
+// @require      https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js
+// @require      https://cdn.jsdelivr.net/npm/tesseract.js@2.1.5/dist/tesseract.min.js
 // @connect      rep0st.rene8888.at
 // @connect      github.com
 // @connect      raw.githubusercontent.com
