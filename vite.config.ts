@@ -25,7 +25,6 @@ export default defineConfig(({ mode }) => ({
           "pr0p0ll.com",
         ],
         "run-at": "document-end",
-        require: ["https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"],
         resource: {
           customCSS:
             "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",
