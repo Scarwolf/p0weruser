@@ -73,18 +73,21 @@
         <div class="item-info">
             <div>
                 <div class="item-vote{p.voteClass(item.vote)}">
-                  <span class="pict vote-up">+</span>
-                  <span class="pict vote-down">-</span>
-                  <?js if( p.shouldShowScore(item) ) {?> <span
-                    class="score<?js if(!p.olderThanMinAge(item)){?> score-young<?js}?>" title="{"
-                    Blussi".inflects(item.up)}, {item.down} Minus">
-                    <?js print((item.up - item.down).toSiUnit()) ?>
+                  <div>
+                    <div>
+                      <span class="pict vote-up">+</span>
+                      <span class="pict vote-down">-</span>
+                    </div>
+                    <?js if( p.shouldShowScore(item) ) {?> <span class="score<?js if(!p.olderThanMinAge(item)){?> score-young<?js}?>"
+                      title="{" Blussi".inflects(item.up)}, {item.down} Minus">
+                      <?js print((item.up - item.down).toSiUnit()) ?>
                     </span>
                     <?js } else { ?> <span class="score-hidden" title="Benis noch unsichtbar">●●●</span>
                     <?js } ?>
-                  <span class="pict vote-fav<?js if (item.fav){ ?> faved<?js } ?>" title="Favorisieren [f]">*</span> 
-                  <span class="collect" title="In Sammlung einsortieren">▼</span>
-                  <div class="benisbar" data-after-text="{item.up} up / {item.down} down"></div>
+                    <span class="pict vote-fav<?js if (item.fav){ ?> faved<?js } ?>" title="Favorisieren [f]">*</span>
+                    <span class="collect" title="In Sammlung einsortieren">▼</span>
+                    <div class="benisbar" data-after-text="{item.up} up / {item.down} down"></div>
+                  </div>
                 </div>
                 <div>
                     <div class="item-details">
