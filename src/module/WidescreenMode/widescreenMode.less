@@ -495,7 +495,8 @@ body[class] {
         opacity: 1;
         transition: opacity .2s;
         overflow-y: auto;
-        height: 100%;
+        // 90px is the height of navbar + comment header
+        height: calc(100vh - 90px);
 
         .comment-content,
         .comment-foot,
