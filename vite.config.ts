@@ -25,7 +25,6 @@ export default defineConfig(({ mode }) => ({
           "pr0p0ll.com",
         ],
         "run-at": "document-end",
-        grant: ["GM_notification", "GM_xmlhttpRequest"],
         require: ["https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"],
         resource: {
           customCSS:
