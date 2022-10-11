@@ -2,8 +2,8 @@ import Utils from './Utils';
 import EventHandler from './EventHandler';
 import { PoweruserModule } from './types';
 import Settings from './core/Settings/Settings';
-import { modules } from './module';
-import StateStore from "./core/StateStroe/StateStore";
+import { modules } from "./module";
+import styles from "./style.css?inline";
 
 const allModules = Object.values(modules).map((m) => m());
 
@@ -33,8 +33,9 @@ const addStyles = () => {
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
   document.getElementsByTagName("head")[0].appendChild(fa);
 
-  let scrollbar = document.createElement("style");
-  document.getElementsByTagName("head")[0].appendChild(scrollbar);
+  let globalStyle = document.createElement("style");
+  globalStyle.textContent = styles;
+  document.getElementsByTagName("head")[0].appendChild(globalStyle);
 };
 
 const activatedModules = getActivatedModules();
