@@ -1,5 +1,4 @@
 import Settings from '@/core/Settings/Settings';
-import moment from 'moment';
 import Pr0p0llDiagramm from '@/lib/Pr0p0llDiagramm';
 import overlayTemplate from "../../../assets/template/pr0p0llOverlay.html?raw";
 import { ModuleSetting, PoweruserModule } from '@/types';
@@ -15,13 +14,16 @@ export default class Pr0p0ll implements PoweruserModule {
     token = Settings.get('Pr0p0ll.settings.user_token') as string;
     readonly showDiagramms = Settings.get('Pr0p0ll.settings.show_diagramms');
     readonly apiUrl = 'https://pr0p0ll.com/?p=viewjson&id=';
+    readonly regionDe = new Intl.DateTimeFormat('de-DE', { 
+      dateStyle: 'long',
+      timeZone: 'Europe/Berlin' 
+    });
 
     inboxLink: HTMLElement;
     target: HTMLElement | null = null;
     template = `<a href="https://pr0p0ll.com/?p=user" target="_blank" class="empty pr0p0ll-count fa fa-edit head-link"><span>0</span></a>`;
 
     constructor() {
-        moment.locale('de');
         this.inboxLink = document.getElementById('inbox-link')!;
     }
 
@@ -33,12 +35,14 @@ export default class Pr0p0ll implements PoweruserModule {
             this.addListener();
         }
 
+        const _this = this;
         p.View.Overlay.Pr0p0llDiagramm = p.View.Base.extend({
             template: overlayTemplate,
             init: function (container: any, parent: any, params: any) {
                 this.data.p0ll = params.data;
-                this.data.dateTo = moment(params.data.info.endedOn, 'X').format('LL');
-                this.data.dateFrom = moment(params.data.info.endedOn - params.data.info.duration, 'X').format('LL');
+                console.log(params.data);
+                this.data.dateTo = _this.regionDe.format(params.data.info.endedOn * 1000);
+                this.data.dateFrom = _this.regionDe.format(params.data.info.endedOn * 1000 - params.data.info.duration * 1000);
                 container[0].classList.add('pr0p0ll-overlay');
                 this.parent(container, parent);
             }

@@ -16,7 +16,6 @@
     "dependencies": {
         "chart.js": "^2.9.4",
         "core-js": "^2.6.12",
-        "moment": "^2.29.4",
         "tesseract.js": "^2.1.5"
     },
     "devDependencies": {
