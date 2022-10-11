@@ -1,6 +1,6 @@
 import path from "path";
 import { defineConfig } from "vite";
-import monkey from "vite-plugin-monkey";
+import monkey, { cdn } from "vite-plugin-monkey";
 import * as pkg from "./package.json";
 
 const getFileName = (mode: "production" | string) => mode === 'production' ? 'p0weruser.user.js' : 'p0weruser.dev.user.js';
@@ -41,6 +41,10 @@ export default defineConfig(({ mode }) => ({
       },
       build: {
         fileName: getFileName(mode),
+        externalGlobals: {
+          "chart.js": cdn.cdnjs("Chart"),
+          "tesseract.js": cdn.cdnjs("Tesseract"),
+        },
       },
     }),
   ],
