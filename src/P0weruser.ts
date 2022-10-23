@@ -6,6 +6,7 @@ import { modules } from "./module";
 import styles from "./style.css?inline";
 
 const allModules = Object.values(modules).map((m) => m());
+const loadedModules: PoweruserModule[] = [];
 
 const getActivatedModules = (): PoweruserModule[] => {
   const setting = window.localStorage.getItem("activated_modules");
@@ -18,8 +19,15 @@ const getActivatedModules = (): PoweruserModule[] => {
   return allModules.filter((m) => activeModuleIds.includes(m.id));
 };
 
+const isLoaded = (module: PoweruserModule) =>
+  loadedModules.some((m) => m.id === module.id);
+
 const loadModule = async (module: PoweruserModule) => {
+  if (isLoaded(module)) {
+    return;
+  }
   await module.load();
+  loadedModules.push(module);
   console.debug(`Loaded module: ${module.id}`);
 };
 const loadModules = async (modulesToLoad: PoweruserModule[]) =>
@@ -44,6 +52,7 @@ Utils.addPrototypes();
 new EventHandler();
 new Settings(allModules, activatedModules);
 addStyles();
+
 if (activatedModules.length > 0) {
   loadModules(activatedModules);
 
@@ -57,7 +66,7 @@ if (activatedModules.length > 0) {
   // We use force navigation here to trigger re-rendering as we're not changing location.
   // As the native pr0gramm initializes first a view is already created. However, It is necessary that we let
   // pr0gramm think we don't have a view yet as otherwise it will try to hide the current view.
-  if (activatedModules.some((m) => m.needsReRendering)) {
+  if (loadedModules.some((m) => m.needsReRendering)) {
     setTimeout(() => {
       p.currentView = null;
 
