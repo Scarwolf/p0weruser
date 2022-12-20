@@ -48,7 +48,7 @@ export default class ViewedPostsMarker implements PoweruserModule {
         try {
           if (this.syncRead) {
             const apiViewedPosts = await this.loadFromApi();
-            this.mergeIntoViewedPostsMultiple(apiViewedPosts);
+            this.mergeIntoViewedPosts(apiViewedPosts);
             if (this.syncWrite && this.syncVersion !== null) {
               await this.writeToApi(this.viewedPosts);
             }
@@ -82,14 +82,15 @@ export default class ViewedPostsMarker implements PoweruserModule {
     p.View.Stream.Item = p.View.Stream.Item.extend({
       show: function (
         rowIndex: any,
-        itemData: any,
+        itemData: { id: unknown },
         defaultHeight: any,
         jumpToComment: any
       ) {
         this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
 
-        _this.mergeIntoViewedPosts(itemData.id);
-        ViewedPostsMarker.markAsViewed(itemData.id);
+        const id = Number(itemData.id);
+        _this.mergeIntoViewedPosts([id]);
+        ViewedPostsMarker.markAsViewed(id);
       },
     });
 
@@ -239,16 +240,25 @@ export default class ViewedPostsMarker implements PoweruserModule {
     return parsedPosts.length > 0;
   }
 
-  private mergeIntoViewedPosts(id: number) {
-    // For the moment we just resort the array. I want to have a stable API to tweak
-    // the algorithm in the future.
-    this.updateViewedPosts([...new Set([...this.viewedPosts, id])]);
-  }
+  private mergeIntoViewedPosts(ids: number[]) {
+    const getIndex = (value: number, arr: number[]) => {
+      let low = 0;
+      let high = arr.length;
 
-  private mergeIntoViewedPostsMultiple(ids: number[]) {
-    // For the moment we just resort the array. I want to have a stable API to tweak
-    // the algorithm in the future.
-    this.updateViewedPosts([...new Set([...this.viewedPosts, ...ids])]);
+      while (low < high) {
+        let mid = (low + high) >>> 1;
+        if (arr[mid] < value) low = mid + 1;
+        else high = mid;
+      }
+      return low;
+    };
+
+    for (const id of ids) {
+      const idx = getIndex(id, this.viewedPosts);
+      if (this.viewedPosts[idx] !== id) {
+        this.viewedPosts.splice(idx, 0, id);
+      }
+    }
   }
 
   private updateViewedPosts(ids: number[]) {
