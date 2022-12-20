@@ -124,17 +124,6 @@ export default class ViewedPostsMarker implements PoweruserModule {
     ];
   }
 
-  /**
-   * Checks any url whether this url would load any of the logged in users collection
-   */
-  wouldLoadUserCollection(url: string): boolean {
-    const name = p.user.name;
-    const queryParams = new URLSearchParams(url);
-
-    // If the current request would retrieve any of the users collection
-    return queryParams.has("collection") && queryParams.get("user") === name;
-  }
-
   private async sync() {
     // When a user is logged in we can try to synchronize with pr0gramm servers
     if (p.user.id !== undefined) {
