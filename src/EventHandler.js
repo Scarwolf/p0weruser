@@ -17,15 +17,23 @@ export default class EventHandler {
 
         (function (loaded) {
           p.View.Stream.Main.prototype.loaded = function (items, position, error) {
-              loaded.call(this, items, position, error);
-              _this.streamLoaded.data = {
-                items,
-                position,
-                error
-              };
-              window.dispatchEvent(_this.streamLoaded);
+            console.log("Hello");
+            loaded.call(this, items, position, error);
+            _this.streamLoaded.data = {
+              items,
+              position,
+              error
+            };
+            window.dispatchEvent(_this.streamLoaded);
           };
         }(p.View.Stream.Main.prototype.loaded));
+
+        // Because we patched the main stream, we might need to re-init it to bind the new loaded Function
+        // Honestley, I don't know how to check whether the p.View.Stream.Main view is active properly.
+        // The following part does the trick anyway
+        if(p.currentView.stream && p.currentView.loadedBound) {
+          p.currentView.init(p.currentView.$container, p.currentView.parent);
+        }
 
         // Add settings-event
         (function (render) {
