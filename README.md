@@ -23,7 +23,7 @@ The original repo can be found here: [FlorianMaak/p0weruser](https://github.com/
 * Integration of [Rene8888s repost-check](https://rep0st.rene8888.at)
 * Automated text recognition
 * Integration of [pr0p0ll.com](https://pr0p0ll.com)
-* Mark viewed posts
+* Mark viewed posts (and synchronize them with the app)
 * Anonymous Title
 * Default Filters
 
@@ -40,8 +40,8 @@ Just open an issue and describe your request as accurately as possible. If you l
 ## Contribution
 Feel free to fork this project. If you like to contribute, please use [git-flow](https://github.com/nvie/gitflow)
 branch-style and follow the commits conventions. If your work is done, please submit a
-pull request. 
+pull request.
 
 ## [Dev] Installation
 After checkout run `npm install` and [npm](https://www.npmjs.com/) will install all needed dependencies. After installation run
-`npm run dev dev` to start dev server, which opens a browser window to install the dev version. File changes will automatically apply 
+`npm run dev dev` to start dev server, which opens a browser window to install the dev version. File changes will automatically apply
