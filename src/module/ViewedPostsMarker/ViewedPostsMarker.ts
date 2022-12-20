@@ -60,24 +60,29 @@ export default class ViewedPostsMarker implements PoweruserModule {
       this.writeToLocalStorage(this.viewedPosts);
     });
 
-    // TODO: Fire event only once
-    $(document).ajaxComplete((event, request, settings) => {
-      /* Since this is a global event handler for every ajax we need to specify on which event
-       * it should be fired. This is the case for every event which accesses items.
-       */
-      if (settings.url!.startsWith("/api/items/get")) {
-        if (
-          this.markOwnFavoritesAsViewed ||
-          !this.wouldLoadUserCollection(settings.url!)
-        ) {
-          this.viewedPosts.forEach((post: number) => {
-            if (this.isSeen(post)) {
-              ViewedPostsMarker.markAsViewed(post);
-            }
-          });
+    const originalStreamLoadFn = p.Stream.prototype._load;
+    p.Stream.prototype._load = function (
+      options: { collection: "favoriten" | unknown; self: boolean },
+      callback: any
+    ) {
+      const result = originalStreamLoadFn.call(this, options, callback);
+
+      const loadsOwnCollection =
+        options.collection === "favoriten" && options.self;
+
+      if (loadsOwnCollection && !_this.markOwnFavoritesAsViewed) {
+        return;
+      }
+
+      for (const item of Object.keys(this.items)) {
+        const id = Number(item);
+        if (_this.isSeen(id)) {
+          ViewedPostsMarker.markAsViewed(id);
         }
       }
-    });
+
+      return result;
+    };
 
     p.View.Stream.Item = p.View.Stream.Item.extend({
       show: function (
