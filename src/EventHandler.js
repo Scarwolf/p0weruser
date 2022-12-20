@@ -17,7 +17,6 @@ export default class EventHandler {
 
         (function (loaded) {
           p.View.Stream.Main.prototype.loaded = function (items, position, error) {
-            console.log("Hello");
             loaded.call(this, items, position, error);
             _this.streamLoaded.data = {
               items,
