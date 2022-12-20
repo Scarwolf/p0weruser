@@ -118,7 +118,7 @@ export default class ViewedPostsMarker implements PoweruserModule {
         title:
           "<strong>Schreibend</strong> Synchronisieren <u><strong>!!! VORSICHT !!!</strong></u>",
         description:
-          "Synchronisiert <strong>SCHREIBEND</strong> mit den pr0gramm Servern. Funtkioniert nur in Verbindung mit der Lesenden Option. <strong>Änderungen an der Schnittstelle oder ein Bug in p0weruser kann die Posts kaputt machen. Außerdem ist das Feature noch nicht ausgiebig getestet. Handle with care!</strong>",
+          "Synchronisiert <strong>SCHREIBEND</strong> mit den pr0gramm Servern. Funktioniert nur in Verbindung mit der Lesenden Option. <strong>Änderungen an der Schnittstelle oder ein Bug in p0weruser kann die Posts kaputt machen. Außerdem ist das Feature noch nicht ausgiebig getestet. Benutzung auf eigene Gefahr!</strong>",
         type: "checkbox",
       },
     ];
