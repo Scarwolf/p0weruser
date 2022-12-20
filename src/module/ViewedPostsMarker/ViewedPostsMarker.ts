@@ -43,23 +43,12 @@ export default class ViewedPostsMarker implements PoweruserModule {
     const viewedPosts = this.loadFromLocalStorage();
     this.updateViewedPosts(viewedPosts);
 
-    window.addEventListener("userSync", async () => {
-      // When a user is logged in we can try to synchronize with pr0gramm servers
-      if (p.user.id !== undefined) {
-        try {
-          if (this.syncRead) {
-            const apiViewedPosts = await this.loadFromApi();
-            this.mergeIntoViewedPosts(apiViewedPosts);
-            if (this.syncWrite && this.syncVersion !== null && this.needsSync) {
-              await this.writeToApi(this.viewedPosts);
-            }
-          }
-        } catch (err) {
-          console.error("Synchronization failed", err);
-        }
-      }
-      this.writeToLocalStorage(this.viewedPosts);
-    });
+    window.addEventListener("userSync", this.sync);
+
+    if(p.currentView?.stream) {
+      const { items } = p.currentView.stream;
+      _this.checkAndMarkItems(Object.keys(items).map(i => Number(i)));
+    }
 
     const originalStreamLoadFn = p.Stream.prototype._load;
     p.Stream.prototype._load = function (
@@ -75,12 +64,7 @@ export default class ViewedPostsMarker implements PoweruserModule {
         return;
       }
 
-      for (const item of Object.keys(this.items)) {
-        const id = Number(item);
-        if (_this.isSeen(id)) {
-          ViewedPostsMarker.markAsViewed(id);
-        }
-      }
+      _this.checkAndMarkItems(Object.keys(this.items).map((i) => Number(i)));
 
       return result;
     };
@@ -149,6 +133,33 @@ export default class ViewedPostsMarker implements PoweruserModule {
 
     // If the current request would retrieve any of the users collection
     return queryParams.has("collection") && queryParams.get("user") === name;
+  }
+
+  private async sync() {
+    // When a user is logged in we can try to synchronize with pr0gramm servers
+    if (p.user.id !== undefined) {
+      try {
+        if (this.syncRead) {
+          const apiViewedPosts = await this.loadFromApi();
+          this.mergeIntoViewedPosts(apiViewedPosts);
+          if (this.syncWrite && this.syncVersion !== null && this.needsSync) {
+            await this.writeToApi(this.viewedPosts);
+          }
+        }
+      } catch (err) {
+        console.error("Synchronization failed", err);
+      }
+    }
+    this.writeToLocalStorage(this.viewedPosts);
+  }
+
+  private checkAndMarkItems(ids: number[]) {
+    for (const item of ids) {
+      const id = Number(item);
+      if (this.isSeen(id)) {
+        ViewedPostsMarker.markAsViewed(id);
+      }
+    }
   }
 
   private async loadFromApi(): Promise<number[]> {

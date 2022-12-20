@@ -27,7 +27,12 @@ export type SetBitsResponse = {
 
 export type P = {
   _routes: any[];
-  currentView: any;
+  currentView: null | {
+    $itemContainer: unknown;
+    currentItemId: number | null;
+    stream: StreamInView | undefined;
+    hideItem(): unknown;
+  };
   NAVIGATE: {
     DEFAULT: 0;
     SILENT: 1;
@@ -57,6 +62,11 @@ export type P = {
   merge: (a: any, b: any) => any;
   getURL(): string;
   mobile: boolean;
+};
+
+// I don't know if its the same stream
+export type StreamInView = {
+  items: Record<number, StreamItem>;
 };
 
 export type Stream = {
