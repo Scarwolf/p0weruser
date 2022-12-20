@@ -60,23 +60,23 @@ export type Stream = {
 }
 
 export type User = {
-    voteCache: any;
-    cookie: {
-        t: number;
-        lp: boolean;
-        lv: number;
-        n: string;
-        id: string;
-        verified: boolean;
-    };
-    flagsName: any;
-    admin: boolean;
+  voteCache: any;
+  cookie: {
+    t: number;
+    lp: boolean;
+    lv: number;
+    n: string;
     id: string;
-    flags: number;
-    name: string;
-    inboxCount: number;
-    setInboxLink: (inbox: any) => any;
-}
+    verified: boolean;
+  };
+  flagsName: any;
+  admin: boolean;
+  id: string | undefined;
+  flags: number;
+  name: string;
+  inboxCount: number;
+  setInboxLink: (inbox: any) => any;
+};
 
 export type Flag = {
     flag: number;

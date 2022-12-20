@@ -2,10 +2,14 @@ import { ModuleSetting, PoweruserModule } from '@/types';
 import Settings from '@/core/Settings/Settings';
 import Utils, { loadStyle } from "@/Utils";
 import style from './viewedPostsMarker.less?inline';
+import { deflate } from "pako";
 
+// Magic Strings
 const viewedPostsStorageV1 = "viewed_posts";
 const viewedPostsStorageV2 = "viewed_posts_binary";
 const viewedPostsStorageBackup = "viewed_posts_backup";
+const pr0grammBitsVersionHeader = "X-pr0gramm-Bits-Version";
+const pr0grammNonceHeader = "X-pr0gramm-Nonce";
 
 export default class ViewedPostsMarker implements PoweruserModule {
   readonly id = "ViewedPostsMarker";
@@ -14,7 +18,16 @@ export default class ViewedPostsMarker implements PoweruserModule {
   readonly markOwnFavoritesAsViewed = Settings.get(
     "ViewedPostsMarker.settings.mark_own_favorites_as_viewed"
   );
+  readonly syncRead = Settings.get(
+    "ViewedPostsMarker.settings.sync_read",
+    false
+  );
+  readonly syncWrite = Settings.get(
+    "ViewedPostsMarker.settings.sync_write",
+    false
+  );
 
+  private syncVersion: number | null = null;
   private viewedPosts: number[] = [];
 
   async load() {
@@ -28,8 +41,22 @@ export default class ViewedPostsMarker implements PoweruserModule {
 
     const viewedPosts = this.loadFromLocalStorage();
     this.updateViewedPosts(viewedPosts);
-    console.log(viewedPosts);
-    window.addEventListener("userSync", () => {
+
+    window.addEventListener("userSync", async () => {
+      // When a user is logged in we can try to synchronize with pr0gramm servers
+      if (p.user.id !== undefined) {
+        try {
+          if (this.syncRead) {
+            const apiViewedPosts = await this.loadFromApi();
+            this.mergeIntoViewedPostsMultiple(apiViewedPosts);
+            if (this.syncWrite && this.syncVersion !== null) {
+              await this.writeToApi(this.viewedPosts);
+            }
+          }
+        } catch (err) {
+          console.error("Synchronization failed", err);
+        }
+      }
       this.writeToLocalStorage(this.viewedPosts);
     });
 
@@ -88,6 +115,21 @@ export default class ViewedPostsMarker implements PoweruserModule {
           "Markiert Posts in den persönlichen Sammlungen als gelesen",
         type: "checkbox",
       },
+      {
+        id: "sync_read",
+        title: "<strong>Lesend</strong> Synchronisieren",
+        description:
+          "Synchronisiert <strong>LESEND</strong> mit den pr0gramm Servern. Das bedeutet, dass gesehene Posts aus der App in p0weruser übertragen werden, aber nicht umgekehrt",
+        type: "checkbox",
+      },
+      {
+        id: "sync_write",
+        title:
+          "<strong>Schreibend</strong> Synchronisieren <u><strong>!!! VORSICHT !!!</strong></u>",
+        description:
+          "Synchronisiert <strong>SCHREIBEND</strong> mit den pr0gramm Servern. Funtkioniert nur in Verbindung mit der Lesenden Option. <strong>Änderungen an der Schnittstelle oder ein Bug in p0weruser kann die Posts kaputt machen. Außerdem ist das Feature noch nicht ausgiebig getestet. Handle with care!</strong>",
+        type: "checkbox",
+      },
     ];
   }
 
@@ -102,6 +144,23 @@ export default class ViewedPostsMarker implements PoweruserModule {
     return queryParams.has("collection") && queryParams.get("user") === name;
   }
 
+  private async loadFromApi(): Promise<number[]> {
+    const response = await fetch(
+      "/api/seen/bits?uncompressed=true&binary=true"
+    );
+    if (!response.ok) {
+      return [];
+    }
+    const buffer = await response.arrayBuffer();
+    const version = Number(response.headers.get(pr0grammBitsVersionHeader));
+    if (this.syncVersion === version) {
+      return this.viewedPosts;
+    }
+
+    this.syncVersion = version;
+    return this.parseSeenPostIdsFromBinary(new Uint8Array(buffer));
+  }
+
   private loadFromLocalStorage(): number[] {
     const binaryViewedPosts =
       window.localStorage.getItem(viewedPostsStorageV2) || "";
@@ -110,6 +169,27 @@ export default class ViewedPostsMarker implements PoweruserModule {
     );
 
     return this.parseSeenPostIdsFromBinary(encoded);
+  }
+
+  private async writeToApi(ids: number[]): Promise<any> {
+    if (this.syncVersion === null) {
+      throw new Error("Version is null");
+    }
+
+    const binary = this.convertPostIdsToBinary(ids);
+
+    const compressed = deflate(binary, { level: 9 });
+
+    // TODO: Doesn't work at the moment. 500 Invalid Nonce
+    return fetch("/api/seen/update", {
+      method: "POST",
+      body: new Blob([compressed]),
+      headers: {
+        "Content-Type": "application/octet",
+        [pr0grammBitsVersionHeader]: `${this.syncVersion}`,
+        [pr0grammNonceHeader]: self.crypto.randomUUID(),
+      },
+    });
   }
 
   private writeToLocalStorage(ids: number[]) {
@@ -163,6 +243,12 @@ export default class ViewedPostsMarker implements PoweruserModule {
     // For the moment we just resort the array. I want to have a stable API to tweak
     // the algorithm in the future.
     this.updateViewedPosts([...new Set([...this.viewedPosts, id])]);
+  }
+
+  private mergeIntoViewedPostsMultiple(ids: number[]) {
+    // For the moment we just resort the array. I want to have a stable API to tweak
+    // the algorithm in the future.
+    this.updateViewedPosts([...new Set([...this.viewedPosts, ...ids])]);
   }
 
   private updateViewedPosts(ids: number[]) {
