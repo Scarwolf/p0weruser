@@ -1,4 +1,9 @@
-import { ModuleSetting, PoweruserModule, SetBitsResponse } from "@/types";
+import {
+  ModuleSetting,
+  PoweruserModule,
+  SetBitsResponse,
+  StreamItem,
+} from "@/types";
 import Settings from "@/core/Settings/Settings";
 import Utils, { loadStyle } from "@/Utils";
 import style from "./viewedPostsMarker.less?inline";
@@ -44,30 +49,23 @@ export default class ViewedPostsMarker implements PoweruserModule {
     this.updateViewedPosts(viewedPosts);
 
     window.addEventListener("userSync", this.sync);
-
-    if(p.currentView?.stream) {
-      const { items } = p.currentView.stream;
-      _this.checkAndMarkItems(Object.keys(items).map(i => Number(i)));
-    }
-
-    const originalStreamLoadFn = p.Stream.prototype._load;
-    p.Stream.prototype._load = function (
-      options: { collection: "favoriten" | unknown; self: boolean },
-      callback: any
-    ) {
-      const result = originalStreamLoadFn.call(this, options, callback);
-
+    window.addEventListener("streamLoaded", (ev: Event & any) => {
+      const streamOptions = p.currentView?.stream?.options;
       const loadsOwnCollection =
-        options.collection === "favoriten" && options.self;
+        streamOptions?.collection === "favoriten" && streamOptions?.self;
 
       if (loadsOwnCollection && !_this.markOwnFavoritesAsViewed) {
         return;
       }
 
-      _this.checkAndMarkItems(Object.keys(this.items).map((i) => Number(i)));
+      const { items } = ev.data;
+      _this.checkAndMarkItems(items.map((i: StreamItem) => i.id));
+    });
 
-      return result;
-    };
+    if (p.currentView?.stream) {
+      const { items } = p.currentView.stream;
+      _this.checkAndMarkItems(Object.keys(items).map((i) => Number(i)));
+    }
 
     p.View.Stream.Item = p.View.Stream.Item.extend({
       show: function (

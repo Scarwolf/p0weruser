@@ -5,6 +5,7 @@ export default class EventHandler {
         this.locationChange = new Event('locationChange');
         this.beforeLocationChange = new Event('beforeLocationChange');
         this.userSync = new Event('userSync');
+        this.streamLoaded = new Event('streamLoaded');
         this.locationPattern = new RegExp('\\d+$');
 
         this.addEvents();
@@ -13,6 +14,18 @@ export default class EventHandler {
 
     addEvents() {
         let _this = this;
+
+        (function (loaded) {
+          p.View.Stream.Main.prototype.loaded = function (items, position, error) {
+              loaded.call(this, items, position, error);
+              _this.streamLoaded.data = {
+                items,
+                position,
+                error
+              };
+              window.dispatchEvent(_this.streamLoaded);
+          };
+        }(p.View.Stream.Main.prototype.loaded));
 
         // Add settings-event
         (function (render) {

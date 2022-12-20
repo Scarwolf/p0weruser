@@ -66,6 +66,13 @@ export type P = {
 
 // I don't know if its the same stream
 export type StreamInView = {
+  options:
+    | undefined
+    | {
+        collection: "favoriten" | unknown;
+        self: boolean;
+        user: string;
+      };
   items: Record<number, StreamItem>;
 };
 
