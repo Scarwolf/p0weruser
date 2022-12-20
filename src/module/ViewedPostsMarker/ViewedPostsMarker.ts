@@ -1,7 +1,7 @@
-import { ModuleSetting, PoweruserModule } from '@/types';
-import Settings from '@/core/Settings/Settings';
+import { ModuleSetting, PoweruserModule, SetBitsResponse } from "@/types";
+import Settings from "@/core/Settings/Settings";
 import Utils, { loadStyle } from "@/Utils";
-import style from './viewedPostsMarker.less?inline';
+import style from "./viewedPostsMarker.less?inline";
 import { deflate } from "pako";
 
 // Magic Strings
@@ -29,6 +29,7 @@ export default class ViewedPostsMarker implements PoweruserModule {
 
   private syncVersion: number | null = null;
   private viewedPosts: number[] = [];
+  private needsSync = false;
 
   async load() {
     let _this = this;
@@ -49,7 +50,7 @@ export default class ViewedPostsMarker implements PoweruserModule {
           if (this.syncRead) {
             const apiViewedPosts = await this.loadFromApi();
             this.mergeIntoViewedPosts(apiViewedPosts);
-            if (this.syncWrite && this.syncVersion !== null) {
+            if (this.syncWrite && this.syncVersion !== null && this.needsSync) {
               await this.writeToApi(this.viewedPosts);
             }
           }
@@ -181,21 +182,36 @@ export default class ViewedPostsMarker implements PoweruserModule {
     if (this.syncVersion === null) {
       throw new Error("Version is null");
     }
+    const { id } = p.user;
+    if (id === undefined) {
+      throw new Error("Not logged In");
+    }
 
     const binary = this.convertPostIdsToBinary(ids);
 
     const compressed = deflate(binary, { level: 9 });
 
-    // TODO: Doesn't work at the moment. 500 Invalid Nonce
-    return fetch("/api/seen/update", {
+    const response = await fetch("/api/seen/update", {
       method: "POST",
       body: new Blob([compressed]),
       headers: {
         "Content-Type": "application/octet",
         [pr0grammBitsVersionHeader]: `${this.syncVersion}`,
-        [pr0grammNonceHeader]: self.crypto.randomUUID(),
+        [pr0grammNonceHeader]: id.substring(0, 16),
       },
     });
+
+    if (!response.ok) {
+      throw new Error("Could not update seen bits");
+    }
+
+    const parsedResponse = (await response.json()) as SetBitsResponse;
+
+    if (!parsedResponse.success) {
+      throw new Error("Could not update seen bits");
+    }
+
+    this.syncVersion = parsedResponse.version;
   }
 
   private writeToLocalStorage(ids: number[]) {
@@ -262,6 +278,7 @@ export default class ViewedPostsMarker implements PoweruserModule {
       const idx = getIndex(id, this.viewedPosts);
       if (this.viewedPosts[idx] !== id) {
         this.viewedPosts.splice(idx, 0, id);
+        this.needsSync = true;
       }
     }
   }

@@ -20,6 +20,11 @@ export type ModuleSetting = {
 
 export type FlagName = 'sfw' | 'nsfw' | 'nsfl';
 
+export type SetBitsResponse = {
+  success: boolean;
+  version: number;
+};
+
 export type P = {
   _routes: any[];
   currentView: any;
