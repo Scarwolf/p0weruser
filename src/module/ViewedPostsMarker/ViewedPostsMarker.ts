@@ -48,7 +48,7 @@ export default class ViewedPostsMarker implements PoweruserModule {
     const viewedPosts = this.loadFromLocalStorage();
     this.updateViewedPosts(viewedPosts);
 
-    window.addEventListener("userSync", this.sync);
+    window.addEventListener("userSync", () => this.sync());
     window.addEventListener("streamLoaded", (ev: Event & any) => {
       const streamOptions = p.currentView?.stream?.options;
       const loadsOwnCollection =
