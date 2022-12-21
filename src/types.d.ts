@@ -20,9 +20,19 @@ export type ModuleSetting = {
 
 export type FlagName = 'sfw' | 'nsfw' | 'nsfl';
 
+export type SetBitsResponse = {
+  success: boolean;
+  version: number;
+};
+
 export type P = {
   _routes: any[];
-  currentView: any;
+  currentView: null | {
+    $itemContainer: unknown;
+    currentItemId: number | null;
+    stream: StreamInView | undefined;
+    hideItem(): unknown;
+  };
   NAVIGATE: {
     DEFAULT: 0;
     SILENT: 1;
@@ -54,29 +64,41 @@ export type P = {
   mobile: boolean;
 };
 
+// I don't know if its the same stream
+export type StreamInView = {
+  options:
+    | undefined
+    | {
+        collection: "favoriten" | unknown;
+        self: boolean;
+        user: string;
+      };
+  items: Record<number, StreamItem>;
+};
+
 export type Stream = {
     _load: (options: any, callback: any) => any;
     prototype: any;
 }
 
 export type User = {
-    voteCache: any;
-    cookie: {
-        t: number;
-        lp: boolean;
-        lv: number;
-        n: string;
-        id: string;
-        verified: boolean;
-    };
-    flagsName: any;
-    admin: boolean;
+  voteCache: any;
+  cookie: {
+    t: number;
+    lp: boolean;
+    lv: number;
+    n: string;
     id: string;
-    flags: number;
-    name: string;
-    inboxCount: number;
-    setInboxLink: (inbox: any) => any;
-}
+    verified: boolean;
+  };
+  flagsName: any;
+  admin: boolean;
+  id: string | undefined;
+  flags: number;
+  name: string;
+  inboxCount: number;
+  setInboxLink: (inbox: any) => any;
+};
 
 export type Flag = {
     flag: number;

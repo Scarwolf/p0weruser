@@ -390,8 +390,10 @@ export default class WidescreenMode implements PoweruserModule {
         if (this.closeOnBackgroundClick) {
             this.container.addEventListener('click', (e: any) => {
                 if (e.target === this.container) {
+                  if (p.currentView) {
                     p.currentView.currentItemId = null;
                     p.currentView.hideItem();
+                  }
                 }
             });
         }
@@ -412,8 +414,8 @@ export default class WidescreenMode implements PoweruserModule {
                     this.toggleMove();
                     break;
                 case 'Escape':
-                    if (this.resized && p.currentView.$itemContainer) {
-                        p.currentView.hideItem();
+                    if (this.resized && p.currentView?.$itemContainer) {
+                      p.currentView.hideItem();
                     }
                     break;
                 case 'ArrowUp':
@@ -464,7 +466,9 @@ export default class WidescreenMode implements PoweruserModule {
 
         if (!this.isMoveable) {
             this.img.on('click', () => {
+              if (p.currentView) {
                 p.currentView.hideItem();
+              }
             });
         }
     }
