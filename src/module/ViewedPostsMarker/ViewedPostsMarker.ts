@@ -216,8 +216,8 @@ export default class ViewedPostsMarker implements PoweruserModule {
     const binary = this.convertPostIdsToBinary(ids);
 
     let decoded = "";
-    for (let i = 0; i < binary.length; i += 500_000) {
-      const chunk = binary.slice(i, i + 500_000);
+    for (let i = 0; i < binary.length; i += 100_000) {
+      const chunk = binary.slice(i, i + 100_000);
       // We need to do it in chunks because otherwise an error is thrown.
       // 500.000 seems to work fine.
       decoded += String.fromCharCode(...chunk);
