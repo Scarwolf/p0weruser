@@ -15,7 +15,7 @@ import StatisticsLinkInNavbar from "./StatisticsInNavbar/StatisticsLinkInNavbar"
 import StyleCustomization from "./StyleCustomization/StyleCustomization";
 import ViewedPostsMarker from "./ViewedPostsMarker/ViewedPostsMarker";
 import WidescreenMode from "./WidescreenMode/WidescreenMode";
-import DownloadImage  from "./DownloadImage/DownloadImage";
+import DownloadPost from "./DownloadPost/DownloadPost";
 
 export const modules: Record<PoweruserModuleId, () => PoweruserModule> = {
     'StyleCustomization': () => new StyleCustomization(),
@@ -34,5 +34,5 @@ export const modules: Record<PoweruserModuleId, () => PoweruserModule> = {
     'NotificationCenter': () => new NotificationCenter(),
     'Pr0p0ll': () => new Pr0p0ll(),
     'WidescreenMode': () => new WidescreenMode(),
-    "DownloadImage": () => new DownloadImage(),
+    "DownloadPost": () => new DownloadPost(),
 };

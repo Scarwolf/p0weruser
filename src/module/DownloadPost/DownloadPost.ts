@@ -1,9 +1,8 @@
 import Settings from '@/core/Settings/Settings';
 import { ModuleSetting, P, PoweruserModule } from '@/types';
-import { loadStyle } from "@/Utils";
 
-export default class DownloadImage implements PoweruserModule {
-    readonly id = 'DownloadImage';
+export default class DownloadPost implements PoweruserModule {
+    readonly id = 'DownloadPost';
     readonly name = 'Posts in hoher Auflösung herunterladen';
     readonly description = 'Fügt einen Button zu jedem Post hinzu, um den Post in höchster Qualität herunterzuladen.';
     readonly isDownloadButtonEnabled = Settings.get("DownloadImage.settings.download_image");
