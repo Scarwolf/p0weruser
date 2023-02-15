@@ -4,8 +4,8 @@ import { loadStyle } from "@/Utils";
 
 export default class DownloadImage implements PoweruserModule {
     readonly id = 'DownloadImage';
-    readonly name = 'Bilder in hoher Auflösung herunterladen';
-    readonly description = 'Fügt einen Button zu jedem Post hinzu, um ein Bild in höchster Qualität herunterzuladen.';
+    readonly name = 'Posts in hoher Auflösung herunterladen';
+    readonly description = 'Fügt einen Button zu jedem Post hinzu, um den Post in höchster Qualität herunterzuladen.';
     readonly isDownloadButtonEnabled = Settings.get("DownloadImage.settings.download_image");
 
     async load() {
