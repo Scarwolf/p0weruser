@@ -18,6 +18,7 @@ export default class StatisticsLinkInNavbar implements PoweruserModule{
         elem.id = "user-link-stats";
         elem.appendChild(text);
         elem.setAttribute('href', 'https://pr0gramm.com/userstats');
+        elem.setAttribute("style", "padding-left: 8px");
 
         this.target.appendChild(elem);
     }
