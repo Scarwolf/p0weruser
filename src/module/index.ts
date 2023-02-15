@@ -15,11 +15,12 @@ import StatisticsLinkInNavbar from "./StatisticsInNavbar/StatisticsLinkInNavbar"
 import StyleCustomization from "./StyleCustomization/StyleCustomization";
 import ViewedPostsMarker from "./ViewedPostsMarker/ViewedPostsMarker";
 import WidescreenMode from "./WidescreenMode/WidescreenMode";
+import DownloadImage  from "./DownloadImage/DownloadImage";
 
 export const modules: Record<PoweruserModuleId, () => PoweruserModule> = {
     'StyleCustomization': () => new StyleCustomization(),
     'AdvancedComments': () => new AdvancedComments(),
-    'AnonymousTitle': () => new AnonymousTitle(), 
+    'AnonymousTitle': () => new AnonymousTitle(),
     'BenisInNavbar': () => new BenisInNavbar(),
     'Chat': () => new Chat(),
     'DefaultFilters': () => new DefaultFilters(),
@@ -32,5 +33,6 @@ export const modules: Record<PoweruserModuleId, () => PoweruserModule> = {
     'ViewedPostsMarker': () => new ViewedPostsMarker(),
     'NotificationCenter': () => new NotificationCenter(),
     'Pr0p0ll': () => new Pr0p0ll(),
-    'WidescreenMode': () => new WidescreenMode()
+    'WidescreenMode': () => new WidescreenMode(),
+    "DownloadImage": () => new DownloadImage(),
 };
