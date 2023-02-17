@@ -170,7 +170,14 @@ export type StreamItem = {
     vote: number;
     width: number;
     preview: string;
+    tags: ItemTag[];
 };
+
+export type ItemTag = {
+  id: number;
+  confidence: number;
+  tag: string;
+}
 
 export type BaseView = {
     template: string;

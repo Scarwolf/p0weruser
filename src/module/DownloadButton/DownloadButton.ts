@@ -1,5 +1,5 @@
 import Settings from '@/core/Settings/Settings';
-import { ModuleSetting, P, PoweruserModule } from '@/types';
+import { ModuleSetting, P, PoweruserModule, StreamItem } from '@/types';
 
 export default class DownloadButton implements PoweruserModule {
     readonly id = 'Download-Button';
@@ -11,12 +11,12 @@ export default class DownloadButton implements PoweruserModule {
       this.initDownloadButton();
     }
 
-    createButton() {
+    createButton(data: StreamItem) {
       const itemInfoBox = document.querySelectorAll(".item-info")[0];
       const downloadButton = document.createElement("button");
       downloadButton.setAttribute("id", "p0weruser-download-button");
       downloadButton.textContent = "D0wnload";
-      downloadButton.onclick = this.onDownloadClick;
+      downloadButton.onclick = this.onDownloadClick.bind(this, data);
 
       itemInfoBox.append(downloadButton);
     }
@@ -25,19 +25,16 @@ export default class DownloadButton implements PoweruserModule {
       if(!this.isDownloadButtonEnabled) return;
 
       window.addEventListener('itemOpened', (ev: Event & any) => {
-        this.createButton();
+        this.createButton(ev.data.itemData);
       });
     }
 
-    onDownloadClick() {
-      const fullsizeLink = document.querySelectorAll(".item-fullsize-link")[0]?.getAttribute("href");
-      const mediaLink = document.querySelectorAll(".item-image-actual")[0]?.getAttribute("src");
-
-      const mediaUrl = "https:" + (fullsizeLink ? fullsizeLink : mediaLink ? mediaLink : "empty");
-      const tags = document.querySelectorAll(".item-tags .tags")[0].children;
+    onDownloadClick(data: StreamItem) {
+      const mediaUrl = `https:${data.image}`;
+      const tags = data.tags;
       const typeMatch = mediaUrl.match(/\.([a-zA-Z0-9]+)$/);
       const type = typeMatch !== null ? typeMatch[0] : ".unknown";
-      const fileNameTags = Array.from(tags).slice(0, tags.length - 3).map(e => e.children[0].textContent);
+      const fileNameTags = tags.slice(0, tags.length - 3).map(e => e.tag);
 
       fetch(mediaUrl)
         .then(res => res.blob())
