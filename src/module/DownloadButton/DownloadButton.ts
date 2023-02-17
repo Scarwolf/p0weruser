@@ -23,9 +23,8 @@ export default class DownloadButton implements PoweruserModule {
 
     initDownloadButton() {
       if(!this.isDownloadButtonEnabled) return;
-      this.createButton();
 
-      window.addEventListener('locationChange', () => {
+      window.addEventListener('itemOpened', () => {
         this.createButton();
       });
     }
