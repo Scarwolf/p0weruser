@@ -12,7 +12,7 @@ export default class DownloadButton implements PoweruserModule {
     }
 
     createButton() {
-      const itemInfoBox = document.querySelectorAll(".item-info")[0]; // $('.item-info')
+      const itemInfoBox = document.querySelectorAll(".item-info")[0];
       const downloadButton = document.createElement("button");
       downloadButton.setAttribute("id", "p0weruser-download-button");
       downloadButton.textContent = "D0wnload";
@@ -24,7 +24,7 @@ export default class DownloadButton implements PoweruserModule {
     initDownloadButton() {
       if(!this.isDownloadButtonEnabled) return;
 
-      window.addEventListener('itemOpened', () => {
+      window.addEventListener('itemOpened', (ev: Event & any) => {
         this.createButton();
       });
     }
