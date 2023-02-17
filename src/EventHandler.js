@@ -49,7 +49,7 @@ export default class EventHandler {
           p.View.Stream.Item.prototype.show = function (rowIndex, itemData, defaultHeight, jumpToComment) {
             show.call(this, rowIndex, itemData, defaultHeight, jumpToComment);
             _this.itemOpened.data = {
-              rowIndex, itemData, defaultHeight, jumpToComment
+              rowIndex, itemData, defaultHeight, jumpToComment, $container: this.$container
             };
             window.dispatchEvent(_this.itemOpened);
 

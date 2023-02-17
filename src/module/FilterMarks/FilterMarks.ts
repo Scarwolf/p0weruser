@@ -85,7 +85,7 @@ export default class FilterMarks implements PoweruserModule {
                             ${item.preview ? `previewSrc="${item.preview}"` : ""}
                         ></p-thumbnail>
                         ${_this.displayBenisStream ? `
-                        <span 
+                        <span
                             class="benis-info ${item.up - item.down > 0 ? 'up' : 'down'}">
                             ${item.up - item.down}
                         </span>` : ''}
@@ -107,15 +107,12 @@ export default class FilterMarks implements PoweruserModule {
 
         if (this.displayLabelDetails) {
             // Handle detail-view
-            p.View.Stream.Item = p.View.Stream.Item.extend({
-                show: function (rowIndex: any, itemData: any, defaultHeight: any, jumpToComment: any) {
-                    this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
 
-                    if (_this.displayLabelDetails) {
-                        FilterMarks.displayFilterLabel(itemData, this.$container);
-                    }
-                }
-            });
+            if (_this.displayLabelDetails) {
+              window.addEventListener("itemOpened", (ev: Event & any ) => {
+                  FilterMarks.displayFilterLabel(ev.data.itemData, ev.data.$container);
+              });
+            }
         }
 
         // Fix audio-controls
