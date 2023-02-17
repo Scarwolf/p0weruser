@@ -8,6 +8,7 @@ import Settings from "@/core/Settings/Settings";
 import Utils, { loadStyle } from "@/Utils";
 import style from "./viewedPostsMarker.less?inline";
 import { deflate } from "pako";
+import { info } from "../../core/logger";
 
 // Magic Strings
 const viewedPostsStorageV1 = "viewed_posts";
@@ -40,9 +41,9 @@ export default class ViewedPostsMarker implements PoweruserModule {
     let _this = this;
 
     if (this.needsMigration()) {
-      console.log("Starting migration...");
+      info("Starting migration...");
       this.migrate();
-      console.log("Migration complete!");
+      info("Migration complete!");
     }
 
     const viewedPosts = this.loadFromLocalStorage();

@@ -1,3 +1,5 @@
+import * as logger from "./core/logger";
+
 export default class EventHandler {
     constructor() {
         this.settingsLoaded = new Event('settingsLoaded');
@@ -25,6 +27,8 @@ export default class EventHandler {
               error
             };
             window.dispatchEvent(_this.streamLoaded);
+
+            logger.debug("[E] StreamLoaded: ", _this.streamLoaded);
           };
         }(p.View.Stream.Main.prototype.loaded));
         (function (show) {
@@ -34,6 +38,8 @@ export default class EventHandler {
               rowIndex, itemData, defaultHeight, jumpToComment
             };
             window.dispatchEvent(_this.itemOpened);
+
+            logger.debug("[E] ItemOpened: ", _this.itemOpened);
           };
         }(p.View.Stream.Item.prototype.show));
 
@@ -49,6 +55,8 @@ export default class EventHandler {
             p.View.Settings.prototype.render = function (params) {
                 render.call(this, params);
                 window.dispatchEvent(_this.settingsLoaded);
+
+                logger.debug("[E] Settings Loaded: ", _this.settingsLoaded);
             };
         }(p.View.Settings.prototype.render));
 
@@ -64,6 +72,8 @@ export default class EventHandler {
                 _this.locationChange.mode = mode;
                 _this.locationChange.isPost = _this.locationPattern.test(location);
                 window.dispatchEvent(_this.locationChange);
+
+                logger.debug("[E] Location Changed (navigateTo): ", _this.locationChange);
             };
         }(p.navigateTo));
 
@@ -73,6 +83,7 @@ export default class EventHandler {
             _this.locationChange.isPost = _this.locationPattern.test(e.currentTarget.location.pathname);
 
             window.dispatchEvent(_this.locationChange);
+            logger.debug("[E] Location Changed (popState): ", _this.locationChange);
         };
 
         // Add commentsloaded-event
@@ -82,6 +93,7 @@ export default class EventHandler {
                 _this.commentsLoaded.data = this.$container;
                 window.dispatchEvent(_this.commentsLoaded);
 
+                logger.debug("[E] Comments Loaded: ", _this.commentsLoaded);
             };
         }(p.View.Stream.Comments.prototype.render));
 
@@ -90,6 +102,8 @@ export default class EventHandler {
                 _this.userSync.data = response;
                 syncCallback.call(this, response);
                 window.dispatchEvent(_this.userSync);
+
+                logger.debug("[E] Sync: ", _this.userSync);
             };
         }(p.User.prototype.syncCallback));
     }
