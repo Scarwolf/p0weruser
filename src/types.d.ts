@@ -31,6 +31,7 @@ export type P = {
     currentItemId: number | null;
     stream: StreamInView | undefined;
     hideItem(): unknown;
+    load(): void;
   };
   NAVIGATE: {
     DEFAULT: 0;

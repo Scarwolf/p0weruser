@@ -62,6 +62,12 @@ const init = () => {
     const route404 = p._routes.find((r) => String(r.rule) === "/(.*)/");
     const route404Index = p._routes.indexOf(route404);
     p._routes.push(p._routes.splice(route404Index, 1)[0]);
+
+    // Because we probably patched some templates and methods we need to re-render the current view so the changes apply.
+    // The easiest method to do so, is by just re-navigate to the current url.
+    // TODO: We could keep track about the changes that require a re-load, and check here if it is required
+    p.currentView = null;
+    p.navigateTo(p.getURL(), p.NAVIGATE.FORCE);
   }
 };
 
