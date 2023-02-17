@@ -8,6 +8,7 @@ export default class EventHandler {
         this.beforeLocationChange = new Event('beforeLocationChange');
         this.userSync = new Event('userSync');
         this.streamLoaded = new Event('streamLoaded');
+        this.loadStreamContent = new Event('loadStreamContent');
         this.itemOpened = new Event('itemOpened');
         this.locationPattern = /\d+$/;
 
@@ -31,6 +32,19 @@ export default class EventHandler {
             logger.debug("[E] StreamLoaded: ", _this.streamLoaded);
           };
         }(p.View.Stream.Main.prototype.loaded));
+
+        (function (load) {
+          p.Stream.prototype._load = function (options, callback) {
+            load.call(this, options, callback);
+            _this.loadStreamContent.data = {
+              options
+            };
+            window.dispatchEvent(_this.loadStreamContent);
+
+            logger.debug("[E] Stream Items Loaded: ", _this.loadStreamContent);
+          };
+        }(p.Stream.prototype._load));
+
         (function (show) {
           p.View.Stream.Item.prototype.show = function (rowIndex, itemData, defaultHeight, jumpToComment) {
             show.call(this, rowIndex, itemData, defaultHeight, jumpToComment);

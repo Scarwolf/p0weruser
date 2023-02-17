@@ -21,13 +21,10 @@ export default class RepostMarker implements PoweruserModule {
 
 
     async load() {
-        const originalStreamLoadFn = p.Stream.prototype._load;
         const _this = this;
-        p.Stream.prototype._load = function (options: any, callback: any) {
-            const result = originalStreamLoadFn.call(this, options, callback);
-            _this.loadReposts(options);
-            return result;
-        };
+        window.addEventListener("loadStreamContent", (e: Event & any) => {
+          _this.loadReposts(e.data.options);
+        });
         const currentStream = p.currentView?.stream;
         if (currentStream) {
             await this.loadReposts(currentStream.options);
