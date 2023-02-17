@@ -9,7 +9,7 @@ export default class EventHandler {
         this.userSync = new Event('userSync');
         this.streamLoaded = new Event('streamLoaded');
         this.itemOpened = new Event('itemOpened');
-        this.locationPattern = new RegExp('\\d+$');
+        this.locationPattern = /\d+$/;
 
         this.addEvents();
     }
