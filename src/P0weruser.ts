@@ -49,16 +49,22 @@ const addStyles = () => {
 
 const activatedModules = getActivatedModules();
 
-Utils.addPrototypes();
-new EventHandler();
-new Settings(allModules, activatedModules);
-addStyles();
-if (activatedModules.length > 0) {
-  loadModules(activatedModules);
+const init = () => {
+  Utils.addPrototypes();
+  new EventHandler();
+  new Settings(allModules, activatedModules);
+  addStyles();
+  if (activatedModules.length > 0) {
+    loadModules(activatedModules);
 
-  // Maybe we have added some view routes, therefore moving the 404 view to the end. If there is more particular ordering
-  // necessary it must be done in the module.
-  const route404 = p._routes.find((r) => String(r.rule) === "/(.*)/");
-  const route404Index = p._routes.indexOf(route404);
-  p._routes.push(p._routes.splice(route404Index, 1)[0]);
-}
+    // Maybe we have added some view routes, therefore moving the 404 view to the end. If there is more particular ordering
+    // necessary it must be done in the module.
+    const route404 = p._routes.find((r) => String(r.rule) === "/(.*)/");
+    const route404Index = p._routes.indexOf(route404);
+    p._routes.push(p._routes.splice(route404Index, 1)[0]);
+  }
+};
+
+// We defer the initialization process, so we can (at least partially) ensure the userscript is executed AFTER the pr0gramm script.
+// It should be the case anyway as we're relying on @run-at document-end, but just to make sure and make it easier to reason about.
+setTimeout(init, 0);
