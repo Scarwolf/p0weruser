@@ -2,8 +2,8 @@ import Settings from '@/core/Settings/Settings';
 import { ModuleSetting, P, PoweruserModule, StreamItem } from '@/types';
 
 export default class DownloadButton implements PoweruserModule {
-    readonly id = 'Download-Button';
-    readonly name = 'Posts in hoher Auflösung herunterladen';
+    readonly id = 'DownloadButton';
+    readonly name = 'Download-Button';
     readonly description = 'Fügt einen Button zu jedem Post hinzu, um den Post in höchster Qualität herunterzuladen.';
     readonly isDownloadButtonEnabled = Settings.get("DownloadImage.settings.download_button");
 
@@ -36,7 +36,7 @@ export default class DownloadButton implements PoweruserModule {
       const type = typeMatch !== null ? typeMatch[0] : ".unknown";
       const fileNameTags = tags.slice(0, tags.length - 3).map(e => e.tag);
 
-      fetch(mediaUrl)
+      fetch(mediaUrl, { cache: "no-cache" })
         .then(res => res.blob())
         .then(blob => {
           const tempLink = document.createElement("a");
