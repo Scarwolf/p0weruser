@@ -6,6 +6,7 @@ export default class EventHandler {
         this.beforeLocationChange = new Event('beforeLocationChange');
         this.userSync = new Event('userSync');
         this.streamLoaded = new Event('streamLoaded');
+        this.itemOpened = new Event('itemOpened');
         this.locationPattern = new RegExp('\\d+$');
 
         this.addEvents();
@@ -26,6 +27,15 @@ export default class EventHandler {
             window.dispatchEvent(_this.streamLoaded);
           };
         }(p.View.Stream.Main.prototype.loaded));
+        (function (show) {
+          p.View.Stream.Item.prototype.show = function (rowIndex, itemData, defaultHeight, jumpToComment) {
+            show.call(this, rowIndex, itemData, defaultHeight, jumpToComment);
+            _this.itemOpened.data = {
+              rowIndex, itemData, defaultHeight, jumpToComment
+            };
+            window.dispatchEvent(_this.itemOpened);
+          };
+        }(p.View.Stream.Item.prototype.show));
 
         // Because we patched the main stream, we might need to re-init it to bind the new loaded Function
         // Honestley, I don't know how to check whether the p.View.Stream.Main view is active properly.

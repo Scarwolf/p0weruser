@@ -67,19 +67,10 @@ export default class ViewedPostsMarker implements PoweruserModule {
       _this.checkAndMarkItems(Object.keys(items).map((i) => Number(i)));
     }
 
-    p.View.Stream.Item = p.View.Stream.Item.extend({
-      show: function (
-        rowIndex: any,
-        itemData: { id: unknown },
-        defaultHeight: any,
-        jumpToComment: any
-      ) {
-        this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
-
-        const id = Number(itemData.id);
-        _this.mergeIntoViewedPosts([id]);
-        ViewedPostsMarker.markAsViewed(id);
-      },
+    window.addEventListener("itemOpened", (ev: Event & any ) => {
+      const id = Number(ev.data.itemData.id);
+      _this.mergeIntoViewedPosts([id]);
+      ViewedPostsMarker.markAsViewed(id);
     });
 
     // Fix audio-controls
