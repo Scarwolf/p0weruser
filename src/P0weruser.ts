@@ -46,35 +46,19 @@ const addStyles = () => {
   document.getElementsByTagName("head")[0].appendChild(globalStyle);
 };
 
-// We defer the initialization and hope that pr0gramm has been initialized before
-setTimeout(() => {
-  const activatedModules = getActivatedModules();
 
-  Utils.addPrototypes();
-  new EventHandler();
-  new Settings(allModules, activatedModules);
-  addStyles();
-  if (activatedModules.length > 0) {
-    loadModules(activatedModules);
+const activatedModules = getActivatedModules();
 
-    // Maybe we have added some view routes, therefore moving the 404 view to the end. If there is more particular ordering
-    // necessary it must be done in the module.
-    const route404 = p._routes.find((r) => String(r.rule) === "/(.*)/");
-    const route404Index = p._routes.indexOf(route404);
-    p._routes.push(p._routes.splice(route404Index, 1)[0]);
+Utils.addPrototypes();
+new EventHandler();
+new Settings(allModules, activatedModules);
+addStyles();
+if (activatedModules.length > 0) {
+  loadModules(activatedModules);
 
-    // Once the modules are loaded we need to trigger re-rendering again as we may have overridden views.
-    // We use force navigation here to trigger re-rendering as we're not changing location.
-    // As the native pr0gramm initializes first a view is already created. However, It is necessary that we let
-    // pr0gramm think we don't have a view yet as otherwise it will try to hide the current view.
-    if (loadedModules.some((m) => m.needsReRendering)) {
-      setTimeout(() => {
-        p.currentView = null;
-
-        // We navigate using the full URL to ensure that the view is re-rendered with all parameters.
-        // If we would use p.location, some URL parts will be trimmed down, for example the ":comment" suffix.
-        p.navigateTo(p.getURL(), p.NAVIGATE.FORCE);
-      }, 0);
-    }
-  }
-}, 500);
+  // Maybe we have added some view routes, therefore moving the 404 view to the end. If there is more particular ordering
+  // necessary it must be done in the module.
+  const route404 = p._routes.find((r) => String(r.rule) === "/(.*)/");
+  const route404Index = p._routes.indexOf(route404);
+  p._routes.push(p._routes.splice(route404Index, 1)[0]);
+}

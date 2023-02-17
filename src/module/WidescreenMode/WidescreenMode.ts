@@ -8,7 +8,6 @@ import { ModuleSetting, PoweruserModule } from '@/types';
 export default class WidescreenMode implements PoweruserModule {
     readonly id = 'WidescreenMode';
     readonly name = 'Widescreen Mode';
-    readonly needsReRendering = true;
     container: any = {};
     commentsContainer: any = {};
     resized: boolean = false;
