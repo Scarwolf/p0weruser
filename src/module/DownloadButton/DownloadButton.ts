@@ -36,8 +36,8 @@ export default class DownloadButton implements PoweruserModule {
       const mediaUrl = "https:" + (fullsizeLink ? fullsizeLink : mediaLink ? mediaLink : "empty");
       const tags = document.querySelectorAll(".item-tags .tags")[0].children;
       const typeMatch = mediaUrl.match(/\.([a-zA-Z0-9]+)$/);
-      const type = typeMatch !== null ? typeMatch[0] : ".unknwon";
-      const fileNameTags = Array.from(tags).slice(0, tags.length-3).map(e => e.children[0].textContent);
+      const type = typeMatch !== null ? typeMatch[0] : ".unknown";
+      const fileNameTags = Array.from(tags).slice(0, tags.length - 3).map(e => e.children[0].textContent);
 
       fetch(mediaUrl)
         .then(res => res.blob())
