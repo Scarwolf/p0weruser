@@ -4,7 +4,6 @@ export type PoweruserModule = {
     readonly id: PoweruserModuleId;
     readonly name: string;
     readonly description: string;
-    readonly needsReRendering?: boolean;
     load(): Promise<void>;
     getSettings?: () => ModuleSetting[]
 };
@@ -32,6 +31,7 @@ export type P = {
     currentItemId: number | null;
     stream: StreamInView | undefined;
     hideItem(): unknown;
+    load(): void;
   };
   NAVIGATE: {
     DEFAULT: 0;

@@ -103,7 +103,6 @@ export default class Settings {
 
   addListeners() {
     window.addEventListener("settingsLoaded", () => {
-      console.log("Settings loaded");
       this.addSettingsTab();
     });
   }
@@ -141,10 +140,10 @@ export default class Settings {
 
       // Build module-row
       moduleList.innerHTML += `
-                <input type="checkbox" 
+                <input type="checkbox"
                        class="box-from-label"
-                       name="${module.id}" 
-                       id="${module.id}" 
+                       name="${module.id}"
+                       id="${module.id}"
                        data-module="${module.id}" ${
         checked ? ' checked="checked"' : ""
       }>

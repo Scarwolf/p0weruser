@@ -46,10 +46,10 @@ const addStyles = () => {
   document.getElementsByTagName("head")[0].appendChild(globalStyle);
 };
 
-// We defer the initialization and hope that pr0gramm has been initialized before
-setTimeout(() => {
-  const activatedModules = getActivatedModules();
 
+const activatedModules = getActivatedModules();
+
+const init = () => {
   Utils.addPrototypes();
   new EventHandler();
   new Settings(allModules, activatedModules);
@@ -63,18 +63,14 @@ setTimeout(() => {
     const route404Index = p._routes.indexOf(route404);
     p._routes.push(p._routes.splice(route404Index, 1)[0]);
 
-    // Once the modules are loaded we need to trigger re-rendering again as we may have overridden views.
-    // We use force navigation here to trigger re-rendering as we're not changing location.
-    // As the native pr0gramm initializes first a view is already created. However, It is necessary that we let
-    // pr0gramm think we don't have a view yet as otherwise it will try to hide the current view.
-    if (loadedModules.some((m) => m.needsReRendering)) {
-      setTimeout(() => {
-        p.currentView = null;
-
-        // We navigate using the full URL to ensure that the view is re-rendered with all parameters.
-        // If we would use p.location, some URL parts will be trimmed down, for example the ":comment" suffix.
-        p.navigateTo(p.getURL(), p.NAVIGATE.FORCE);
-      }, 0);
-    }
+    // Because we probably patched some templates and methods we need to re-render the current view so the changes apply.
+    // The easiest method to do so, is by just re-navigate to the current url.
+    // TODO: We could keep track about the changes that require a re-load, and check here if it is required
+    p.currentView = null;
+    p.navigateTo(p.getURL(), p.NAVIGATE.FORCE);
   }
-}, 500);
+};
+
+// We defer the initialization process, so we can (at least partially) ensure the userscript is executed AFTER the pr0gramm script.
+// It should be the case anyway as we're relying on @run-at document-end, but just to make sure and make it easier to reason about.
+setTimeout(init, 0);

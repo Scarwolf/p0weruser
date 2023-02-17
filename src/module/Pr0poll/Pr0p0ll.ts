@@ -14,9 +14,9 @@ export default class Pr0p0ll implements PoweruserModule {
     token = Settings.get('Pr0p0ll.settings.user_token') as string;
     readonly showDiagramms = Settings.get('Pr0p0ll.settings.show_diagramms');
     readonly apiUrl = 'https://pr0p0ll.com/?p=viewjson&id=';
-    readonly regionDe = new Intl.DateTimeFormat('de-DE', { 
+    readonly regionDe = new Intl.DateTimeFormat('de-DE', {
       dateStyle: 'long',
-      timeZone: 'Europe/Berlin' 
+      timeZone: 'Europe/Berlin'
     });
 
     inboxLink: HTMLElement;
@@ -40,7 +40,6 @@ export default class Pr0p0ll implements PoweruserModule {
             template: overlayTemplate,
             init: function (container: any, parent: any, params: any) {
                 this.data.p0ll = params.data;
-                console.log(params.data);
                 this.data.dateTo = _this.regionDe.format(params.data.info.endedOn * 1000);
                 this.data.dateFrom = _this.regionDe.format(params.data.info.endedOn * 1000 - params.data.info.duration * 1000);
                 container[0].classList.add('pr0p0ll-overlay');

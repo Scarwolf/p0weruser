@@ -8,6 +8,7 @@ import Settings from "@/core/Settings/Settings";
 import Utils, { loadStyle } from "@/Utils";
 import style from "./viewedPostsMarker.less?inline";
 import { deflate } from "pako";
+import { info } from "../../core/logger";
 
 // Magic Strings
 const viewedPostsStorageV1 = "viewed_posts";
@@ -40,9 +41,9 @@ export default class ViewedPostsMarker implements PoweruserModule {
     let _this = this;
 
     if (this.needsMigration()) {
-      console.log("Starting migration...");
+      info("Starting migration...");
       this.migrate();
-      console.log("Migration complete!");
+      info("Migration complete!");
     }
 
     const viewedPosts = this.loadFromLocalStorage();
@@ -67,19 +68,10 @@ export default class ViewedPostsMarker implements PoweruserModule {
       _this.checkAndMarkItems(Object.keys(items).map((i) => Number(i)));
     }
 
-    p.View.Stream.Item = p.View.Stream.Item.extend({
-      show: function (
-        rowIndex: any,
-        itemData: { id: unknown },
-        defaultHeight: any,
-        jumpToComment: any
-      ) {
-        this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
-
-        const id = Number(itemData.id);
-        _this.mergeIntoViewedPosts([id]);
-        ViewedPostsMarker.markAsViewed(id);
-      },
+    window.addEventListener("itemOpened", (ev: Event & any ) => {
+      const id = Number(ev.data.itemData.id);
+      _this.mergeIntoViewedPosts([id]);
+      ViewedPostsMarker.markAsViewed(id);
     });
 
     // Fix audio-controls

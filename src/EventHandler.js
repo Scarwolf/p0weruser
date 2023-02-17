@@ -1,3 +1,5 @@
+import * as logger from "./core/logger";
+
 export default class EventHandler {
     constructor() {
         this.settingsLoaded = new Event('settingsLoaded');
@@ -6,7 +8,9 @@ export default class EventHandler {
         this.beforeLocationChange = new Event('beforeLocationChange');
         this.userSync = new Event('userSync');
         this.streamLoaded = new Event('streamLoaded');
-        this.locationPattern = new RegExp('\\d+$');
+        this.loadStreamContent = new Event('loadStreamContent');
+        this.itemOpened = new Event('itemOpened');
+        this.locationPattern = /\d+$/;
 
         this.addEvents();
     }
@@ -24,8 +28,34 @@ export default class EventHandler {
               error
             };
             window.dispatchEvent(_this.streamLoaded);
+
+            logger.debug("[E] StreamLoaded: ", _this.streamLoaded);
           };
         }(p.View.Stream.Main.prototype.loaded));
+
+        (function (load) {
+          p.Stream.prototype._load = function (options, callback) {
+            load.call(this, options, callback);
+            _this.loadStreamContent.data = {
+              options
+            };
+            window.dispatchEvent(_this.loadStreamContent);
+
+            logger.debug("[E] Stream Items Loaded: ", _this.loadStreamContent);
+          };
+        }(p.Stream.prototype._load));
+
+        (function (show) {
+          p.View.Stream.Item.prototype.show = function (rowIndex, itemData, defaultHeight, jumpToComment) {
+            show.call(this, rowIndex, itemData, defaultHeight, jumpToComment);
+            _this.itemOpened.data = {
+              rowIndex, itemData, defaultHeight, jumpToComment, $container: this.$container
+            };
+            window.dispatchEvent(_this.itemOpened);
+
+            logger.debug("[E] ItemOpened: ", _this.itemOpened);
+          };
+        }(p.View.Stream.Item.prototype.show));
 
         // Because we patched the main stream, we might need to re-init it to bind the new loaded Function
         // Honestley, I don't know how to check whether the p.View.Stream.Main view is active properly.
@@ -39,6 +69,8 @@ export default class EventHandler {
             p.View.Settings.prototype.render = function (params) {
                 render.call(this, params);
                 window.dispatchEvent(_this.settingsLoaded);
+
+                logger.debug("[E] Settings Loaded: ", _this.settingsLoaded);
             };
         }(p.View.Settings.prototype.render));
 
@@ -54,6 +86,8 @@ export default class EventHandler {
                 _this.locationChange.mode = mode;
                 _this.locationChange.isPost = _this.locationPattern.test(location);
                 window.dispatchEvent(_this.locationChange);
+
+                logger.debug("[E] Location Changed (navigateTo): ", _this.locationChange);
             };
         }(p.navigateTo));
 
@@ -63,6 +97,7 @@ export default class EventHandler {
             _this.locationChange.isPost = _this.locationPattern.test(e.currentTarget.location.pathname);
 
             window.dispatchEvent(_this.locationChange);
+            logger.debug("[E] Location Changed (popState): ", _this.locationChange);
         };
 
         // Add commentsloaded-event
@@ -72,6 +107,7 @@ export default class EventHandler {
                 _this.commentsLoaded.data = this.$container;
                 window.dispatchEvent(_this.commentsLoaded);
 
+                logger.debug("[E] Comments Loaded: ", _this.commentsLoaded);
             };
         }(p.View.Stream.Comments.prototype.render));
 
@@ -80,6 +116,8 @@ export default class EventHandler {
                 _this.userSync.data = response;
                 syncCallback.call(this, response);
                 window.dispatchEvent(_this.userSync);
+
+                logger.debug("[E] Sync: ", _this.userSync);
             };
         }(p.User.prototype.syncCallback));
     }

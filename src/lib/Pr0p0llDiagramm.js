@@ -200,7 +200,6 @@ export default class Pr0p0llDiagramm {
                 onClick: (e, data) => {
                     if (data[0]) {
                         let index = answers.answers[data[0]._index];
-                        console.log(index);
                     }
                 }
             }
