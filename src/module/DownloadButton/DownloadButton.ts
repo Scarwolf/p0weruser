@@ -12,7 +12,7 @@ export default class DownloadButton implements PoweruserModule {
     }
 
     createButton() {
-      const itemInfoBox = $('.item-info');
+      const itemInfoBox = document.querySelectorAll(".item-info")[0]; // $('.item-info')
       const downloadButton = document.createElement("button");
       downloadButton.setAttribute("id", "p0weruser-download-button");
       downloadButton.textContent = "D0wnload";
