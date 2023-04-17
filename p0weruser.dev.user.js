@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         p0weruser - Rel0aded [Dev]
 // @namespace    https://github.com/Scarwolf/p0weruser/
-// @version      2.6.0-dev-1678457213399
+// @version      2.6.0-dev-1681722173057
 // @author       PoTTii - Created by Florian Maak
 // @description  A modularized userScript for pr0gramm.com - Developed by FlorianMaak, Modified by Scarwolf
 // @license      GPL-3.0; http://www.gnu.org/licenses/gpl-3.0.txt
