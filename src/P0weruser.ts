@@ -65,9 +65,12 @@ const init = () => {
 
     // Because we probably patched some templates and methods we need to re-render the current view so the changes apply.
     // The easiest method to do so, is by just re-navigate to the current url.
+    // p.navigateTo(p.getURL(), p.NAVIGATE.FORCE);
+    // However, this causes the history to contain a duplicated entry. Therfeore we dispatch an internal event that is
+    // normally issued by the navigateTo method.
     // TODO: We could keep track about the changes that require a re-load, and check here if it is required
     p.currentView = null;
-    p.navigateTo(p.getURL(), p.NAVIGATE.FORCE);
+    p._dispatch(null, true);
   }
 };
 

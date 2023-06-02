@@ -26,6 +26,7 @@ export type SetBitsResponse = {
 
 export type P = {
   _routes: any[];
+  _dispatch: (arg1: unknown | null, arg2: boolean) => unknown;
   currentView: null | {
     $itemContainer: unknown;
     currentItemId: number | null;
