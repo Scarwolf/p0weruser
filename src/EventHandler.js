@@ -21,27 +21,31 @@ export default class EventHandler {
 
         (function (loaded) {
           p.View.Stream.Main.prototype.loaded = function (items, position, error) {
-            loaded.call(this, items, position, error);
-            _this.streamLoaded.data = {
-              items,
-              position,
-              error
-            };
-            window.dispatchEvent(_this.streamLoaded);
+            if(p.currentView.classId === 26) {
+              loaded.call(this, items, position, error);
+              _this.streamLoaded.data = {
+                items,
+                position,
+                error
+              };
+              window.dispatchEvent(_this.streamLoaded);
 
-            logger.debug("[E] StreamLoaded: ", _this.streamLoaded);
+              logger.debug("[E] StreamLoaded: ", _this.streamLoaded);
+            }
           };
         }(p.View.Stream.Main.prototype.loaded));
 
         (function (load) {
           p.Stream.prototype._load = function (options, callback) {
-            load.call(this, options, callback);
-            _this.loadStreamContent.data = {
-              options
-            };
-            window.dispatchEvent(_this.loadStreamContent);
+            if(p.currentView.classId === 26) {
+              load.call(this, options, callback);
+              _this.loadStreamContent.data = {
+                options
+              };
+              window.dispatchEvent(_this.loadStreamContent);
 
-            logger.debug("[E] Stream Items Loaded: ", _this.loadStreamContent);
+              logger.debug("[E] Stream Items Loaded: ", _this.loadStreamContent);
+            }
           };
         }(p.Stream.prototype._load));
 
