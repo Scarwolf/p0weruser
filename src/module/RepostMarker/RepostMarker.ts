@@ -21,6 +21,9 @@ export default class RepostMarker implements PoweruserModule {
 
 
     async load() {
+        // Disabled due to bug #132
+        return;
+
         const _this = this;
         window.addEventListener("loadStreamContent", (e: Event & any) => {
           _this.loadReposts(e.data.options);
