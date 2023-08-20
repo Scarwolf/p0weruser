@@ -22,7 +22,6 @@ The original repo can be found here: [FlorianMaak/p0weruser](https://github.com/
 * TinEye Imagesearch
 * Integration of [Rene8888s repost-check](https://rep0st.rene8888.at)
 * Automated text recognition
-* Integration of [pr0p0ll.com](https://pr0p0ll.com)
 * Mark viewed posts (and synchronize them with the app)
 * Anonymous Title
 * Default Filters

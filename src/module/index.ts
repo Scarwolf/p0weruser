@@ -8,7 +8,6 @@ import DesktopNotifications from "./DesktopNotifications/DesktopNotifications";
 import FilterMarks from "./FilterMarks/FilterMarks";
 import ImageOCR from "./ImageOCR/ImageOCR";
 import NotificationCenter from "./NotificationCenter/NotificationCenter";
-import Pr0p0ll from "./Pr0poll/Pr0p0ll";
 import Rep0st from "./Rep0st/Rep0st";
 import RepostMarker from "./RepostMarker/RepostMarker";
 import StatisticsLinkInNavbar from "./StatisticsInNavbar/StatisticsLinkInNavbar";
@@ -32,7 +31,6 @@ export const modules: Record<PoweruserModuleId, () => PoweruserModule> = {
     'StatisticsLinkInNavbar': () => new StatisticsLinkInNavbar(),
     'ViewedPostsMarker': () => new ViewedPostsMarker(),
     'NotificationCenter': () => new NotificationCenter(),
-    'Pr0p0ll': () => new Pr0p0ll(),
     'WidescreenMode': () => new WidescreenMode(),
     "DownloadButton": () => new DownloadButton(),
 };
