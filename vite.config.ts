@@ -22,7 +22,6 @@ export default defineConfig(({ mode }) => ({
           "github.com",
           "raw.githubusercontent.com",
           "pr0gramm.com",
-          "pr0p0ll.com",
         ],
         "run-at": "document-end",
         require: ["https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"],

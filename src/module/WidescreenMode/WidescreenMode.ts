@@ -488,9 +488,6 @@ export default class WidescreenMode implements PoweruserModule {
                 this.toggleNavigation();
             });
         }
-
-        // Init additional menuitems
-        this.addMenuItem('pr0p0ll', 'https://pr0p0ll.com', ' fa-bar-chart');
     }
 
 
