@@ -67,7 +67,7 @@ export default class DefaultFilters implements PoweruserModule {
         if (p.location === 'top' || p.location === 'new') {
             const filter = this.getFilter();
             if (filter) {
-                const location = 'new/' + encodeURIComponent(filter);
+                const location = p.location + '/' + encodeURIComponent(filter);
                 p.navigateTo(location, p.NAVIGATE.SILENT);
             }
         }
