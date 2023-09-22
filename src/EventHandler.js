@@ -21,8 +21,8 @@ export default class EventHandler {
 
         (function (loaded) {
           p.View.Stream.Main.prototype.loaded = function (items, position, error) {
-            if(p.currentView.classId === 26) {
-              loaded.call(this, items, position, error);
+            loaded.call(this, items, position, error);
+            if (p.currentView.classId === 26) {
               _this.streamLoaded.data = {
                 items,
                 position,
@@ -37,8 +37,8 @@ export default class EventHandler {
 
         (function (load) {
           p.Stream.prototype._load = function (options, callback) {
-            if(p.currentView.classId === 26) {
-              load.call(this, options, callback);
+            load.call(this, options, callback);
+            if (p.currentView.classId === 26) {
               _this.loadStreamContent.data = {
                 options
               };
