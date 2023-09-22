@@ -18,10 +18,15 @@ export default class EventHandler {
 
     addEvents() {
         let _this = this;
+      // We have two options to check for the main stream:
+      // 1. Check whether the current view has a stream property
+      // 2. Check the classId of the current view. However the classId can be changed when
+      //    pr0gramm introduces a new view. So we have to check for the stream property anyway.
+      const isMainStream = () => p.currentView.stream !== undefined || p.currentView.classId === 27;
 
         (function (loaded) {
           p.View.Stream.Main.prototype.loaded = function (items, position, error) {
-            if(p.currentView.classId === 26) {
+            if (isMainStream()) {
               loaded.call(this, items, position, error);
               _this.streamLoaded.data = {
                 items,
@@ -37,7 +42,7 @@ export default class EventHandler {
 
         (function (load) {
           p.Stream.prototype._load = function (options, callback) {
-            if(p.currentView.classId === 26) {
+            if (isMainStream()) {
               load.call(this, options, callback);
               _this.loadStreamContent.data = {
                 options
