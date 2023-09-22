@@ -70,7 +70,7 @@ const init = () => {
     // normally issued by the navigateTo method.
     // TODO: We could keep track about the changes that require a re-load, and check here if it is required
     p.currentView = null;
-    p._dispatch(null, true);
+    p._dispatch(null, false);
   }
 };
 
