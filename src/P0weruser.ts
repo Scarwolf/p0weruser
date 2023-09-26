@@ -69,8 +69,7 @@ const init = () => {
     // However, this causes the history to contain a duplicated entry. Therfeore we dispatch an internal event that is
     // normally issued by the navigateTo method.
     // TODO: We could keep track about the changes that require a re-load, and check here if it is required
-    p.currentView = null;
-    p._dispatch(null, true);
+    p.currentView?.fragmentChange(p.getFragment());
   }
 };
 

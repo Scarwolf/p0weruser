@@ -27,12 +27,14 @@ export type SetBitsResponse = {
 export type P = {
   _routes: any[];
   _dispatch: (arg1: unknown | null, arg2: boolean) => unknown;
+  getFragment(): string;
   currentView: null | {
     $itemContainer: unknown;
     currentItemId: number | null;
     stream: StreamInView | undefined;
     hideItem(): unknown;
     load(): void;
+    fragmentChange(fragment: string): void;
   };
   NAVIGATE: {
     DEFAULT: 0;
