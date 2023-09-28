@@ -11,11 +11,30 @@
             <?js if( item.video ) { ?>
             <div class="item-image">
                 <?js if(supportsAutoplay) {?>
-                <video class="item-image-actual" draggable="true" src="{item.image}" type="video/mp4" loop autoplay
-                       preload="auto"></video>
+                <video class="item-image-actual" draggable="true" loop autoplay preload="auto">
+                  <source src="{item.image}" type="video/mp4">
+                  <?js if (CONFIG.FEATURE_FLAG.SUBTITLES && p.user.paid) { ?>
+                  <?js if (item.subtitles && item.subtitles.length > 0) { ?>
+                  <?js for (const st of item.subtitles) { ?>
+                  <track kind="subtitles" src="{st.path}" label="{st.label}" srclang="{st.language}" <?js if (st.isDefault) { ?> default
+                  <?js } ?> >
+                  <?js } ?>
+                  <?js } ?>
+                  <?js } ?>
+                </video>
                 <?js } else { ?>
-                <video class="item-image-actual" draggable="true" webkit-playsinline playsinline poster="{item.thumb}" src="{item.image}"
-                       type="video/mp4" loop preload="metadata"></video>
+                <video class="item-image-actual" draggable="true" webkit-playsinline playsinline loop preload="metadata"
+                  poster="{item.thumb}">
+                  <source src="{item.image}" type="video/mp4">
+                  <?js if (CONFIG.FEATURE_FLAG.SUBTITLES && p.user.paid) { ?>
+                  <?js if (item.subtitles && item.subtitles.length > 0) { ?>
+                  <?js for (const st of item.subtitles) { ?>
+                  <track kind="subtitles" src="{st.path}" label="{st.label}" srclang="{st.language}" <?js if (st.isDefault) { ?> default
+                  <?js } ?> >
+                  <?js } ?>
+                  <?js } ?>
+                  <?js } ?>
+                </video>
                 <svg class="video-play-button" viewBox="0 0 200 200">
                     <circle cx="100" cy="100" r="90" fill="none" stroke-width="15" stroke="#fff"></circle>
                     <polygon points="70, 55 70, 145 145, 100" fill="#fff"></polygon>
