@@ -29,7 +29,7 @@ jobs:
           path: dist
 
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        uses: JamesIves/github-pages-deploy-action@v4.4.3
         if: github.event_name == 'push' && github.ref_name == 'master'
         with:
           branch: gh-pages
