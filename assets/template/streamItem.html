@@ -14,7 +14,6 @@
                 <?js if(supportsAutoplay) {?>
                 <video class="item-image-actual" draggable="true" loop autoplay preload="auto">
                   <source src="{item.image}" type="video/mp4">
-                  <?js if (CONFIG.FEATURE_FLAG.SUBTITLES) { ?>
                   <?js if (item.subtitles && item.subtitles.length > 0) { ?>
                   <?js for (const st of item.subtitles) { ?>
                     <track kind="subtitles" src="{st.path}" label="{st.label}" srclang="{st.language}" <?js if (st.isDefault) { ?>
@@ -22,19 +21,16 @@
                   <?js } ?> >
                   <?js } ?>
                   <?js } ?>
-                  <?js } ?>
                 </video>
                 <?js } else { ?>
                 <video class="item-image-actual" draggable="true" webkit-playsinline playsinline loop preload="metadata"
                   poster="{item.thumb}">
                   <source src="{item.image}" type="video/mp4">
-                  <?js if (CONFIG.FEATURE_FLAG.SUBTITLES) { ?>
                   <?js if (item.subtitles && item.subtitles.length > 0) { ?>
                   <?js for (const st of item.subtitles) { ?>
                   <track kind="subtitles" src="{st.path}" label="{st.label}" srclang="{st.language}" <?js if (st.isDefault) { ?>
                   data-is-default=""
                   <?js } ?> >
-                  <?js } ?>
                   <?js } ?>
                   <?js } ?>
                 </video>
@@ -83,7 +79,7 @@
                     </div>
                 </div>
               <?js } ?>
-              <?js if (CONFIG.FEATURE_FLAG.SUBTITLES && item.subtitles && item.subtitles.length > 0) { ?>
+              <?js if (item.subtitles && item.subtitles.length > 0) { ?>
               <?js if (item.subtitles.length === 1) { ?>
               <label title="{{item.subtitles[0].label}} (U)" class="subtitle-controls" id="video-controls-enable-subtitles-label">
                 <input type="checkbox" id="video-controls-enable-subtitles-checkbox">
