@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         p0weruser - Rel0aded [Dev]
 // @namespace    https://github.com/Scarwolf/p0weruser/
-// @version      2.9.2-dev-1700159576297
+// @version      2.9.2-dev-1700356083695
 // @author       PoTTii - Created by Florian Maak
 // @description  A modularized userScript for pr0gramm.com - Developed by FlorianMaak, Modified by Scarwolf
 // @license      GPL-3.0; http://www.gnu.org/licenses/gpl-3.0.txt
@@ -269,7 +269,7 @@ var Es=Object.defineProperty;var Ss=(ae,J,se)=>J in ae?Es(ae,J,{enumerable:!0,co
                         <a href="https://imgops.com/{item.trimmedUrl}">
                           ImgOps
                         </a> |
-                        <a href="https://www.google.com/searchbyimage?hl=en&amp;safe=off&amp;site=search&amp;image_url=http:{item.image}"
+                        <a href="https://lens.google.com/uploadbyurl?url=http:{item.image}"
                            target="_blank"> Bild googeln
                         </a> |
                         <a href="https://tineye.com/search/?url=http:{item.image}"
