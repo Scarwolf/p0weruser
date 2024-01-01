@@ -22,7 +22,7 @@
     "devDependencies": {
         "@types/greasemonkey": "^4.0.7",
         "@types/jquery": "^3.5.29",
-        "@types/node": "^18.19.3",
+        "@types/node": "^18.19.4",
         "@types/pako": "^2.0.3",
         "ajv": "^6.12.6",
         "less": "^4.2.0",
