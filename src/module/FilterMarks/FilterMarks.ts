@@ -34,6 +34,8 @@ export default class FilterMarks implements PoweruserModule {
                 return 'nsfl';
             case 8:
                 return 'nsfp';
+            case 16:
+                return 'pol';
             default:
                 throw new Error("Uknown Filter");
         }

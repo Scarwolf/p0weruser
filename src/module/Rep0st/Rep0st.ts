@@ -79,7 +79,7 @@ export default class Rep0st implements PoweruserModule {
 
     // Filters
     let filters = p.user.flagsName.split("+");
-    filters = filters.indexOf("all") !== -1 ? ["sfw", "nsfw", "nsfl"] : filters;
+    filters = filters.indexOf("all") !== -1 ? ["sfw", "nsfw", "nsfl", "pol"] : filters;
 
     for (const filter of filters) {
       dta.append("filter", filter);
