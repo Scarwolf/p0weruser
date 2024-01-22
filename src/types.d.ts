@@ -17,7 +17,7 @@ export type ModuleSetting = {
     type: ModuleSettingType;
 };
 
-export type FlagName = 'sfw' | 'nsfw' | 'nsfl' | 'pol';
+export type FlagName = 'sfw' | 'nsfw' | 'nsfl' | 'nsfp' | 'pol';
 
 export type SetBitsResponse = {
   success: boolean;

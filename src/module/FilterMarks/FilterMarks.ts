@@ -1,5 +1,5 @@
 import Settings from '@/core/Settings/Settings';
-import { ModuleSetting, PoweruserModule, StreamItem } from '@/types';
+import { FlagName, ModuleSetting, PoweruserModule, StreamItem } from '@/types';
 import Utils, { loadStyle } from "@/Utils";
 import style from './filterMarks.less?inline';
 
@@ -15,6 +15,7 @@ export default class FilterMarks implements PoweruserModule {
 
     static displayFilterLabel(itemData: any, $container: any) {
         let filter = FilterMarks.getFilter(itemData);
+        if(!filter) return;
         let badge = document.createElement('span');
         badge.className = 'badge';
         badge.classList.toggle(filter);
@@ -24,7 +25,7 @@ export default class FilterMarks implements PoweruserModule {
     }
 
 
-    static getFilter(itemData: any) {
+    static getFilter(itemData: any): FlagName | null {
         switch (itemData.flags) {
             case 1:
                 return 'sfw';
@@ -37,7 +38,8 @@ export default class FilterMarks implements PoweruserModule {
             case 16:
                 return 'pol';
             default:
-                throw new Error("Uknown Filter");
+                console.warn('Unknown filter', itemData.flags);
+                return null;
         }
     }
 
