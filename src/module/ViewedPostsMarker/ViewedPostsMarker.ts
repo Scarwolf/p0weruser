@@ -143,7 +143,7 @@ export default class ViewedPostsMarker implements PoweruserModule {
 
   private async loadFromApi(): Promise<number[]> {
     const response = await fetch(
-      "/api/seen/bits?uncompressed=true&binary=true"
+      "/api/seen/data?compressed=false&binary=true"
     );
     if (!response.ok) {
       return [];
