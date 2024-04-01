@@ -150,6 +150,7 @@ export default class NotificationCenter implements PoweruserModule {
     }
 
     if (isSystemNotification) {
+      title = "Systembenachrichtigung";
       user = "Systembenachrichtigung";
     }
 
