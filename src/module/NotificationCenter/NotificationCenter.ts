@@ -136,11 +136,12 @@ export default class NotificationCenter implements PoweruserModule {
     msg: any,
     read: boolean
   ) {
-    let elem = document.createElement("li");
+    const elem = document.createElement("li");
     elem.id = `notification-${cId}`;
     let img =
       '<img src="//thumb.pr0gramm.com/##THUMB##" class="comment-thumb">';
-    let url = image ? `/new/${id}:comment${cId}` : `/inbox/messages/${user}`;
+    const isSystemNotification = user === null;
+    const url = image ? `/new/${id}:comment${cId}` : isSystemNotification ? `/inbox/notifications` : `/inbox/messages/${user}`;
 
     if (!image) {
       img = '<span class="message fa fa-envelope-open"></span>';
@@ -148,7 +149,7 @@ export default class NotificationCenter implements PoweruserModule {
       img = img.replace("##THUMB", image);
     }
 
-    if (user === null) {
+    if (isSystemNotification) {
       user = "Systembenachrichtigung";
     }
 
