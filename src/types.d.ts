@@ -135,17 +135,20 @@ export type GlobalPr0Config = {
     HEADER_HEIGHT: number;
 }
 
+export type UserInbox = {
+  comments: number;
+  mentions: number;
+  messages: number;
+  notifications: number;
+  follows: number;
+  digests: number;
+}
+
 export type UserSyncEvent = {
     type: "userSync";
     data: {
         score: number;
-        inbox: {
-            comments: number;
-            mentions: number;
-            messages: number;
-            notifications: number;
-            follows: number;
-        }
+        inbox: UserInbox;
     }
 };
 

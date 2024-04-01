@@ -1,6 +1,6 @@
 import template from "../../../assets/template/notificationCenter.html?raw";
 import templateEntry from "../../../assets/template/notificationEntry.html?raw";
-import { ModuleSetting, PoweruserModule } from "@/types";
+import { ModuleSetting, PoweruserModule, UserInbox } from "@/types";
 import Utils, { loadStyle } from "@/Utils";
 import style from "./notificationCenter.less?inline";
 import Settings from "@/core/Settings/Settings";
@@ -86,7 +86,8 @@ export default class NotificationCenter implements PoweruserModule {
           messages: 0,
           comments: 0,
           follows: 0,
-        });
+          digests: 0
+        } as UserInbox);
 
         if (unreadMessages <= 0) {
           let elem = document.createElement("li");
