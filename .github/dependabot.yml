@@ -11,7 +11,7 @@ updates:
     directory: /
     open-pull-requests-limit: 5
     schedule:
-      interval: daily
+      interval: weekly
     groups:
       development-dependencies:
         dependency-type: "development"
