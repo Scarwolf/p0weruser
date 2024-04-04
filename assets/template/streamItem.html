@@ -13,24 +13,38 @@
                 <div class="item-image-thumb" style="background-image: url({item.thumb})"></div>
                 <?js if(supportsAutoplay) {?>
                 <video class="item-image-actual" draggable="true" loop autoplay preload="auto">
+                  <?js if (item.variants && item.variants.length > 0) { ?>
+                  <?js for (const variant of item.variants) { ?>
+                  <source src="{variant.src}" type="{{variant.mimeType}}" <?js if (variant.media) { ?> media="{{variant.media}}"
+                  <?js } ?> >
+                  <?js } ?>
+                  <?js } else {?>
                   <source src="{item.image}" type="video/mp4">
+                  <?js } ?>
                   <?js if (item.subtitles && item.subtitles.length > 0) { ?>
                   <?js for (const st of item.subtitles) { ?>
-                    <track kind="subtitles" src="{st.path}" label="{st.label}" srclang="{st.language}" <?js if (st.isDefault) { ?>
-                    data-is-default=""
-                  <?js } ?> >
+                    <track kind="subtitles" src="{st.path}" label="{st.label}" srclang="{st.language}" <?js if (st.isDefault ||
+                      item.subtitles.length===1) { ?> data-is-default=""
+                    <?js } ?> >
                   <?js } ?>
                   <?js } ?>
                 </video>
                 <?js } else { ?>
                 <video class="item-image-actual" draggable="true" webkit-playsinline playsinline loop preload="metadata"
                   poster="{item.thumb}">
+                  <?js if (item.variants && item.variants.length > 0) { ?>
+                  <?js for (const variant of item.variants) { ?>
+                  <source src="{variant.src}" type="{{variant.mimeType}}" <?js if (variant.media) { ?> media="{{variant.media}}"
+                  <?js } ?> >
+                  <?js } ?>
+                  <?js } else {?>
                   <source src="{item.image}" type="video/mp4">
+                  <?js } ?>
                   <?js if (item.subtitles && item.subtitles.length > 0) { ?>
                   <?js for (const st of item.subtitles) { ?>
-                  <track kind="subtitles" src="{st.path}" label="{st.label}" srclang="{st.language}" <?js if (st.isDefault) { ?>
-                  data-is-default=""
-                  <?js } ?> >
+                    <track kind="subtitles" src="{st.path}" label="{st.label}" srclang="{st.language}" <?js if (st.isDefault ||
+                      item.subtitles.length===1) { ?> data-is-default=""
+                    <?js } ?> >
                   <?js } ?>
                   <?js } ?>
                 </video>
