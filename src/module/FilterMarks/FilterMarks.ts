@@ -79,33 +79,18 @@ export default class FilterMarks implements PoweruserModule {
 
         if (this.displayLabelStream || this.displayBenisStream) {
             // Handle stream-view
-            p.View.Stream.Main.prototype.buildItem = function (item: StreamItem) {
-                const shouldShowPreview = !p.mobile && !!item.preview;
-                return `
-                    <a class="silent thumb filter ${_this.displayLabelStream ? FilterMarks.getFilter(item) : ''}" ${shouldShowPreview ? `data-has-preview="true"` : ''} id="item-${item.id}" href="${this.baseURL + item.id}">
-                        <p-thumbnail
-                            itemId="${item.id}"
-                            thumbSrc="${item.thumb}"
-                            ${item.preview ? `previewSrc="${item.preview}"` : ""}
-                        ></p-thumbnail>
-                        ${_this.displayBenisStream ? `
-                        <span
-                            class="benis-info ${item.up - item.down > 0 ? 'up' : 'down'}">
-                            ${item.up - item.down}
-                        </span>` : ''}
-                        ${shouldShowPreview ? `
-                        <video
-                            class="inline-preview-video"
-                            preload="none"
-                            loop
-                            muted
-                            width="128"
-                            height="128"
-                            src="${item.preview}"
-                        >` : ''}
-                        ${item.promoted > 1000000000 ? '<div class="sticky-badge"></div>' : ''}
-                    </a>
-                `;
+          p.View.Stream.Main.prototype.buildItem = function (item: StreamItem) {
+              return `
+              <a class="silent thumb filter ${_this.displayLabelStream ? FilterMarks.getFilter(item) : ''}" id="item-${item.id}" href="${this.baseURL + item.id}">
+                <p-thumbnail itemId="${item.id}" thumbSrc=" ${item.thumb}"
+                  ${item.preview ? `previewSrc="${item.preview}"` : ''}
+                  ${item.seen ? 'seen' : ''}
+                  ${item.seen === false ? 'automaticSeen' : ''}
+                ></p-thumbnail>
+                ${_this.displayBenisStream ? `<span class="benis-info ${item.up - item.down > 0 ? 'up' : 'down'}">${item.up - item.down}</span>` : ''}
+              ${item.promoted > 1000000000 ? '<div class="sticky-badge"></div>' : ''}
+              </a>
+            `;
             };
         }
 

@@ -176,6 +176,7 @@ export type StreamItem = {
     width: number;
     preview: string;
     tags: ItemTag[];
+  seen: boolean;
 };
 
 export type ItemTag = {
