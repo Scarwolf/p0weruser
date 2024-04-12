@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         p0weruser - Rel0aded [Dev]
 // @namespace    https://github.com/Scarwolf/p0weruser/
-// @version      2.10.2-dev-1712940364788
+// @version      2.10.2-dev-1712940510713
 // @author       PoTTii - Created by Florian Maak
 // @description  A modularized userScript for pr0gramm.com - Developed by FlorianMaak, Modified by Scarwolf
 // @license      GPL-3.0; http://www.gnu.org/licenses/gpl-3.0.txt
@@ -275,7 +275,7 @@ var Es=Object.defineProperty;var Ss=(ae,J,se)=>J in ae?Es(ae,J,{enumerable:!0,co
                         <a href="https://tineye.com/search/?url=http:{item.image}"
                            target="_blank"> tineye
                         </a>
-                    </span> |
+                    </span>
                     <span class="action copy-link" data-url="https://{CONFIG.HOST}/new/{item.id}" title="Link zum Teilen in die Zwischenablage kopieren"> Teilen</span> </span>  |
                     <span style="margin-right: 12px;"> | <a href="{item.image}" target="_blank" class="action">herunterladen</a> </span>
                         <?js } ?>
