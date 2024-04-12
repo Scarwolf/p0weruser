@@ -158,7 +158,7 @@
                             <span class="pict">s</span>upload</span>
                         <?js } ?>
                         </span>
-                        <?js if( !item.video ) {?>
+                        <?js if( !item.video ) {?> |
                         <span class="item-google-search">
                         <span class="pict">g</span>&nbsp;
                         <a href="https://imgops.com/{item.trimmedUrl}">
@@ -172,7 +172,7 @@
                         </a>
                     <?js } ?>
                     </span>
-                    <span class="action copy-link" data-url="https://{CONFIG.HOST}/new/{item.id}" title="Link zum Teilen in die Zwischenablage kopieren"> Teilen</span> </span>  |
+                    <span class="action copy-link" data-url="https://{CONFIG.HOST}/new/{item.id}" title="Link zum Teilen in die Zwischenablage kopieren"> Teilen</span> </span> 
                     <span style="margin-right: 12px;"> | <a href="{item.image}" target="_blank" class="action">herunterladen</a> </span>
                         <?js if( p.user.admin ) { ?>
                         [<span class="action" id="item-delete" data-id="{item.id}">del</span>]
