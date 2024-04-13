@@ -152,10 +152,8 @@
                         <span class="time">von</span>
                         <a href="#user/{item.user}" class="user um{item.mark}">{item.user}</a>
                         <span class="item-source">
-                    <?js if( item.source ) {?>
+                        <?js if( item.source ) {?>
                             <span class="pict">s</span>&nbsp;<a href="{{item.source}}" target="_blank">{{item.source.hostName()}}</a>
-                            <?js } else { ?>
-                            <span class="pict">s</span>upload</span>
                         <?js } ?>
                         </span>
                         <?js if( !item.video ) {?> |
