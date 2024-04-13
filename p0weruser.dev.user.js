@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         p0weruser - Rel0aded [Dev]
 // @namespace    https://github.com/Scarwolf/p0weruser/
-// @version      2.10.2-dev-1712943797617
+// @version      2.10.2-dev-1712968517739
 // @author       PoTTii - Created by Florian Maak
 // @description  A modularized userScript for pr0gramm.com - Developed by FlorianMaak, Modified by Scarwolf
 // @license      GPL-3.0; http://www.gnu.org/licenses/gpl-3.0.txt
@@ -257,10 +257,8 @@ var Es=Object.defineProperty;var Ss=(ae,J,se)=>J in ae?Es(ae,J,{enumerable:!0,co
                         <span class="time">von</span>
                         <a href="#user/{item.user}" class="user um{item.mark}">{item.user}</a>
                         <span class="item-source">
-                    <?js if( item.source ) {?>
+                        <?js if( item.source ) {?>
                             <span class="pict">s</span>&nbsp;<a href="{{item.source}}" target="_blank">{{item.source.hostName()}}</a>
-                            <?js } else { ?>
-                            <span class="pict">s</span>upload</span>
                         <?js } ?>
                         </span>
                         <?js if( !item.video ) {?> |
@@ -276,7 +274,7 @@ var Es=Object.defineProperty;var Ss=(ae,J,se)=>J in ae?Es(ae,J,{enumerable:!0,co
                            target="_blank"> tineye
                         </a>
                     <?js } ?>
-                    </span>
+                    </span> |
                     <span class="action copy-link" data-url="https://{CONFIG.HOST}/new/{item.id}" title="Link zum Teilen in die Zwischenablage kopieren"> Teilen</span> </span> 
                     <span style="margin-right: 12px;"> | <a href="{item.image}" target="_blank" class="action">herunterladen</a> </span>
                         <?js if( p.user.admin ) { ?>
