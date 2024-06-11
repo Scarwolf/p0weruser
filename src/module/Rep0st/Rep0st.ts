@@ -78,11 +78,11 @@ export default class Rep0st implements PoweruserModule {
     dta.append("url", imgElement[0].src);
 
     // Filters
-    let filters = p.user.flagsName.split("+");
-    filters = filters.indexOf("all") !== -1 ? ["sfw", "nsfw", "nsfl", "pol"] : filters;
+    let flags = p.user.flagsName.split("+");
+    flags = flags.indexOf("all") !== -1 ? ["sfw", "nsfw", "nsfl", "nsfp", "pol"] : flags;
 
-    for (const filter of filters) {
-      dta.append("filter", filter);
+    for (const flag of flags) {
+      dta.append("flag", flag);
     }
 
     GM_xmlhttpRequest({
