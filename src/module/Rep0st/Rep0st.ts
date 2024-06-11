@@ -82,7 +82,7 @@ export default class Rep0st implements PoweruserModule {
     flags = flags.indexOf("all") !== -1 ? ["sfw", "nsfw", "nsfl", "nsfp", "pol"] : flags;
 
     for (const flag of flags) {
-      dta.append("flag", flag);
+      dta.append("flags", flag);
     }
 
     GM_xmlhttpRequest({
