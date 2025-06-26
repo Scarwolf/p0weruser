@@ -147,7 +147,7 @@ export type UserInbox = {
 export type UserSyncEvent = {
     type: "userSync";
     data: {
-        score: number;
+        score: number | undefined; // Score seems to be removed from the event...
         inbox: UserInbox;
     }
 };
