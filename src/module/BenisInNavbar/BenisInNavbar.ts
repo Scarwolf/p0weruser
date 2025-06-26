@@ -59,7 +59,7 @@ export default class BenisInNavbar implements PoweruserModule {
     addListener() {
         window.addEventListener('userSync', async (e: unknown) => {
           const benisFromEvent = (e as UserSyncEvent).data.score;
-          const fetchBenisFromApi = async () => {
+          const fetchBenisFromApi: () => Promise<number> = async () => {
             const response = await fetch("/api/user/score", {
               credentials: "same-origin",
               headers: {
@@ -68,23 +68,24 @@ export default class BenisInNavbar implements PoweruserModule {
             });
             const apiResult = await response.json();
             if (apiResult.score) {
-              return apiResult.score;
+              return Number(apiResult.score);
             } else {
               throw new Error("score not found in api result");
             }
           }
-
-          this.benis = String(
-            benisFromEvent ||
+          
+          const determinedBenis: number | undefined = benisFromEvent !== undefined ?
+            benisFromEvent :
             await fetchBenisFromApi()
               .catch((error) => {
                 console.error(error);
-                return this.#BENIS_PLACEHOLDER;
-              })
-          ) || this.#BENIS_PLACEHOLDER;
+                return undefined
+              });
+        
 
+          this.benis = String(determinedBenis || this.#BENIS_PLACEHOLDER);
 
-            this.addBenis();
+          this.addBenis();
         });
     }
 }
