@@ -4,6 +4,8 @@ import style from './benisInNavbar.less?inline';
 import { loadStyle } from '@/Utils';
 
 export default class BenisInNavbar implements PoweruserModule {
+    readonly #BENIS_PLACEHOLDER = "-";
+
     readonly id = 'BenisInNavbar';
     readonly name = 'Benis in Navigation';
     readonly description = 'Zeigt deinen aktuellen Benis in der Headerleiste an';
@@ -12,7 +14,7 @@ export default class BenisInNavbar implements PoweruserModule {
     readonly showUsername = Settings.get(`${this.id}.settings.show_username`) as boolean;
 
     target = document.getElementById('user-profile-name');
-    benis = "-";
+    benis = this.#BENIS_PLACEHOLDER;
 
 
     async load() {
@@ -56,7 +58,6 @@ export default class BenisInNavbar implements PoweruserModule {
 
     addListener() {
         window.addEventListener('userSync', async (e: unknown) => {
-          const benisPlaceholder = "-";
           const benisFromEvent = (e as UserSyncEvent).data.score;
           const fetchBenisFromApi = async () => {
             const response = await fetch("/api/user/score", {
@@ -78,9 +79,9 @@ export default class BenisInNavbar implements PoweruserModule {
             await fetchBenisFromApi()
               .catch((error) => {
                 console.error(error);
-                return benisPlaceholder;
+                return this.#BENIS_PLACEHOLDER;
               })
-          ) || benisPlaceholder;
+          ) || this.#BENIS_PLACEHOLDER;
 
 
             this.addBenis();
