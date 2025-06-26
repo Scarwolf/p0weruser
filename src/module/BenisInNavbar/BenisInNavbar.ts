@@ -66,9 +66,9 @@ export default class BenisInNavbar implements PoweruserModule {
                 Accept: "application/json",
               },
             });
-            const api_result = await response.json();
-            if ("score" in api_result) {
-              return api_result.score;
+            const apiResult = await response.json();
+            if (apiResult.score) {
+              return apiResult.score;
             } else {
               throw new Error("score not found in api result");
             }
