@@ -55,8 +55,30 @@ export default class BenisInNavbar implements PoweruserModule {
 
 
     addListener() {
-        window.addEventListener('userSync', (e: unknown) => {
-            this.benis = String((e as UserSyncEvent).data.score);
+        window.addEventListener('userSync', async (e: unknown) => {
+            this.benis = String(
+              (e as UserSyncEvent).data.score ||
+                (await fetch("/api/user/score", {
+                  credentials: "same-origin",
+                  headers: {
+                    Accept: "application/json",
+                  },
+                })
+                  .then(async (response) => {
+                    const api_result = await response.json();
+                    if ("score" in api_result) {
+                      return api_result.score;
+                    } else {
+                      console.error("score not found in api result");
+                      console.error(api_result);
+                    }
+                  })
+                  .catch(async (error) => {
+                    console.error(error);
+                  })) ||
+                "ERROR",
+            );
+
 
             this.addBenis();
         });
